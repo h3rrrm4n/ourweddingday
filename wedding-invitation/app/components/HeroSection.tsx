@@ -1,157 +1,187 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.8, ease: "easeOut" as const },
-  }),
-};
+import { motion } from "framer-motion";
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-center py-24 px-4 overflow-hidden"
+      className="relative w-full flex flex-col items-center overflow-hidden"
+      style={{ minHeight: "100svh" }}
     >
-      {/* Background glow */}
+      {/* Full-bleed couple photo background */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.07) 0%, transparent 70%)",
+          background: "linear-gradient(180deg, #3A3028 0%, #5A4838 35%, #7A6050 65%, #4A3828 100%)",
         }}
-      />
-
-      {/* Photo placeholder */}
-      <motion.div
-        custom={0}
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="relative mb-10"
       >
+        {/* Photo placeholder — replace with <Image> when photo is ready */}
         <div
-          className="rounded-full overflow-hidden"
-          style={{
-            width: 200,
-            height: 200,
-            border: "3px solid rgba(201,168,76,0.5)",
-            boxShadow: "0 8px 48px rgba(140,100,40,0.2), 0 0 0 8px rgba(201,168,76,0.08)",
-          }}
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ opacity: 0.4 }}
         >
-          {/* Placeholder image */}
-          <div
-            className="w-full h-full flex flex-col items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #F5E6C8 0%, #EDD9A8 50%, #C9A84C22 100%)" }}
-          >
-            <svg viewBox="0 0 80 80" width="60" height="60" fill="none">
-              <circle cx="40" cy="28" r="16" fill="rgba(201,168,76,0.35)" />
-              <path d="M10 72 Q10 50 40 50 Q70 50 70 72" fill="rgba(201,168,76,0.25)" />
-            </svg>
-            <span style={{ fontSize: 11, color: "#A07830", marginTop: 4, fontFamily: "var(--font-inter)", letterSpacing: "0.1em" }}>
-              Ձեր լուսանկարը
-            </span>
-          </div>
+          <svg viewBox="0 0 200 240" width="160" height="200" fill="none" opacity="0.5">
+            <circle cx="100" cy="70" r="40" fill="rgba(255,255,255,0.2)" />
+            <path d="M20 200 Q20 140 100 140 Q180 140 180 200" fill="rgba(255,255,255,0.15)" />
+          </svg>
         </div>
-
-        {/* Gold ring ornament */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute -inset-3 rounded-full pointer-events-none"
+        {/* Vignette overlay */}
+        <div
+          className="absolute inset-0"
           style={{
-            border: "1px dashed rgba(201,168,76,0.3)",
-            borderRadius: "50%",
+            background: "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%)",
           }}
         />
-      </motion.div>
-
-      {/* Names */}
-      <motion.h1
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="text-center mb-4"
-        style={{
-          fontFamily: "var(--font-playfair), serif",
-          fontSize: "clamp(2.4rem, 7vw, 4.5rem)",
-          color: "#3D3530",
-          letterSpacing: "0.02em",
-          lineHeight: 1.1,
-        }}
-      >
-        Անի{" "}
-        <motion.span
-          style={{ color: "#C9A84C" }}
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-block"
-        >
-          ♥
-        </motion.span>{" "}
-        Արման
-      </motion.h1>
-
-      {/* Date */}
-      <motion.div
-        custom={2}
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="flex flex-col items-center gap-2 mb-8"
-      >
-        <p
+        {/* Bottom gradient fade into content */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-48"
           style={{
-            fontFamily: "var(--font-inter), sans-serif",
-            fontSize: "clamp(0.95rem, 2.5vw, 1.15rem)",
-            color: "#A07830",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
+            background: "linear-gradient(to bottom, transparent 0%, var(--bg) 100%)",
+          }}
+        />
+      </div>
+
+      {/* Overlay text */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-8 py-20 text-center">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.9 }}
+          className="font-script mb-3"
+          style={{ fontSize: "clamp(1.8rem, 7vw, 2.8rem)", color: "rgba(255,255,255,0.92)" }}
+        >
+          Save the Date
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.9 }}
+          className="font-serif font-bold"
+          style={{
+            fontSize: "clamp(2.2rem, 9vw, 4rem)",
+            color: "#FFFFFF",
+            letterSpacing: "0.01em",
+            lineHeight: 1.1,
+          }}
+        >
+          Անի & Արման
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="flex items-center gap-3 my-4"
+        >
+          <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
+          <span
+            className="font-sans"
+            style={{ fontSize: "0.68rem", letterSpacing: "0.3em", color: "rgba(255,255,255,0.8)", textTransform: "uppercase" }}
+          >
+            Ամուսնանում ենք
+          </span>
+          <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.8 }}
+          className="font-serif"
+          style={{
+            fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
+            color: "rgba(255,255,255,0.9)",
+            letterSpacing: "0.05em",
           }}
         >
           20 Սեպտեմբերի 2026
-        </p>
-      </motion.div>
+        </motion.p>
+      </div>
 
-      {/* Decorative divider */}
-      <motion.div
-        custom={3}
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="flex items-center gap-4 w-full max-w-sm"
+      {/* Scroll down invitation card section */}
+      <div
+        className="relative z-10 w-full flex flex-col items-center px-6 pb-12 pt-6 text-center"
+        style={{ background: "var(--bg)" }}
       >
-        <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.5))" }} />
-        <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
-          <path d="M20 4 L22 16 L34 16 L24 24 L28 36 L20 28 L12 36 L16 24 L6 16 L18 16 Z" fill="rgba(201,168,76,0.4)" />
-          <circle cx="20" cy="20" r="3" fill="#C9A84C" />
-        </svg>
-        <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.5))" }} />
-      </motion.div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="font-script mb-1"
+          style={{ fontSize: "clamp(1.5rem, 6vw, 2.2rem)", color: "var(--text-dark)" }}
+        >
+          Save the Date
+        </motion.p>
 
-      {/* Sub-tagline */}
-      <motion.p
-        custom={4}
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="mt-6 text-center"
-        style={{
-          fontFamily: "var(--font-inter), sans-serif",
-          fontSize: "clamp(0.85rem, 2vw, 1rem)",
-          color: "#8B7355",
-          letterSpacing: "0.08em",
-          fontStyle: "italic",
-          maxWidth: 400,
-        }}
-      >
-        Սիրով հրավիրում ենք Ձեզ բաժանել մեր երջանկությունը
-      </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.7 }}
+          className="label-caps mb-5"
+        >
+          • • • Հրավիրված եք մեր հարսանիքին • • •
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+          className="mb-1"
+        >
+          <h2
+            className="font-serif font-bold"
+            style={{ fontSize: "clamp(1.8rem, 7vw, 2.8rem)", color: "var(--text-dark)" }}
+          >
+            Անի & Արման
+          </h2>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.7 }}
+          className="label-caps mb-5"
+        >
+          Ամուսնանում ենք
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="mb-7 px-10 py-3 font-serif text-center"
+          style={{
+            border: "1px solid rgba(44,37,32,0.25)",
+            borderRadius: 4,
+            fontSize: "clamp(1rem, 4vw, 1.2rem)",
+            color: "var(--text-dark)",
+            letterSpacing: "0.05em",
+          }}
+        >
+          20 Սեպտեմբերի 2026
+        </motion.div>
+
+        {/* Gold heart divider */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="flex items-center gap-3"
+          style={{ color: "var(--gold)" }}
+        >
+          <div className="h-px w-16" style={{ background: "var(--gold-light)" }} />
+          <span style={{ fontSize: "1rem" }}>♥</span>
+          <div className="h-px w-16" style={{ background: "var(--gold-light)" }} />
+        </motion.div>
+      </div>
     </section>
   );
 }
