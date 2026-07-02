@@ -3,135 +3,132 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const EVENTS = [
-  { label: "Հարսնացուի տուն", time: "10:00" },
-  { label: "Պսակ", time: "14:00" },
-  { label: "Ընթրիք", time: "18:00" },
+const VENUES = [
+  {
+    icon: "🏠",
+    title: "Հարսնացուի տուն",
+    time: "10:00",
+    address: "[Հասցե]",
+    desc: "Հարսնացուի օրհնության արարողություն",
+  },
+  {
+    icon: "⛪",
+    title: "Եկեղեցի",
+    time: "14:00",
+    address: "[Եկեղեցու հասցե]",
+    desc: "Պսակադրության արարողություն",
+  },
+  {
+    icon: "🍽️",
+    title: "Ռեստորան",
+    time: "18:00",
+    address: "[Ռեստորանի հասցե]",
+    desc: "Հարսանեկան հանդիսություն",
+  },
 ];
 
 export default function VenueSection() {
-  const [mapOpen, setMapOpen] = useState(false);
+  const [openMap, setOpenMap] = useState<number | null>(null);
 
   return (
     <section
-      id="venue"
-      className="py-14 px-6 flex flex-col items-center"
-      style={{ background: "var(--bg)" }}
+      className="py-14 px-5 flex flex-col items-center"
+      style={{ background: "var(--bg-section)" }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-sm flex flex-col items-center"
+        className="w-full max-w-sm"
       >
-        <p className="label-caps mb-4">Օրվա ծրագիրը</p>
-
-        {/* Events grid */}
-        <div className="w-full flex justify-around mb-8">
-          {EVENTS.map((ev, i) => (
-            <div key={i} className="flex flex-col items-center gap-1 text-center">
-              <span
-                className="font-serif font-bold"
-                style={{ fontSize: "clamp(1.3rem, 5vw, 1.7rem)", color: "var(--gold)", letterSpacing: "0.02em" }}
-              >
-                {ev.time}
-              </span>
-              <span
-                className="font-sans"
-                style={{ fontSize: "0.75rem", color: "var(--text-mid)", letterSpacing: "0.04em", maxWidth: 80, textAlign: "center" }}
-              >
-                {ev.label}
-              </span>
-              {i < EVENTS.length - 1 && (
-                <div
-                  className="absolute"
-                  style={{
-                    width: 1,
-                    height: 40,
-                    background: "rgba(44,37,32,0.15)",
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Divider lines between events */}
-        <div className="w-full flex justify-center gap-0 mb-8">
-          <div className="flex-1 h-px" style={{ background: "rgba(44,37,32,0.1)" }} />
+        {/* Section header */}
+        <div className="flex flex-col items-center mb-8">
+          <p className="caps-label mb-3">Օրվա ծրագիրը</p>
+          {/* Time row */}
+          <div className="flex w-full justify-around py-4">
+            {VENUES.map((v, i) => (
+              <div key={i} className="flex flex-col items-center gap-1">
+                <span className="font-serif font-bold" style={{ fontSize: "1.5rem", color: "#B8952E" }}>{v.time}</span>
+                <span className="font-sans" style={{ fontSize: "0.7rem", color: "var(--text-light)", letterSpacing: "0.05em", textAlign: "center", maxWidth: 72 }}>
+                  {v.title}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="w-full h-px" style={{ background: "rgba(42,33,24,0.08)" }} />
         </div>
 
         {/* Venue cards */}
-        {[
-          {
-            title: "Հարսնացուի տուն",
-            address: "[Հարսնացուի հասցե]",
-            time: "10:00",
-            desc: "Հարսնացուի օրհնության արարողություն",
-          },
-          {
-            title: "Եկեղեցի",
-            address: "[Եկեղեցու հասցե]",
-            time: "14:00",
-            desc: "Պսակադրության արարողություն",
-          },
-          {
-            title: "Ռեստորան",
-            address: "[Ռեստորանի հասցե]",
-            time: "18:00",
-            desc: "Հարսանեկան հանդիսություն",
-          },
-        ].map((venue, i) => (
+        {VENUES.map((v, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6 }}
-            className="card w-full mb-4 overflow-hidden"
+            className="card mb-4 overflow-hidden"
           >
             <div className="p-5">
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="font-serif font-bold" style={{ fontSize: "1.05rem", color: "var(--text-dark)" }}>
-                  {venue.title}
-                </h3>
-                <span className="font-sans font-medium" style={{ fontSize: "0.9rem", color: "var(--gold)" }}>
-                  {venue.time}
-                </span>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex items-center justify-center rounded-full text-lg"
+                    style={{ width: 40, height: 40, background: "linear-gradient(135deg, #F5EDD8, #EDD8A8)" }}
+                  >
+                    {v.icon}
+                  </div>
+                  <div>
+                    <p className="font-serif font-bold" style={{ fontSize: "1rem", color: "#2A2118" }}>{v.title}</p>
+                    <p className="font-sans" style={{ fontSize: "0.78rem", color: "#B8952E", letterSpacing: "0.04em" }}>{v.time}</p>
+                  </div>
+                </div>
               </div>
-              <p className="font-sans mb-1" style={{ fontSize: "0.82rem", color: "var(--text-light)" }}>
-                📍 {venue.address}
+
+              <p className="font-sans mb-1" style={{ fontSize: "0.8rem", color: "var(--text-light)", display: "flex", alignItems: "center", gap: 5 }}>
+                <span>📍</span>{v.address}
               </p>
-              <p className="font-sans" style={{ fontSize: "0.85rem", color: "var(--text-mid)", fontStyle: "italic" }}>
-                {venue.desc}
+              <p className="font-sans" style={{ fontSize: "0.83rem", color: "var(--text-mid)", fontStyle: "italic", lineHeight: 1.55 }}>
+                {v.desc}
               </p>
             </div>
 
-            {/* Map toggle */}
-            <div style={{ borderTop: "1px solid rgba(44,37,32,0.07)", padding: "10px 20px" }}>
+            {/* Map link */}
+            <div
+              className="flex items-center justify-between px-5 py-3"
+              style={{ borderTop: "1px solid rgba(42,33,24,0.06)" }}
+            >
+              <span className="font-sans" style={{ fontSize: "0.78rem", color: "var(--text-light)" }}>
+                Google Maps-ում դիտել →
+              </span>
               <button
-                onClick={() => setMapOpen(mapOpen ? false : true)}
-                className="font-sans flex items-center gap-2"
-                style={{ fontSize: "0.8rem", color: "var(--gold)", letterSpacing: "0.04em", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                onClick={() => setOpenMap(openMap === i ? null : i)}
+                className="font-sans flex items-center gap-1.5"
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#B8952E",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  letterSpacing: "0.04em",
+                }}
               >
-                <svg viewBox="0 0 16 16" width="13" height="13" fill="none">
-                  <path d="M8 1C5.239 1 3 3.239 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.761-2.239-5-5-5Z" stroke="currentColor" strokeWidth="1.2" fill="rgba(184,148,42,0.15)" />
-                  <circle cx="8" cy="6" r="1.8" fill="currentColor" />
-                </svg>
-                Բացել քարտեզը →
+                {openMap === i ? "Փակել" : "Քարտեզ"}
+                <span style={{ fontSize: "0.85rem" }}>{openMap === i ? "↑" : "↓"}</span>
               </button>
             </div>
 
             <motion.div
-              animate={{ height: mapOpen && i === 0 ? 200 : 0, opacity: mapOpen && i === 0 ? 1 : 0 }}
+              animate={{ height: openMap === i ? 200 : 0, opacity: openMap === i ? 1 : 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >
               <div
-                className="w-full flex items-center justify-center"
-                style={{ height: 200, background: "linear-gradient(135deg, #EDE0C8, #D8C9B5)", fontSize: "0.82rem", color: "var(--text-mid)" }}
+                className="w-full flex flex-col items-center justify-center gap-2"
+                style={{ height: 200, background: "#F5EDD8", fontSize: "0.82rem", color: "var(--text-light)" }}
               >
+                <span style={{ fontSize: "1.8rem" }}>🗺️</span>
                 Քարտեզը կավելացվի
               </div>
             </motion.div>
@@ -145,13 +142,9 @@ export default function VenueSection() {
           viewport={{ once: true }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
-          className="gold-btn w-full mt-2"
+          className="btn-gold mt-2"
         >
-          <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
-            <path d="M10 2L18 10 10 18 2 10 10 2Z" stroke="currentColor" strokeWidth="1.5" fill="rgba(255,255,255,0.2)" />
-            <path d="M10 6v4l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          Ուղղություն ստանալ
+          🗺️ &nbsp;Ուղղություն ստանալ
         </motion.button>
       </motion.div>
     </section>

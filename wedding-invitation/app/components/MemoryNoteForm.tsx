@@ -4,143 +4,90 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function MemoryNoteForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [first, setFirst] = useState("");
+  const [last,  setLast]  = useState("");
+  const [msg,   setMsg]   = useState("");
+  const [sent,  setSent]  = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName || !message) return;
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3500);
-    setFirstName(""); setLastName(""); setMessage("");
+    if (!first || !msg) return;
+    setSent(true);
+    setTimeout(() => setSent(false), 3500);
+    setFirst(""); setLast(""); setMsg("");
   };
 
-  const inputStyle: React.CSSProperties = {
+  const inp: React.CSSProperties = {
     background: "#FFFFFF",
-    border: "1px solid rgba(44,37,32,0.15)",
-    borderRadius: 10,
-    padding: "13px 16px",
+    border: "1.5px solid rgba(42,33,24,0.12)",
+    borderRadius: 12,
+    padding: "13px 15px",
     fontFamily: "var(--font-inter), sans-serif",
     fontSize: "0.9rem",
-    color: "var(--text-dark)",
+    color: "#2A2118",
     width: "100%",
     outline: "none",
-    transition: "border-color 0.2s",
   };
 
   return (
     <section
-      id="memory"
-      className="py-14 px-6 flex flex-col items-center"
-      style={{ background: "var(--bg-warm)" }}
+      className="py-14 px-5 flex flex-col items-center"
+      style={{ background: "#EDE5D4" }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
         className="w-full max-w-sm"
       >
-        <h2
-          className="font-serif font-bold text-center mb-8"
-          style={{ fontSize: "clamp(1.3rem, 5vw, 1.9rem)", color: "var(--text-dark)" }}
-        >
-          Հուշային նամակ թողնել
+        <h2 className="font-serif font-bold text-center mb-8"
+          style={{ fontSize: "clamp(1.3rem, 5.5vw, 1.9rem)", color: "#2A2118" }}>
+          Հուշային Նամակ Թողնել
         </h2>
 
-        {submitted ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="card p-8 text-center"
-          >
-            <div style={{ fontSize: "2.5rem", marginBottom: 12 }}>💌</div>
-            <p className="font-serif" style={{ fontSize: "1.1rem", color: "var(--text-dark)" }}>
-              Շնորհակալություն։
-            </p>
-            <p className="font-sans mt-2" style={{ fontSize: "0.88rem", color: "var(--text-mid)" }}>
-              Ձեր նամակը ուղարկված է
-            </p>
+        {sent ? (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="card p-10 text-center">
+            <div style={{ fontSize: "2.8rem", marginBottom: 12 }}>💌</div>
+            <p className="font-serif" style={{ fontSize: "1.1rem", color: "#2A2118" }}>Շնորհակալություն</p>
+            <p className="font-sans mt-2" style={{ fontSize: "0.88rem", color: "var(--text-mid)" }}>Ձեր նամակն ուղարկվեց</p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Name row */}
+          <form onSubmit={submit} className="flex flex-col gap-4">
             <div className="flex gap-3">
-              <input
-                style={inputStyle}
-                placeholder="Անուն"
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
-                required
-              />
-              <input
-                style={inputStyle}
-                placeholder="Ազգանուն"
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
-              />
+              <input style={inp} placeholder="Անուն" value={first} onChange={e => setFirst(e.target.value)} required />
+              <input style={inp} placeholder="Ազգանուն" value={last} onChange={e => setLast(e.target.value)} />
             </div>
-
-            {/* Message */}
             <textarea
-              style={{ ...inputStyle, minHeight: 120, resize: "vertical" }}
+              style={{ ...inp, minHeight: 124, resize: "vertical" }}
               placeholder="Ձեր հուշային նամակը..."
-              value={message}
-              onChange={e => setMessage(e.target.value)}
+              value={msg}
+              onChange={e => setMsg(e.target.value)}
               required
             />
 
-            {/* Upload buttons */}
             <div className="flex gap-3">
-              {[
-                { icon: "📷", label: "Լուսանկար" },
-                { icon: "🎥", label: "Վիդեո" },
-              ].map((btn) => (
-                <button
-                  key={btn.label}
-                  type="button"
-                  className="flex-1 flex flex-col items-center gap-1.5 py-4 rounded-xl font-sans"
-                  style={{
-                    border: "1.5px dashed rgba(44,37,32,0.2)",
-                    background: "transparent",
-                    color: "var(--text-mid)",
-                    fontSize: "0.8rem",
-                    cursor: "pointer",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  <span style={{ fontSize: "1.3rem" }}>{btn.icon}</span>
-                  {btn.label}
+              {[{ e: "📷", l: "Լուսանկար" }, { e: "🎥", l: "Վիդեո" }].map(b => (
+                <button key={b.l} type="button"
+                  className="flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl font-sans"
+                  style={{ border: "1.5px dashed rgba(42,33,24,0.18)", background: "rgba(255,255,255,0.6)", color: "var(--text-mid)", fontSize: "0.78rem", cursor: "pointer" }}>
+                  <span style={{ fontSize: "1.4rem" }}>{b.e}</span>
+                  {b.l}
                 </button>
               ))}
             </div>
 
-            <button
-              type="button"
-              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-sans"
-              style={{
-                border: "1.5px dashed rgba(44,37,32,0.2)",
-                background: "transparent",
-                color: "var(--text-mid)",
-                fontSize: "0.82rem",
-                cursor: "pointer",
-                letterSpacing: "0.04em",
-              }}
-            >
-              <span style={{ fontSize: "1.2rem" }}>🎙️</span>
+            <button type="button"
+              className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-sans"
+              style={{ border: "1.5px dashed rgba(42,33,24,0.18)", background: "rgba(255,255,255,0.6)", color: "var(--text-mid)", fontSize: "0.82rem", cursor: "pointer", letterSpacing: "0.04em" }}>
+              <span style={{ fontSize: "1.3rem" }}>🎙️</span>
               Ձայնագրություն ուղարկել
             </button>
 
-            {/* Submit */}
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              className="gold-btn w-full mt-1"
-              style={{ justifyContent: "center", padding: "16px 28px" }}
-            >
+            <motion.button type="submit"
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+              className="btn-gold mt-1" style={{ padding: "16px 28px" }}>
               Նամակ ուղարկել
             </motion.button>
           </form>

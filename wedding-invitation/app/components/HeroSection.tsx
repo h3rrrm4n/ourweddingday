@@ -2,186 +2,203 @@
 
 import { motion } from "framer-motion";
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { delay, duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+});
+
 export default function HeroSection() {
   return (
-    <section
-      id="hero"
-      className="relative w-full flex flex-col items-center overflow-hidden"
-      style={{ minHeight: "100svh" }}
-    >
-      {/* Full-bleed couple photo background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(180deg, #3A3028 0%, #5A4838 35%, #7A6050 65%, #4A3828 100%)",
-        }}
+    <>
+      {/* ── PHOTO HERO ── */}
+      <section
+        className="relative w-full flex flex-col items-center justify-center overflow-hidden"
+        style={{ minHeight: "100svh" }}
       >
-        {/* Photo placeholder — replace with <Image> when photo is ready */}
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ opacity: 0.4 }}
-        >
-          <svg viewBox="0 0 200 240" width="160" height="200" fill="none" opacity="0.5">
-            <circle cx="100" cy="70" r="40" fill="rgba(255,255,255,0.2)" />
-            <path d="M20 200 Q20 140 100 140 Q180 140 180 200" fill="rgba(255,255,255,0.15)" />
-          </svg>
-        </div>
-        {/* Vignette overlay */}
+        {/* Background photo (dark overlay) */}
         <div
           className="absolute inset-0"
           style={{
-            background: "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%)",
+            background: "linear-gradient(180deg, #2E2520 0%, #4A3C32 35%, #6A5648 65%, #3A2E28 100%)",
           }}
-        />
-        {/* Bottom gradient fade into content */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-48"
-          style={{
-            background: "linear-gradient(to bottom, transparent 0%, var(--bg) 100%)",
-          }}
-        />
-      </div>
+        >
+          {/* Vignette */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "radial-gradient(ellipse 90% 75% at 50% 45%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.52) 100%)",
+            }}
+          />
+          {/* Bottom fade to cream */}
+          <div
+            className="absolute bottom-0 left-0 right-0"
+            style={{
+              height: 160,
+              background: "linear-gradient(to bottom, transparent 0%, #F5F0E8 100%)",
+            }}
+          />
+        </div>
 
-      {/* Overlay text */}
-      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-8 py-20 text-center">
+        {/* Text overlay */}
+        <div className="relative z-10 flex flex-col items-center text-center px-8">
+          <motion.p {...fadeUp(0.2)} className="font-script mb-2"
+            style={{ fontSize: "clamp(1.8rem, 8vw, 3rem)", color: "rgba(255,255,255,0.93)" }}>
+            Save the Date
+          </motion.p>
+
+          <motion.h1 {...fadeUp(0.4)} className="font-serif font-bold"
+            style={{ fontSize: "clamp(2.4rem, 10vw, 4.2rem)", color: "#FFFFFF", letterSpacing: "0.01em", lineHeight: 1.1 }}>
+            Անի & Արման
+          </motion.h1>
+
+          <motion.div {...fadeUp(0.55)} className="flex items-center gap-3 my-4">
+            <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.45)" }} />
+            <span className="caps-label" style={{ color: "rgba(255,255,255,0.75)", letterSpacing: "0.28em" }}>
+              Ամուսնանում ենք
+            </span>
+            <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.45)" }} />
+          </motion.div>
+
+          <motion.p {...fadeUp(0.68)} className="font-serif"
+            style={{ fontSize: "clamp(1.1rem, 4.5vw, 1.5rem)", color: "rgba(255,255,255,0.88)", letterSpacing: "0.04em" }}>
+            20 Սեպտեմբերի 2026
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ── INVITATION CARD (below photo hero) ── */}
+      <section
+        className="relative w-full flex flex-col items-center px-6 py-16 text-center"
+        style={{
+          background: "linear-gradient(180deg, #F5F0E8 0%, #EDE5D4 40%, #E8DEC8 80%, #F0E8D4 100%)",
+        }}
+      >
+        {/* Top dot */}
+        <motion.div
+          initial={{ opacity: 0, scaleY: 0 }}
+          whileInView={{ opacity: 1, scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="w-px h-10 mb-5"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(184,149,46,0.5))" }}
+        />
+
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.9 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
           className="font-script mb-3"
-          style={{ fontSize: "clamp(1.8rem, 7vw, 2.8rem)", color: "rgba(255,255,255,0.92)" }}
+          style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "#2A2118" }}
         >
           Save the Date
         </motion.p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.9 }}
-          className="font-serif font-bold"
-          style={{
-            fontSize: "clamp(2.2rem, 9vw, 4rem)",
-            color: "#FFFFFF",
-            letterSpacing: "0.01em",
-            lineHeight: 1.1,
-          }}
-        >
-          Անի & Արման
-        </motion.h1>
-
+        {/* Dots row */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="flex items-center gap-3 my-4"
-        >
-          <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
-          <span
-            className="font-sans"
-            style={{ fontSize: "0.68rem", letterSpacing: "0.3em", color: "rgba(255,255,255,0.8)", textTransform: "uppercase" }}
-          >
-            Ամուսնանում ենք
-          </span>
-          <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.8 }}
-          className="font-serif"
-          style={{
-            fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
-            color: "rgba(255,255,255,0.9)",
-            letterSpacing: "0.05em",
-          }}
-        >
-          20 Սեպտեմբերի 2026
-        </motion.p>
-      </div>
-
-      {/* Scroll down invitation card section */}
-      <div
-        className="relative z-10 w-full flex flex-col items-center px-6 pb-12 pt-6 text-center"
-        style={{ background: "var(--bg)" }}
-      >
-        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="font-script mb-1"
-          style={{ fontSize: "clamp(1.5rem, 6vw, 2.2rem)", color: "var(--text-dark)" }}
+          transition={{ delay: 0.1 }}
+          className="flex items-center gap-2 mb-4"
         >
-          Save the Date
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.7 }}
-          className="label-caps mb-5"
-        >
-          • • • Հրավիրված եք մեր հարսանիքին • • •
-        </motion.p>
+          <div className="w-8 h-px" style={{ background: "rgba(184,149,46,0.4)" }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(184,149,46,0.5)" }} />
+          <p className="caps-label" style={{ fontSize: "0.6rem", letterSpacing: "0.3em" }}>
+            Հրավիրված եք մեր հարսանիքին
+          </p>
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(184,149,46,0.5)" }} />
+          <div className="w-8 h-px" style={{ background: "rgba(184,149,46,0.4)" }} />
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+          className="flex items-center gap-3 mb-5"
+        >
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(107,94,80,0.3)" }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(107,94,80,0.5)" }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(107,94,80,0.3)" }} />
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="mb-1"
+          className="font-serif font-bold mb-2"
+          style={{ fontSize: "clamp(1.9rem, 8vw, 3rem)", color: "#2A2118", letterSpacing: "0.01em" }}
         >
-          <h2
-            className="font-serif font-bold"
-            style={{ fontSize: "clamp(1.8rem, 7vw, 2.8rem)", color: "var(--text-dark)" }}
-          >
-            Անի & Արման
-          </h2>
-        </motion.div>
+          Անի & Արման
+        </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-          className="label-caps mb-5"
+          transition={{ delay: 0.3 }}
+          className="caps-label mb-6"
+          style={{ letterSpacing: "0.3em" }}
         >
           Ամուսնանում ենք
         </motion.p>
 
+        {/* Date box */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mb-7 px-10 py-3 font-serif text-center"
+          transition={{ delay: 0.38, duration: 0.6 }}
+          className="mb-8 px-8 py-3 font-serif text-center"
           style={{
-            border: "1px solid rgba(44,37,32,0.25)",
-            borderRadius: 4,
+            border: "1px solid rgba(42,33,24,0.22)",
+            borderRadius: 3,
             fontSize: "clamp(1rem, 4vw, 1.2rem)",
-            color: "var(--text-dark)",
-            letterSpacing: "0.05em",
+            color: "#2A2118",
+            letterSpacing: "0.04em",
+            position: "relative",
           }}
         >
+          {/* Corner marks */}
+          {[
+            { top: -4, left: -4 }, { top: -4, right: -4 },
+            { bottom: -4, left: -4 }, { bottom: -4, right: -4 },
+          ].map((pos, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2"
+              style={{
+                ...pos,
+                borderTop: pos.top !== undefined ? "1.5px solid rgba(42,33,24,0.3)" : undefined,
+                borderBottom: pos.bottom !== undefined ? "1.5px solid rgba(42,33,24,0.3)" : undefined,
+                borderLeft: pos.left !== undefined ? "1.5px solid rgba(42,33,24,0.3)" : undefined,
+                borderRight: pos.right !== undefined ? "1.5px solid rgba(42,33,24,0.3)" : undefined,
+              }}
+            />
+          ))}
           20 Սեպտեմբերի 2026
         </motion.div>
 
-        {/* Gold heart divider */}
+        {/* Scroll arrow */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="flex items-center gap-3"
-          style={{ color: "var(--gold)" }}
+          className="flex flex-col items-center gap-2"
         >
-          <div className="h-px w-16" style={{ background: "var(--gold-light)" }} />
-          <span style={{ fontSize: "1rem" }}>♥</span>
-          <div className="h-px w-16" style={{ background: "var(--gold-light)" }} />
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ color: "rgba(184,149,46,0.7)", fontSize: "1.2rem" }}
+          >
+            ↓
+          </motion.div>
         </motion.div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

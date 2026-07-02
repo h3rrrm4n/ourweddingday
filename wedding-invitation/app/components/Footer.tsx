@@ -6,15 +6,15 @@ export default function Footer() {
   return (
     <footer
       className="py-16 px-6 flex flex-col items-center"
-      style={{ background: "var(--dark-footer)" }}
+      style={{ background: "#1A1510" }}
     >
       <motion.h2
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
         className="font-serif font-bold text-center mb-2"
-        style={{ fontSize: "clamp(1.8rem, 7vw, 2.8rem)", color: "#FFFFFF" }}
+        style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "#FFFFFF" }}
       >
         Անի & Արման
       </motion.h2>
@@ -23,35 +23,27 @@ export default function Footer() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.15, duration: 0.7 }}
+        transition={{ delay: 0.12, duration: 0.7 }}
         className="font-sans mb-8"
-        style={{ fontSize: "0.9rem", color: "var(--gold-light)", letterSpacing: "0.1em" }}
+        style={{ fontSize: "0.88rem", color: "#D4B05A", letterSpacing: "0.12em" }}
       >
         20 Սեպտեմբերի 2026
       </motion.p>
 
-      {/* Instagram icon */}
+      {/* Instagram */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="mb-8"
+        className="mb-8 flex items-center justify-center rounded-full"
+        style={{ width: 46, height: 46, border: "1.5px solid rgba(255,255,255,0.18)", cursor: "pointer" }}
       >
-        <div
-          className="flex items-center justify-center rounded-full"
-          style={{
-            width: 44,
-            height: 44,
-            border: "1.5px solid rgba(255,255,255,0.2)",
-          }}
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="5" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-            <circle cx="12" cy="12" r="4" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-            <circle cx="17.5" cy="6.5" r="1.2" fill="rgba(255,255,255,0.6)" />
-          </svg>
-        </div>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="rgba(255,255,255,0.55)" strokeWidth="1.4"/>
+          <circle cx="12" cy="12" r="4" stroke="rgba(255,255,255,0.55)" strokeWidth="1.4"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="rgba(255,255,255,0.55)"/>
+        </svg>
       </motion.div>
 
       <motion.div
@@ -60,7 +52,7 @@ export default function Footer() {
         viewport={{ once: true }}
         transition={{ delay: 0.25, duration: 0.8 }}
         className="w-full max-w-xs mb-8 h-px"
-        style={{ background: "rgba(255,255,255,0.12)" }}
+        style={{ background: "rgba(255,255,255,0.1)" }}
       />
 
       <motion.p
@@ -69,7 +61,7 @@ export default function Footer() {
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.7 }}
         className="font-sans text-center max-w-xs mb-6"
-        style={{ fontSize: "0.92rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.65 }}
+        style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}
       >
         Սիրով սպասում ենք Ձեզ մեր ամենաերջանիկ օրը միասին նշելու
       </motion.p>
@@ -79,12 +71,11 @@ export default function Footer() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4 }}
-        className="flex items-center gap-2"
-        style={{ color: "var(--gold)" }}
+        className="flex items-center gap-2.5"
       >
-        <span>♥</span>
-        <span className="font-sans" style={{ fontSize: "0.82rem", letterSpacing: "0.15em" }}>Սիրով</span>
-        <span>♥</span>
+        <span style={{ color: "#B8952E", fontSize: "0.95rem" }}>♥</span>
+        <span className="font-sans" style={{ fontSize: "0.78rem", color: "#B8952E", letterSpacing: "0.2em" }}>Սիրով</span>
+        <span style={{ color: "#B8952E", fontSize: "0.95rem" }}>♥</span>
       </motion.div>
     </footer>
   );
