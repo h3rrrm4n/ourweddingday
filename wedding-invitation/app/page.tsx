@@ -69,7 +69,7 @@ export default function Home() {
                   color: "#8C7650",
                   letterSpacing: "0.44em",
                   textTransform: "uppercase",
-                }}>Հарсанйац Hравер</span>
+                }}>Wedding Invitation</span>
                 <div style={{ width: 24, height: 1, background: "rgba(140,118,78,0.45)" }} />
               </div>
 
@@ -101,7 +101,7 @@ export default function Home() {
                 letterSpacing: "0.26em",
                 textTransform: "uppercase",
                 marginTop: 14,
-              }}>20 · Сепtемbер · 2026</p>
+              }}>20 · September · 2026</p>
             </motion.div>
 
             {/* ── Envelope ── */}

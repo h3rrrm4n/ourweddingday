@@ -192,8 +192,11 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
               transition={{ duration: 0.25, ease: "easeIn" }}
               style={{
                 position: "absolute",
-                // Seal center at 50% width, 50% height (the fold point)
-                top: "calc(50% - 12%)",
+                // Seal must be centered at the fold point (50% width, 50% height).
+                // Container height = 75% of width (paddingBottom trick).
+                // Seal = 24% of width. Half = 12% of width = 16% of height.
+                // So top-center = 50% height − 16% height = 34% height.
+                top: "34%",
                 left: "calc(50% - 12%)",
                 width: "24%",
                 paddingBottom: "24%",
