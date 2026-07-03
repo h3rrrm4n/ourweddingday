@@ -1,170 +1,157 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
-function FadeUp({ children, delay = 0, className = "", style = {} }: {
-  children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties;
-}) {
-  return (
-    <motion.div
-      className={className}
-      style={style}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.8, ease: "easeOut" as const },
+  }),
+};
 
 export default function HeroSection() {
   return (
-    <>
-      {/* ── FULL-BLEED PHOTO HERO ── */}
-      <section
-        className="relative w-full flex items-center justify-center overflow-hidden"
-        style={{ minHeight: "100svh" }}
-      >
-        {/* Photo bg */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(180deg, #2A201A 0%, #3E3028 40%, #5A4436 70%, #3A2C22 100%)",
-        }}>
-          <div className="absolute inset-0" style={{
-            background: "radial-gradient(ellipse 85% 75% at 50% 45%, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.55) 100%)",
-          }}/>
-          {/* Fade bottom into page bg */}
-          <div className="absolute bottom-0 inset-x-0 h-40" style={{
-            background: "linear-gradient(to bottom, transparent 0%, #FAF6EE 100%)",
-          }}/>
-        </div>
-
-        {/* Text */}
-        <div className="relative z-10 flex flex-col items-center text-center px-8 py-20">
-          <motion.p className="f-script mb-2"
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.9 }}
-            style={{ fontSize: "clamp(1.8rem, 8vw, 3rem)", color: "rgba(255,255,255,0.92)" }}>
-            Save the Date
-          </motion.p>
-          <motion.h1 className="f-serif font-bold"
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.38, duration: 0.9 }}
-            style={{ fontSize: "clamp(2.4rem, 10vw, 4.4rem)", color: "#FFF", lineHeight: 1.08 }}>
-            Անի & Արման
-          </motion.h1>
-          <motion.div className="flex items-center gap-3 my-4"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ delay: 0.54, duration: 0.8 }}>
-            <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.4)" }}/>
-            <span className="caps" style={{ color: "rgba(255,255,255,0.7)", letterSpacing: "0.26em" }}>Ամուսնանում ենք</span>
-            <div className="h-px w-14" style={{ background: "rgba(255,255,255,0.4)" }}/>
-          </motion.div>
-          <motion.p className="f-serif"
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.68, duration: 0.8 }}
-            style={{ fontSize: "clamp(1.1rem, 4.5vw, 1.5rem)", color: "rgba(255,255,255,0.88)", letterSpacing: "0.04em" }}>
-            20 Սեպտեմբերի 2026
-          </motion.p>
-        </div>
-      </section>
-
-      {/* ── INVITATION CARD — warm golden champagne gradient ── */}
-      <section
-        className="w-full flex flex-col items-center px-6 py-16 text-center"
+    <section
+      id="hero"
+      className="relative flex flex-col items-center justify-center py-24 px-4 overflow-hidden"
+    >
+      {/* Background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: `
-            radial-gradient(ellipse 140% 90% at 15% 55%, rgba(195,155,55,0.42) 0%, transparent 55%),
-            radial-gradient(ellipse 140% 90% at 85% 45%, rgba(195,155,55,0.38) 0%, transparent 55%),
-            linear-gradient(180deg, #FAF2D8 0%, #F0E2A8 28%, #E8D490 52%, #F0E2A8 76%, #FAF5E0 100%)
-          `,
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.07) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* Photo placeholder */}
+      <motion.div
+        custom={0}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        className="relative mb-10"
+      >
+        <div
+          className="rounded-full overflow-hidden"
+          style={{
+            width: 200,
+            height: 200,
+            border: "3px solid rgba(201,168,76,0.5)",
+            boxShadow: "0 8px 48px rgba(140,100,40,0.2), 0 0 0 8px rgba(201,168,76,0.08)",
+          }}
+        >
+          {/* Placeholder image */}
+          <div
+            className="w-full h-full flex flex-col items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #F5E6C8 0%, #EDD9A8 50%, #C9A84C22 100%)" }}
+          >
+            <svg viewBox="0 0 80 80" width="60" height="60" fill="none">
+              <circle cx="40" cy="28" r="16" fill="rgba(201,168,76,0.35)" />
+              <path d="M10 72 Q10 50 40 50 Q70 50 70 72" fill="rgba(201,168,76,0.25)" />
+            </svg>
+            <span style={{ fontSize: 11, color: "#A07830", marginTop: 4, fontFamily: "var(--font-inter)", letterSpacing: "0.1em" }}>
+              Ձեր լուսանկարը
+            </span>
+          </div>
+        </div>
+
+        {/* Gold ring ornament */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute -inset-3 rounded-full pointer-events-none"
+          style={{
+            border: "1px dashed rgba(201,168,76,0.3)",
+            borderRadius: "50%",
+          }}
+        />
+      </motion.div>
+
+      {/* Names */}
+      <motion.h1
+        custom={1}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        className="text-center mb-4"
+        style={{
+          fontFamily: "var(--font-playfair), serif",
+          fontSize: "clamp(2.4rem, 7vw, 4.5rem)",
+          color: "#3D3530",
+          letterSpacing: "0.02em",
+          lineHeight: 1.1,
         }}
       >
-        {/* Vertical line at top */}
-        <FadeUp delay={0}>
-          <div className="w-px h-10 mb-6 mx-auto" style={{ background: "linear-gradient(to bottom, transparent, rgba(140,100,30,0.4))" }}/>
-        </FadeUp>
+        Անի{" "}
+        <motion.span
+          style={{ color: "#C9A84C" }}
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="inline-block"
+        >
+          ♥
+        </motion.span>{" "}
+        Արման
+      </motion.h1>
 
-        {/* Save the Date script */}
-        <FadeUp delay={0.05}>
-          <p className="f-script" style={{ fontSize: "clamp(2rem, 9vw, 3.2rem)", color: "#2C2318" }}>
-            Save the Date
-          </p>
-        </FadeUp>
+      {/* Date */}
+      <motion.div
+        custom={2}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        className="flex flex-col items-center gap-2 mb-8"
+      >
+        <p
+          style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            fontSize: "clamp(0.95rem, 2.5vw, 1.15rem)",
+            color: "#A07830",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+          }}
+        >
+          20 Սեպտեմբերի 2026
+        </p>
+      </motion.div>
 
-        {/* Subtitle */}
-        <FadeUp delay={0.12}>
-          <div className="flex items-center gap-2 mt-3 mb-1">
-            <div className="w-6 h-px" style={{ background: "rgba(140,100,30,0.4)" }}/>
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(140,100,30,0.5)" }}/>
-            <p className="caps" style={{ color: "rgba(44,35,24,0.65)", letterSpacing: "0.26em" }}>
-              Հրավիրված եք մեր հարսանիքին
-            </p>
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(140,100,30,0.5)" }}/>
-            <div className="w-6 h-px" style={{ background: "rgba(140,100,30,0.4)" }}/>
-          </div>
-        </FadeUp>
+      {/* Decorative divider */}
+      <motion.div
+        custom={3}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        className="flex items-center gap-4 w-full max-w-sm"
+      >
+        <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.5))" }} />
+        <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
+          <path d="M20 4 L22 16 L34 16 L24 24 L28 36 L20 28 L12 36 L16 24 L6 16 L18 16 Z" fill="rgba(201,168,76,0.4)" />
+          <circle cx="20" cy="20" r="3" fill="#C9A84C" />
+        </svg>
+        <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.5))" }} />
+      </motion.div>
 
-        {/* Decorative dots */}
-        <FadeUp delay={0.16}>
-          <div className="flex gap-2 my-4">
-            {[0.3, 0.5, 0.7, 0.5, 0.3].map((o, i) => (
-              <div key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: `rgba(100,80,40,${o})` }}/>
-            ))}
-          </div>
-        </FadeUp>
-
-        {/* Names */}
-        <FadeUp delay={0.2}>
-          <h2 className="f-serif font-bold" style={{ fontSize: "clamp(2rem, 8.5vw, 3.2rem)", color: "#2C2318" }}>
-            Անի & Արման
-          </h2>
-        </FadeUp>
-
-        {/* Caps subtitle */}
-        <FadeUp delay={0.27}>
-          <p className="caps mt-2 mb-6" style={{ letterSpacing: "0.3em", color: "rgba(44,35,24,0.55)" }}>
-            Ամուսնանում ենք
-          </p>
-        </FadeUp>
-
-        {/* Date in thin frame */}
-        <FadeUp delay={0.33}>
-          <div
-            className="f-serif mb-7 px-8 py-3 relative"
-            style={{
-              fontSize: "clamp(1rem, 4vw, 1.2rem)",
-              color: "#2C2318",
-              letterSpacing: "0.05em",
-              border: "1px solid rgba(42,33,24,0.25)",
-              borderRadius: 2,
-            }}
-          >
-            {/* Corner ticks */}
-            {[
-              { top: -4, left: -4, borderTop: "1.5px solid rgba(42,33,24,0.3)", borderLeft: "1.5px solid rgba(42,33,24,0.3)" },
-              { top: -4, right: -4, borderTop: "1.5px solid rgba(42,33,24,0.3)", borderRight: "1.5px solid rgba(42,33,24,0.3)" },
-              { bottom: -4, left: -4, borderBottom: "1.5px solid rgba(42,33,24,0.3)", borderLeft: "1.5px solid rgba(42,33,24,0.3)" },
-              { bottom: -4, right: -4, borderBottom: "1.5px solid rgba(42,33,24,0.3)", borderRight: "1.5px solid rgba(42,33,24,0.3)" },
-            ].map((s, i) => (
-              <div key={i} className="absolute w-2.5 h-2.5" style={s as React.CSSProperties}/>
-            ))}
-            20 Սեպտեմբերի 2026
-          </div>
-        </FadeUp>
-
-        {/* Scroll arrow */}
-        <FadeUp delay={0.42}>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            style={{ color: "rgba(140,100,30,0.6)", fontSize: "1.25rem" }}
-          >
-            ↓
-          </motion.div>
-        </FadeUp>
-      </section>
-    </>
+      {/* Sub-tagline */}
+      <motion.p
+        custom={4}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        className="mt-6 text-center"
+        style={{
+          fontFamily: "var(--font-inter), sans-serif",
+          fontSize: "clamp(0.85rem, 2vw, 1rem)",
+          color: "#8B7355",
+          letterSpacing: "0.08em",
+          fontStyle: "italic",
+          maxWidth: 400,
+        }}
+      >
+        Սիրով հրավիրում ենք Ձեզ բաժանել մեր երջանկությունը
+      </motion.p>
+    </section>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, Dancing_Script } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -14,22 +14,26 @@ const inter = Inter({
   display: "swap",
 });
 
-const dancing = Dancing_Script({
-  variable: "--font-dancing",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Անի ♥ Արման | Հարսանյաց Հրավեր",
   description: "Անի և Արմանի հարսանյաց հրավերը՝ 20 Սեպտեմբերի 2026",
+  openGraph: {
+    title: "Անի ♥ Արման | Հարսանյաց Հրավեր",
+    description: "Սիրով սպասում ենք Ձեզ",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="hy" className={`${playfair.variable} ${inter.variable} ${dancing.variable}`}>
+    <html
+      lang="hy"
+      className={`${playfair.variable} ${inter.variable}`}
+    >
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
