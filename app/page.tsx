@@ -8,7 +8,7 @@ import ContentReveal from "@/components/ContentReveal";
 // TIMING.pocketFadeDelay), so the content begins revealing exactly as the
 // envelope starts dissolving — one continuous motion rather than two
 // separate steps.
-const OPEN_SEQUENCE_MS = 1300;
+const OPEN_SEQUENCE_MS = 1500;
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>("idle");
@@ -22,7 +22,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative w-full h-dvh overflow-hidden bg-milk flex items-center justify-center">
+    <main className="relative w-full h-dvh overflow-hidden bg-pudra flex items-center justify-center">
       <div className="grain-overlay" />
       <Envelope stage={stage} onSealClick={handleSealClick} />
       <ContentReveal visible={stage === "opened"} />

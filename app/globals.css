@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
 :root {
+  /* Dusty rose / "pudra" palette */
+  --pudra: #D9C4BB;
+  --pudra-light: #E3D3CB;
+  --pudra-deep: #C7AEA3;
+  --seal: #C6A179;
+  --seal-deep: #9A7850;
+  --ink: #2E2118;
   --milk: #F8F6F2;
-  --ivory: #F3EFE4;
-  --ivory-light: #F6F2E9;
   --paper: #FBFAF6;
-  --burgundy: #5C1A22;
-  --burgundy-deep: #3E0F16;
-  --burgundy-light: #7A2A33;
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
 }
 
 @theme inline {
+  --color-pudra: var(--pudra);
   --color-milk: var(--milk);
-  --color-ivory: var(--ivory);
   --color-paper: var(--paper);
-  --color-burgundy: var(--burgundy);
+  --color-ink: var(--ink);
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
 }
@@ -26,8 +28,8 @@
 }
 
 html, body {
-  background: var(--milk);
-  color: #2E2A26;
+  background: var(--pudra);
+  color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   overscroll-behavior: none;
 }

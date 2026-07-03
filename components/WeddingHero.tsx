@@ -16,9 +16,9 @@ const item = {
 
 /**
  * The main wedding page — what the guest sees once the envelope has
- * finished opening. Kept in the same restrained, editorial palette as
- * the envelope (milk / ivory / burgundy), ready to be extended with
- * further sections (schedule, RSVP, etc.).
+ * finished opening. Kept in the same dusty-rose ("pudra") palette as
+ * the envelope, ready to be extended with further sections (schedule,
+ * RSVP, etc.).
  */
 export default function WeddingHero() {
   return (
@@ -30,34 +30,31 @@ export default function WeddingHero() {
     >
       <motion.p
         variants={item}
-        className="text-[11px] font-medium tracking-[0.3em] uppercase text-burgundy mb-6"
+        className="text-[11px] font-medium tracking-[0.3em] uppercase text-ink/70 mb-6"
       >
         Together with their families
       </motion.p>
 
-      <motion.h1
-        variants={item}
-        className="font-serif leading-[0.95] text-[#2E2A26]"
-      >
+      <motion.h1 variants={item} className="font-serif leading-[0.95] text-ink">
         <span className="block italic text-[15vw] sm:text-6xl">Sarah</span>
-        <span className="block italic text-burgundy text-[9vw] sm:text-4xl my-1">
+        <span className="block italic text-[#9A7850] text-[9vw] sm:text-4xl my-1">
           &amp;
         </span>
         <span className="block italic text-[15vw] sm:text-6xl">James</span>
       </motion.h1>
 
-      <motion.div variants={item} className="w-12 h-px bg-[#D9CBB0] my-8" />
+      <motion.div variants={item} className="w-12 h-px bg-ink/25 my-8" />
 
       <motion.p
         variants={item}
-        className="font-serif text-lg sm:text-xl text-[#6B6459] tracking-wide"
+        className="font-serif text-lg sm:text-xl text-ink/70 tracking-wide"
       >
         Saturday, the Twelfth of September, 2026
       </motion.p>
 
       <motion.p
         variants={item}
-        className="text-[11px] tracking-[0.2em] uppercase text-[#8C8278] mt-3"
+        className="text-[11px] tracking-[0.2em] uppercase text-ink/55 mt-3"
       >
         Villa Rosé · Tuscany, Italy
       </motion.p>
