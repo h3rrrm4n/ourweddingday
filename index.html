@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Հարսանիքի Հրավեր</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= ENVELOPE INTRO ================= -->
+<div class="envelope-screen" id="envelopeScreen">
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope">
+
+      <!-- back of envelope -->
+      <div class="envelope-back">
+        <svg class="envelope-pattern" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid slice">
+          <g stroke="#c9ab7a" stroke-width="0.6" fill="none" opacity="0.35">
+            <path d="M20 30 Q35 10 55 22 Q60 32 48 38 Q30 40 20 30Z"/>
+            <path d="M18 26 Q10 20 6 8"/>
+            <path d="M280 190 Q295 170 315 182 Q320 192 308 198 Q290 200 280 190Z"/>
+            <path d="M278 186 Q270 180 266 168"/>
+            <path d="M270 20 Q280 8 292 16"/>
+            <path d="M28 195 Q18 205 8 200"/>
+          </g>
+        </svg>
+        <div class="envelope-inner-shadow"></div>
+      </div>
+
+      <!-- left / right / bottom triangular folds (purely decorative, static) -->
+      <div class="fold fold-left"></div>
+      <div class="fold fold-right"></div>
+      <div class="fold fold-bottom"></div>
+
+      <!-- top flap that opens -->
+      <div class="envelope-flap" id="envelopeFlap">
+        <svg class="flap-pattern" viewBox="0 0 320 140" preserveAspectRatio="none">
+          <polygon points="0,0 320,0 160,140" fill="#efe3d0"/>
+          <g stroke="#c9ab7a" stroke-width="0.6" fill="none" opacity="0.4">
+            <path d="M60 20 Q75 5 92 15 Q96 24 85 28 Q68 30 60 20Z"/>
+            <path d="M230 18 Q245 4 262 13 Q265 22 254 26 Q238 28 230 18Z"/>
+            <path d="M150 8 Q160 -2 172 6"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- wax seal -->
+      <button class="wax-seal" id="waxSeal" aria-label="Բացել ծրարը">
+        <svg viewBox="0 0 120 120" width="100%" height="100%">
+          <defs>
+            <radialGradient id="waxBody" cx="38%" cy="30%" r="75%">
+              <stop offset="0%"  stop-color="#a83a3a"/>
+              <stop offset="45%" stop-color="#832525"/>
+              <stop offset="78%" stop-color="#6b1c1c"/>
+              <stop offset="100%" stop-color="#4a1212"/>
+            </radialGradient>
+            <radialGradient id="waxSheen" cx="32%" cy="24%" r="40%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="waxShadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3a0f0f" flood-opacity="0.45"/>
+            </filter>
+          </defs>
+
+          <!-- irregular wax blob base, hand-poured look -->
+          <path class="seal-blob" filter="url(#waxShadow)" fill="url(#waxBody)"
+            d="M60 8c6 0 9 6 15 7s12-3 17 1s0 12 4 16s9 9 7 15s-9 7-12 11s1 13-5 16s-12-2-17 0s-8 10-14 10s-9-7-14-10s-12 2-17 0s-1-11-5-16s-11-6-12-11s6-10 7-15s-4-12 0-16s12-2 17-1s9-7 15-7z"/>
+
+          <!-- glossy highlight -->
+          <ellipse cx="42" cy="34" rx="26" ry="18" fill="url(#waxSheen)"/>
+
+          <!-- pressed rim -->
+          <circle cx="60" cy="60" r="41" fill="none" stroke="#3a0f0f" stroke-width="1" opacity="0.55"/>
+          <circle cx="60" cy="60" r="37" fill="none" stroke="#c98a5c" stroke-width="0.6" opacity="0.35"/>
+
+          <!-- engraved rose emblem: shadow pass -->
+          <g fill="none" stroke="#3a0f0f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" transform="translate(1.2 1.2)">
+            <path d="M60 38c-13 3-15 16-6 22c-10 2-15 13-7 21c3 3 8 4 11 1c1 7 8 11 14 7c5 9 16 8 18-2"/>
+            <path d="M60 38c4-5 12-5 14 0c2 4 0 9-5 10"/>
+            <path d="M47 50c-5 2-6 9-2 12"/>
+            <path d="M60 38v46"/>
+            <path d="M50 76c3-4 7-4 10-1c3-3 7-3 10 1"/>
+          </g>
+          <!-- engraved rose emblem: highlight pass -->
+          <g fill="none" stroke="#e6b98f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+            <path d="M60 38c-13 3-15 16-6 22c-10 2-15 13-7 21c3 3 8 4 11 1c1 7 8 11 14 7c5 9 16 8 18-2"/>
+            <path d="M60 38c4-5 12-5 14 0c2 4 0 9-5 10"/>
+            <path d="M47 50c-5 2-6 9-2 12"/>
+            <path d="M60 38v46"/>
+            <path d="M50 76c3-4 7-4 10-1c3-3 7-3 10 1"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+
+    <p class="tap-hint">Հպվեք ծրարը բացելու համար</p>
+  </div>
+</div>
+
+<!-- ================= MAIN INVITATION ================= -->
+<main class="invite" id="invite" aria-hidden="true">
+
+  <div class="invite-ornament invite-ornament--top" aria-hidden="true">
+    <svg viewBox="0 0 200 60" preserveAspectRatio="xMidYMid meet">
+      <g stroke="#b9925f" stroke-width="0.7" fill="none" opacity="0.55">
+        <path d="M100 55 Q100 30 80 20 Q65 12 55 20 Q60 32 75 34 Q85 34 90 28"/>
+        <path d="M100 55 Q100 30 120 20 Q135 12 145 20 Q140 32 125 34 Q115 34 110 28"/>
+        <circle cx="100" cy="52" r="2.2" fill="#b9925f" stroke="none"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="invite-eyebrow">Հարսանիքի Հրավեր</p>
+
+  <h1 class="invite-names">
+    <!-- EDIT: replace with the couple's real names -->
+    <span class="name">Անուն</span>
+    <span class="amp">&amp;</span>
+    <span class="name">Անուն</span>
+  </h1>
+
+  <p class="invite-subline">ամուսնանում ենք</p>
+
+  <div class="invite-divider" aria-hidden="true">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <p class="wedding-date">15 Օգոստոսի, 2026</p>
+  <p class="wedding-day">Շաբաթ</p>
+
+  <div class="countdown" id="countdown" data-target="2026-08-15T16:00:00" aria-label="Հաշվարկ մինչև հարսանիքը">
+    <div class="countdown-box">
+      <span class="countdown-num" id="cd-days">00</span>
+      <span class="countdown-label">Օր</span>
+    </div>
+    <div class="countdown-box">
+      <span class="countdown-num" id="cd-hours">00</span>
+      <span class="countdown-label">Ժամ</span>
+    </div>
+    <div class="countdown-box">
+      <span class="countdown-num" id="cd-minutes">00</span>
+      <span class="countdown-label">Րոպե</span>
+    </div>
+    <div class="countdown-box">
+      <span class="countdown-num" id="cd-seconds">00</span>
+      <span class="countdown-label">Վայրկյան</span>
+    </div>
+  </div>
+
+  <div class="invite-divider" aria-hidden="true">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <div class="venues">
+
+    <!-- EDIT: replace with the real church details -->
+    <div class="venue-card">
+      <div class="venue-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><g fill="none" stroke="#b9925f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 6v10"/><path d="M19 11h10"/>
+          <path d="M14 44V24l10-8 10 8v20"/>
+          <path d="M14 44h20"/>
+          <path d="M20 44V32h8v12"/>
+          <path d="M10 44h28"/>
+        </g></svg>
+      </div>
+      <span class="venue-kind">Պսակադրություն</span>
+      <h3 class="venue-name">Սուրբ Գրիգոր Լուսավորիչ Մայր Տաճար</h3>
+      <p class="venue-address">Երևան, Այգեստանի 6-րդ փողոց</p>
+      <p class="venue-time">15 Օգոստոսի &middot; 16:00</p>
+      <a class="venue-link" href="https://maps.google.com/?q=Սուրբ+Գրիգոր+Լուսավորիչ+Մայր+Տաճար+Երևան" target="_blank" rel="noopener">Տեսնել քարտեզի վրա →</a>
+    </div>
+
+    <!-- EDIT: replace with the real restaurant details -->
+    <div class="venue-card">
+      <div class="venue-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><g fill="none" stroke="#b9925f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 6v16a4 4 0 0 0 4 4v18"/>
+          <path d="M14 6v10"/><path d="M18 6v10"/>
+          <path d="M34 6c-4 0-6 4-6 9s2 8 6 8"/>
+          <path d="M34 6v38"/>
+        </g></svg>
+      </div>
+      <span class="venue-kind">Հարսանյաց ընթրիք</span>
+      <h3 class="venue-name">«Այվազովսկի» Ռեստորան</h3>
+      <p class="venue-address">Երևան, Բաղրամյան պողոտա 24</p>
+      <p class="venue-time">15 Օգոստոսի &middot; 19:00</p>
+      <a class="venue-link" href="https://maps.google.com/?q=Այվազովսկի+Ռեստորան+Երևան" target="_blank" rel="noopener">Տեսնել քարտեզի վրա →</a>
+    </div>
+
+  </div>
+
+  <p class="invite-note">Ձեր ներկայությունը մեզ համար կլինի լավագույն նվերը</p>
+
+  <div class="invite-ornament invite-ornament--bottom" aria-hidden="true">
+    <svg viewBox="0 0 200 60" preserveAspectRatio="xMidYMid meet">
+      <g stroke="#b9925f" stroke-width="0.7" fill="none" opacity="0.55">
+        <path d="M100 5 Q100 30 80 40 Q65 48 55 40 Q60 28 75 26 Q85 26 90 32"/>
+        <path d="M100 5 Q100 30 120 40 Q135 48 145 40 Q140 28 125 26 Q115 26 110 32"/>
+        <circle cx="100" cy="8" r="2.2" fill="#b9925f" stroke="none"/>
+      </g>
+    </svg>
+  </div>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
