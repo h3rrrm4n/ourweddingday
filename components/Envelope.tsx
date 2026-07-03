@@ -8,12 +8,11 @@ export type Stage = "idle" | "opening" | "opened";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const TIMING = {
-  flapDelay: 0.05,
-  flapDuration: 1.0,
-  cardDelay: 0.45,
-  cardDuration: 0.85,
-  envelopeFadeDelay: 1.25,
-  envelopeFadeDuration: 0.55,
+  sealDuration: 0.6,
+  flapDelay: 0.08,
+  flapDuration: 0.75,
+  pocketFadeDelay: 1.3,
+  pocketFadeDuration: 0.6,
 };
 
 export default function Envelope({
@@ -27,29 +26,26 @@ export default function Envelope({
 
   return (
     <motion.div
-      className="relative w-[78vw] sm:w-[68vw] max-w-[560px] min-w-[280px] aspect-[3/2]"
-      style={{
-        perspective: 1800,
-        pointerEvents: isIdle ? "auto" : "none",
-      }}
+      className="relative w-screen h-dvh sm:w-[68vw] sm:h-auto sm:aspect-[3/2] sm:max-w-[560px] sm:min-w-[280px]"
+      style={{ pointerEvents: isIdle ? "auto" : "none" }}
       animate={
         isIdle
-          ? { y: [0, -7, 0], rotate: [0, 0.35, 0], opacity: 1 }
-          : { opacity: 0, y: 22 }
+          ? { scale: [1, 1.012, 1], rotate: [0, 0.25, 0], opacity: 1 }
+          : { opacity: 0 }
       }
       transition={
         isIdle
           ? { duration: 7, repeat: Infinity, ease: "easeInOut" }
           : {
-              delay: TIMING.envelopeFadeDelay,
-              duration: TIMING.envelopeFadeDuration,
+              delay: TIMING.pocketFadeDelay,
+              duration: TIMING.pocketFadeDuration,
               ease: EASE,
             }
       }
     >
-      {/* Envelope body / pocket */}
+      {/* Envelope body / pocket — remains after the flap and seal leave */}
       <div
-        className="paper-grain absolute inset-0 overflow-hidden rounded-[3px]"
+        className="paper-grain absolute inset-0 overflow-hidden sm:rounded-[3px]"
         style={{
           background: "#F3EFE4",
           boxShadow:
@@ -79,33 +75,16 @@ export default function Envelope({
         />
       </div>
 
-      {/* Invitation card, tucked inside, slides upward on open */}
-      <motion.div
-        className="paper-grain absolute left-[8%] right-[8%] top-[12%] bottom-[7%] rounded-[2px]"
-        style={{
-          background: "#FBFAF6",
-          boxShadow: "0 20px 44px -22px rgba(35,25,15,0.3)",
-          zIndex: 10,
-        }}
-        animate={{ y: isIdle ? 0 : "-64%" }}
-        transition={{
-          delay: TIMING.cardDelay,
-          duration: TIMING.cardDuration,
-          ease: EASE,
-        }}
-      />
-
-      {/* Triangular flap, rotates open like a door on its top hinge */}
+      {/* Triangular flap — lifts straight up and away, the folded part opening */}
       <motion.div
         className="paper-grain absolute top-0 left-0 w-full h-[58%] origin-top"
         style={{
           clipPath: "polygon(0 0, 100% 0, 50% 100%)",
           background: "linear-gradient(200deg, #F6F2E8 0%, #F1ECDF 100%)",
-          backfaceVisibility: "hidden",
           filter: "drop-shadow(0 10px 16px rgba(35,25,15,0.14))",
           zIndex: 20,
         }}
-        animate={{ rotateX: isIdle ? 0 : -172 }}
+        animate={isIdle ? { y: 0, opacity: 1 } : { y: "-72%", opacity: 0 }}
         transition={{
           delay: TIMING.flapDelay,
           duration: TIMING.flapDuration,
@@ -113,13 +92,9 @@ export default function Envelope({
         }}
       />
 
-      {/* Wax seal — the sole interactive element */}
-      <motion.button
-        type="button"
-        aria-label="Open invitation"
-        onClick={onSealClick}
-        disabled={!isIdle}
-        className="absolute appearance-none border-0 bg-transparent p-0"
+      {/* Wax seal — the sole interactive element, drops down and away on open */}
+      <div
+        className="absolute"
         style={{
           left: "50%",
           top: "54%",
@@ -127,14 +102,22 @@ export default function Envelope({
           aspectRatio: "1 / 1",
           transform: "translate(-50%, -50%)",
           zIndex: 30,
-          cursor: isIdle ? "pointer" : "default",
         }}
-        whileTap={isIdle ? { scale: 0.86 } : undefined}
-        animate={isIdle ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-        transition={{ duration: 0.35, ease: EASE }}
       >
-        <WaxSeal />
-      </motion.button>
+        <motion.button
+          type="button"
+          aria-label="Open invitation"
+          onClick={onSealClick}
+          disabled={!isIdle}
+          className="absolute inset-0 appearance-none border-0 bg-transparent p-0"
+          style={{ cursor: isIdle ? "pointer" : "default" }}
+          whileTap={isIdle ? { scale: 0.86 } : undefined}
+          animate={isIdle ? { y: 0, opacity: 1, scale: 1 } : { y: "220%", opacity: 0, scale: 0.85 }}
+          transition={{ duration: TIMING.sealDuration, ease: EASE }}
+        >
+          <WaxSeal />
+        </motion.button>
+      </div>
     </motion.div>
   );
 }
