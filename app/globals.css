@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --milk: #F8F6F2;
+  --ivory: #F3EFE4;
+  --ivory-light: #F6F2E9;
+  --paper: #FBFAF6;
+  --burgundy: #5C1A22;
+  --burgundy-deep: #3E0F16;
+  --burgundy-light: #7A2A33;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+@theme inline {
+  --color-milk: var(--milk);
+  --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-burgundy: var(--burgundy);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--milk);
+  color: #2E2A26;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+/* Subtle editorial paper grain, applied at very low opacity so it
+   reads as texture rather than a visible pattern. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+.paper-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
