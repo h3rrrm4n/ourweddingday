@@ -322,87 +322,6 @@
       line-height: 1.7;
     }
 
-    /* ════════════════════════════════════════
-       RSVP SECTION
-    ════════════════════════════════════════ */
-    .rsvp-section {
-      text-align: center;
-      background: linear-gradient(160deg, #F5F2ED 0%, #EDE8DF 100%);
-      max-width: 100%;
-      padding: 120px 24px;
-    }
-
-    .rsvp-section > .inner { max-width: 580px; margin: 0 auto; }
-
-    .rsvp-form {
-      margin-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      text-align: left;
-    }
-
-    .field label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--stone);
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      background: var(--cream);
-      border: 1px solid var(--linen);
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--ink);
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-      appearance: none;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--gold-lt);
-      box-shadow: 0 0 0 4px rgba(184,154,106,.12);
-    }
-
-    .field textarea { resize: vertical; min-height: 100px; }
-
-    .btn-primary {
-      margin-top: 8px;
-      padding: 16px 40px;
-      background: var(--ink);
-      color: var(--cream);
-      border: none;
-      border-radius: 100px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background .25s, transform .2s;
-    }
-
-    .btn-primary:hover {
-      background: var(--gold);
-      transform: scale(1.02);
-    }
 
     /* ════════════════════════════════════════
        FOOTER
@@ -563,76 +482,6 @@
   </section>
 
 
-  <!-- ══ RSVP ══ -->
-  <div class="rsvp-section">
-    <div class="inner">
-      <span class="section-label fade-in">RSVP</span>
-      <h2 class="section-heading fade-in">Will you<br><em>join us?</em></h2>
-      <p class="section-body fade-in" style="margin: 16px auto 0;">
-        Kindly reply by <strong>August 1st, 2026</strong>. We'd love to save a seat just for you.
-      </p>
-
-      <form class="rsvp-form fade-in" onsubmit="handleRsvp(event)">
-        <div class="form-row">
-          <div class="field">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="Emma" required />
-          </div>
-          <div class="field">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Johnson" required />
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="emma@example.com" required />
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="attend">Attending?</label>
-            <select id="attend" required>
-              <option value="" disabled selected>Please select</option>
-              <option value="yes">Joyfully accepts ✓</option>
-              <option value="no">Regretfully declines</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="guests">Number of Guests</label>
-            <select id="guests">
-              <option value="1">1 — Just me</option>
-              <option value="2">2 — Plus one</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="dietary">Dietary Requirements</label>
-          <input type="text" id="dietary" placeholder="Vegetarian, allergies, etc." />
-        </div>
-
-        <div class="field">
-          <label for="message">A Note for the Couple</label>
-          <textarea id="message" placeholder="Share a wish, a memory, or a song request…"></textarea>
-        </div>
-
-        <button class="btn-primary" type="submit">Send my RSVP</button>
-      </form>
-
-      <!-- Success message (hidden by default) -->
-      <div id="rsvp-success" style="display:none; margin-top:32px; text-align:center;">
-        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--ink);">
-          Thank you so much!
-        </p>
-        <p style="margin-top:8px; font-size:14px; color:var(--stone);">
-          We've received your RSVP and can't wait to celebrate with you.
-        </p>
-      </div>
-    </div>
-  </div>
 
 
   <!-- ══ FOOTER ══ -->
@@ -664,12 +513,6 @@
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
 
-    /* ── RSVP form handler ── */
-    function handleRsvp(e) {
-      e.preventDefault();
-      document.querySelector('.rsvp-form').style.display = 'none';
-      document.getElementById('rsvp-success').style.display = 'block';
-    }
   </script>
 
 </body>
