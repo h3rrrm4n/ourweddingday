@@ -7,10 +7,11 @@ interface EnvelopeAnimationProps {
   onOpen: () => void;
 }
 
-const W = 400;   // envelope width
-const H = 280;   // envelope height
-const cx = W / 2; // 200  — center x  (where all folds meet)
-const cy = H / 2; // 140  — center y
+// SVG coordinate space — the viewBox never changes, CSS scales the element
+const W = 400;
+const H = 280;
+const cx = W / 2; // 200
+const cy = H / 2; // 140
 
 export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
   const [phase, setPhase] = useState<"idle" | "opening" | "done">("idle");
@@ -38,13 +39,20 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
         alignItems: "center",
         cursor: phase === "idle" ? "pointer" : "default",
         userSelect: "none",
+        width: "100%",
       }}
     >
       {/* ── Envelope container ── */}
       <motion.div
         animate={{ y: flapOpen ? -14 : 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        style={{ position: "relative", width: W, height: H, perspective: 1400 }}
+        style={{
+          position: "relative",
+          // Responsive: uses full parent width, keeps 400:280 aspect ratio
+          width: "100%",
+          aspectRatio: `${W} / ${H}`,
+          perspective: 1400,
+        }}
       >
 
         {/* ── LAYER 1 — Body SVG (no flap here) ── */}
@@ -113,7 +121,7 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
             top: 0,
             left: 0,
             width: "100%",
-            height: cy, // exactly the triangle height
+            height: "50%", // cy / H = 50%
             zIndex: 2,
             transformOrigin: "center top",
             transformStyle: "preserve-3d",
@@ -160,16 +168,17 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
               exit={{ opacity: 0, scale: 0.55, transition: { duration: 0.28, ease: "easeIn" } }}
               style={{
                 position: "absolute",
-                // Center the seal at the envelope fold point
-                top: cy - 44,
-                left: cx - 44,
-                width: 88,
-                height: 88,
+                // cy/H = 50%, cx/W = 50%; seal is 22% of envelope width
+                top: "calc(50% - 11%)",
+                left: "calc(50% - 11%)",
+                width: "22%",
+                height: 0,
+                paddingBottom: "22%",
                 zIndex: 10,
                 pointerEvents: "none",
               }}
             >
-              <svg viewBox="0 0 88 88" fill="none" style={{ width: "100%", height: "100%" }}>
+              <svg viewBox="0 0 88 88" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
                 <defs>
                   <radialGradient id="sWax" cx="36%" cy="28%" r="70%">
                     <stop offset="0%"   stopColor="#C03030" />

@@ -8,16 +8,15 @@ import InvitationPage from "./components/InvitationPage";
 export default function Home() {
   const [opened, setOpened] = useState(false);
 
-  // Subtle mouse parallax
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const rotateY = useSpring(useTransform(rawX, [-1, 1], [-5, 5]), { stiffness: 45, damping: 20 });
-  const rotateX = useSpring(useTransform(rawY, [-1, 1], [3.5, -3.5]), { stiffness: 45, damping: 20 });
+  const rotateX = useSpring(useTransform(rawY, [-1, 1], [3, -3]), { stiffness: 45, damping: 20 });
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     rawX.set((e.clientX - rect.left) / rect.width * 2 - 1);
-    rawY.set((e.clientY - rect.top)  / rect.height * 2 - 1);
+    rawY.set((e.clientY - rect.top) / rect.height * 2 - 1);
   }, [rawX, rawY]);
 
   const handleMouseLeave = useCallback(() => {
@@ -26,132 +25,153 @@ export default function Home() {
   }, [rawX, rawY]);
 
   return (
-    <div style={{ minHeight: "100vh", overflow: "hidden", background: "#F8F6F2" }}>
+    <div style={{ minHeight: "100svh", overflow: "hidden", background: "#F5F0E8" }}>
       <AnimatePresence mode="wait">
         {!opened ? (
           <motion.div
             key="landing"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.04, filter: "blur(10px)" }}
-            transition={{ duration: 0.65 }}
+            exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)" }}
+            transition={{ duration: 0.6 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             style={{
-              minHeight: "100vh",
+              minHeight: "100svh",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              padding: "clamp(32px, 5vw, 60px) 24px clamp(28px, 4vw, 48px)",
               position: "relative",
-              padding: "48px 24px",
+              gap: 0,
             }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
-            {/* Very soft radial glow behind envelope */}
+            {/* Soft vignette */}
             <div style={{
-              position: "absolute",
+              position: "fixed",
               inset: 0,
               pointerEvents: "none",
-              background: "radial-gradient(ellipse 70% 60% at 50% 56%, rgba(201,180,120,0.08) 0%, transparent 68%)",
+              background: [
+                "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(200,185,155,0.18) 100%)",
+                "radial-gradient(ellipse 60% 50% at 50% 48%, rgba(255,252,245,0.5) 0%, transparent 70%)",
+              ].join(", "),
             }} />
 
-            {/* ── Names + date ── */}
+            {/* ── Top: label + names + date ── */}
             <motion.div
-              initial={{ opacity: 0, y: -18 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.3 }}
-              style={{ textAlign: "center", marginBottom: 80, zIndex: 10 }}
+              transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                textAlign: "center",
+                marginBottom: "clamp(36px, 6vw, 72px)",
+                zIndex: 10,
+                position: "relative",
+              }}
             >
               {/* Label */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginBottom: 20 }}>
-                <div style={{ width: 32, height: 1, background: "linear-gradient(to right, transparent, rgba(123,131,99,0.55))" }} />
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 14,
+                marginBottom: "clamp(16px, 3vw, 28px)",
+              }}>
+                <div style={{ width: 28, height: 1, background: "linear-gradient(to right, transparent, rgba(140,120,80,0.5))" }} />
                 <span style={{
                   fontFamily: "var(--font-inter), sans-serif",
-                  fontSize: "0.58rem",
-                  color: "#7B8363",
-                  letterSpacing: "0.45em",
+                  fontSize: "clamp(0.5rem, 1.2vw, 0.62rem)",
+                  color: "#8A7A60",
+                  letterSpacing: "0.44em",
                   textTransform: "uppercase",
                 }}>
                   Հարսանյաց Հրավեր
                 </span>
-                <div style={{ width: 32, height: 1, background: "linear-gradient(to left, transparent, rgba(123,131,99,0.55))" }} />
+                <div style={{ width: 28, height: 1, background: "linear-gradient(to left, transparent, rgba(140,120,80,0.5))" }} />
               </div>
 
               {/* Names */}
               <h1 style={{
                 fontFamily: "var(--font-armenian), var(--font-cormorant), serif",
-                fontSize: "clamp(2.4rem, 7vw, 3.8rem)",
+                fontSize: "clamp(2.2rem, 7vw, 5rem)",
                 color: "#7D6248",
                 fontStyle: "italic",
                 fontWeight: 700,
                 letterSpacing: "0.04em",
-                lineHeight: 1.15,
+                lineHeight: 1.1,
                 margin: 0,
               }}>
                 Անի{" "}
                 <motion.span
-                  style={{ color: "#9A8060", fontStyle: "normal", display: "inline-block" }}
-                  animate={{ opacity: [0.55, 1, 0.55] }}
+                  style={{ color: "#A08060", fontStyle: "normal", display: "inline-block" }}
+                  animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  &amp;
-                </motion.span>
+                >&amp;</motion.span>
                 {" "}Արման
               </h1>
 
               {/* Date */}
               <p style={{
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: "0.68rem",
-                color: "#7B8363",
-                letterSpacing: "0.3em",
+                fontSize: "clamp(0.6rem, 1.5vw, 0.72rem)",
+                color: "#8A7A60",
+                letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                marginTop: 14,
+                marginTop: "clamp(10px, 1.5vw, 16px)",
               }}>
-                20 Սեպտեմբերի · 2026
+                20 · Սեptembepi · 2026
               </p>
             </motion.div>
 
             {/* ── Envelope ── */}
             <motion.div
-              initial={{ opacity: 0, y: 28, scale: 0.94 }}
+              initial={{ opacity: 0, y: 32, scale: 0.93 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              style={{ zIndex: 10, perspective: 1400 }}
+              transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                zIndex: 10,
+                perspective: 1600,
+                position: "relative",
+                // Mobile: nearly full width. Desktop: large but contained.
+                width: "clamp(300px, 88vw, 720px)",
+              }}
             >
-              {/* Breathing float */}
+              {/* Floating */}
               <motion.div
-                animate={{ y: [0, -9, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Parallax tilt */}
+                {/* Parallax tilt (desktop only — on touch it stays flat) */}
                 <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                   <EnvelopeAnimation onOpen={() => setOpened(true)} />
                 </motion.div>
               </motion.div>
             </motion.div>
 
-            {/* ── Hint text (below envelope) ── */}
+            {/* Hint below envelope */}
             <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 1.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.4 }}
               style={{
-                marginTop: 28,
+                marginTop: "clamp(18px, 3vw, 32px)",
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: "0.6rem",
+                fontSize: "clamp(0.52rem, 1.2vw, 0.62rem)",
                 color: "#9A8E7A",
-                letterSpacing: "0.28em",
+                letterSpacing: "0.26em",
                 textTransform: "uppercase",
                 animation: "hintPulse 3.5s ease-in-out infinite",
+                zIndex: 10,
               }}
             >
-              Հպվեք ծրարը բացելու համար
+              Հппvեք ծrarը bacelu hamar
             </motion.p>
+
             <style>{`
               @keyframes hintPulse {
-                0%, 100% { opacity: 0.38; }
-                50%       { opacity: 1; }
+                0%, 100% { opacity: 0.35; }
+                50%       { opacity: 0.9; }
               }
             `}</style>
           </motion.div>
