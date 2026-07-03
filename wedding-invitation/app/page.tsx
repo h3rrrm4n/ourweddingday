@@ -2,28 +2,28 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import EnvelopeAnimation from "./components/EnvelopeAnimation";
+import Envelope from "./components/EnvelopeAnimation";
 import InvitationPage from "./components/InvitationPage";
 
-export default function Home() {
+export default function Page() {
   const [opened, setOpened] = useState(false);
 
-  // Subtle parallax on desktop (mouse move)
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-4, 4]), { stiffness: 50, damping: 22 });
-  const rotateX = useSpring(useTransform(rawY, [-1, 1], [2.5, -2.5]), { stiffness: 50, damping: 22 });
+  /* subtle mouse tilt on desktop */
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const ry = useSpring(useTransform(mx, [-1, 1], [-4, 4]), { stiffness: 50, damping: 22 });
+  const rx = useSpring(useTransform(my, [-1, 1], [2.5, -2.5]), { stiffness: 50, damping: 22 });
 
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
-    rawX.set((e.clientX - r.left) / r.width * 2 - 1);
-    rawY.set((e.clientY - r.top) / r.height * 2 - 1);
-  }, [rawX, rawY]);
+    mx.set((e.clientX - r.left) / r.width  * 2 - 1);
+    my.set((e.clientY - r.top)  / r.height * 2 - 1);
+  }, [mx, my]);
 
-  const onMouseLeave = useCallback(() => { rawX.set(0); rawY.set(0); }, [rawX, rawY]);
+  const onLeave = useCallback(() => { mx.set(0); my.set(0); }, [mx, my]);
 
   return (
-    <div style={{ minHeight: "100svh", background: "#F2EDE2", overflow: "hidden" }}>
+    <div style={{ minHeight: "100svh", background: "#F0EBE0", overflow: "hidden" }}>
       <AnimatePresence mode="wait">
 
         {!opened ? (
@@ -31,52 +31,44 @@ export default function Home() {
             key="landing"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)" }}
-            transition={{ duration: 0.6 }}
-            onMouseMove={onMouseMove}
-            onMouseLeave={onMouseLeave}
+            exit={{ opacity: 0, scale: 1.02, filter: "blur(6px)" }}
+            transition={{ duration: 0.55 }}
+            onMouseMove={onMove}
+            onMouseLeave={onLeave}
             style={{
               minHeight: "100svh",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              padding: "40px 24px 32px",
+              padding: "clamp(32px,5vw,64px) clamp(16px,4vw,32px) clamp(24px,4vw,48px)",
               position: "relative",
             }}
           >
-            {/* Soft center glow */}
+            {/* soft vignette */}
             <div style={{
-              position: "fixed",
-              inset: 0,
-              pointerEvents: "none",
-              background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,252,240,0.55) 0%, transparent 70%)",
+              position: "fixed", inset: 0, pointerEvents: "none",
+              background: "radial-gradient(ellipse 75% 65% at 50% 50%, rgba(255,252,244,0.50) 0%, transparent 72%)",
             }} />
 
-            {/* ── Names & date ── */}
+            {/* Names + date */}
             <motion.div
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              style={{ textAlign: "center", marginBottom: "clamp(28px, 5vw, 56px)", zIndex: 2 }}
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1,  y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              style={{ textAlign: "center", marginBottom: "clamp(28px,5vw,52px)", position: "relative", zIndex: 2 }}
             >
-              {/* Eyebrow */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 24, height: 1, background: "rgba(140,118,78,0.45)" }} />
-                <span style={{
-                  fontFamily: "var(--font-inter), sans-serif",
-                  fontSize: "clamp(0.48rem, 1.3vw, 0.6rem)",
-                  color: "#8C7650",
-                  letterSpacing: "0.44em",
-                  textTransform: "uppercase",
-                }}>Wedding Invitation</span>
-                <div style={{ width: 24, height: 1, background: "rgba(140,118,78,0.45)" }} />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 16 }}>
+                <div style={{ width: 22, height: 1, background: "rgba(138,112,68,0.5)" }} />
+                <span style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.45rem,1.1vw,0.58rem)", color: "#8A7044", letterSpacing: "0.42em", textTransform: "uppercase" }}>
+                  Wedding Invitation
+                </span>
+                <div style={{ width: 22, height: 1, background: "rgba(138,112,68,0.5)" }} />
               </div>
 
-              {/* Names */}
               <h1 style={{
                 fontFamily: "var(--font-armenian), 'Noto Serif Armenian', serif",
-                fontSize: "clamp(2rem, 6.5vw, 4.5rem)",
+                fontSize: "clamp(1.9rem,6.5vw,4.4rem)",
                 color: "#7D6248",
                 fontStyle: "italic",
                 fontWeight: 700,
@@ -93,37 +85,25 @@ export default function Home() {
                 {" "}Արման
               </h1>
 
-              {/* Date */}
-              <p style={{
-                fontFamily: "var(--font-inter), sans-serif",
-                fontSize: "clamp(0.58rem, 1.4vw, 0.68rem)",
-                color: "#9A8260",
-                letterSpacing: "0.26em",
-                textTransform: "uppercase",
-                marginTop: 14,
-              }}>20 · September · 2026</p>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem,1.3vw,0.65rem)", color: "#9A8260", letterSpacing: "0.24em", textTransform: "uppercase", marginTop: 12 }}>
+                20 &middot; September &middot; 2026
+              </p>
             </motion.div>
 
-            {/* ── Envelope ── */}
+            {/* Envelope */}
             <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1.1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                width: "clamp(280px, 82vw, 540px)",
-                zIndex: 2,
-                perspective: 1400,
-                overflow: "visible",
-              }}
+              initial={{ opacity: 0, y: 20, scale: 0.96 }}
+              animate={{ opacity: 1,  y: 0,  scale: 1 }}
+              transition={{ duration: 1.0, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ width: "clamp(280px, 84vw, 580px)", position: "relative", zIndex: 2, perspective: 1400, overflow: "visible" }}
             >
-              {/* Float */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                style={{ overflow: "visible" }}
               >
-                {/* Parallax tilt */}
-                <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
-                  <EnvelopeAnimation onOpen={() => setOpened(true)} />
+                <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d", overflow: "visible" }}>
+                  <Envelope onOpen={() => setOpened(true)} />
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -132,34 +112,30 @@ export default function Home() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.3 }}
+              transition={{ duration: 0.9, delay: 1.2 }}
               style={{
-                marginTop: "clamp(16px, 3vw, 28px)",
-                fontFamily: "var(--font-inter), sans-serif",
-                fontSize: "clamp(0.5rem, 1.2vw, 0.6rem)",
+                marginTop: "clamp(14px,2.5vw,24px)",
+                fontFamily: "var(--font-inter)",
+                fontSize: "clamp(0.48rem,1.1vw,0.58rem)",
                 color: "#9A8870",
-                letterSpacing: "0.24em",
+                letterSpacing: "0.26em",
                 textTransform: "uppercase",
-                animation: "hintPulse 3.5s ease-in-out infinite",
+                animation: "hint 3.5s ease-in-out infinite",
+                position: "relative",
                 zIndex: 2,
               }}
             >
               Open this
             </motion.p>
 
-            <style>{`
-              @keyframes hintPulse {
-                0%, 100% { opacity: 0.3; }
-                50%       { opacity: 0.85; }
-              }
-            `}</style>
+            <style>{`@keyframes hint { 0%,100%{opacity:.28} 50%{opacity:.88} }`}</style>
           </motion.div>
 
         ) : (
           <motion.div
             key="invitation"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1,  y: 0 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
             <InvitationPage />
