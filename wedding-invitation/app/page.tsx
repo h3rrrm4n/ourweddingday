@@ -79,13 +79,13 @@ export default function Home() {
 
               {/* Names */}
               <h1 style={{
-                fontFamily: "var(--font-cormorant), var(--font-playfair), serif",
+                fontFamily: "var(--font-armenian), var(--font-cormorant), serif",
                 fontSize: "clamp(2.4rem, 7vw, 3.8rem)",
                 color: "#7D6248",
                 fontStyle: "italic",
-                fontWeight: 400,
-                letterSpacing: "0.03em",
-                lineHeight: 1.1,
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                lineHeight: 1.15,
                 margin: 0,
               }}>
                 Անի{" "}

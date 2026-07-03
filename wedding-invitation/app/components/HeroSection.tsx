@@ -81,13 +81,13 @@ export default function HeroSection() {
         custom={2} initial="hidden" animate="visible" variants={fadeUp}
         className="text-center mb-3"
         style={{
-          fontFamily: "var(--font-cormorant), var(--font-playfair), serif",
+          fontFamily: "var(--font-armenian), var(--font-cormorant), serif",
           fontSize: "clamp(2.6rem, 8vw, 4.8rem)",
           color: "#7D6248",
           fontStyle: "italic",
-          fontWeight: 400,
-          letterSpacing: "0.02em",
-          lineHeight: 1.1,
+          fontWeight: 700,
+          letterSpacing: "0.04em",
+          lineHeight: 1.15,
         }}
       >
         Անի{" "}

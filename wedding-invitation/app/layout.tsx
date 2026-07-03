@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, Cormorant_Garamond } from "next/font/google";
+import { Playfair_Display, Inter, Cormorant_Garamond, Noto_Serif_Armenian } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -22,6 +22,13 @@ const inter = Inter({
   display: "swap",
 });
 
+const notoArmenian = Noto_Serif_Armenian({
+  variable: "--font-armenian",
+  subsets: ["armenian"],
+  weight: ["400", "600", "700", "900"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Անի & Արման | Հարսանյաց Հրավեր",
   description: "Անի և Արմանի հարսանյաց հրավերը · 20 Սեպտեմբերի 2026",
@@ -35,7 +42,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="hy">
-      <body className={`${playfair.variable} ${cormorant.variable} ${inter.variable} antialiased`}>
+      <body className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${notoArmenian.variable} antialiased`}>
         {children}
       </body>
     </html>
