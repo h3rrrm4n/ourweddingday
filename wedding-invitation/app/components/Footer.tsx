@@ -7,7 +7,7 @@ export default function Footer() {
     <footer
       className="relative py-16 px-6 flex flex-col items-center overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.05) 40%, rgba(245,230,200,0.15) 100%)",
+        background: "linear-gradient(180deg, transparent 0%, rgba(123,131,99,0.05) 40%, rgba(245,230,200,0.15) 100%)",
       }}
     >
       {/* Top ornamental border */}
@@ -19,7 +19,7 @@ export default function Footer() {
         className="w-full max-w-lg mb-10"
         style={{
           height: 1,
-          background: "linear-gradient(to right, transparent, rgba(201,168,76,0.5), transparent)",
+          background: "linear-gradient(to right, transparent, rgba(123,131,99,0.5), transparent)",
         }}
       />
 
@@ -37,7 +37,7 @@ export default function Footer() {
             width: 80,
             height: 80,
             background: "linear-gradient(135deg, rgba(245,230,200,0.8), rgba(232,213,163,0.6))",
-            border: "2px solid rgba(201,168,76,0.4)",
+            border: "2px solid rgba(123,131,99,0.4)",
             boxShadow: "0 4px 24px rgba(140,100,40,0.12), inset 0 1px 0 rgba(255,255,255,0.7)",
           }}
         >
@@ -45,7 +45,7 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-playfair), serif",
               fontSize: "1.8rem",
-              color: "#A07830",
+              color: "#5E6650",
               letterSpacing: "-0.02em",
               fontStyle: "italic",
             }}
@@ -81,27 +81,27 @@ export default function Footer() {
         transition={{ duration: 0.8, delay: 0.3 }}
         className="flex items-center gap-4 w-full max-w-xs mb-6"
       >
-        <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.4))" }} />
+        <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(123,131,99,0.4))" }} />
         <svg viewBox="0 0 28 28" width="22" height="22" fill="none">
           <path
             d="M14 3 Q18 8 14 14 Q10 8 14 3Z"
-            fill="rgba(201,168,76,0.5)"
+            fill="rgba(123,131,99,0.5)"
           />
           <path
             d="M14 14 Q18 20 14 25 Q10 20 14 14Z"
-            fill="rgba(201,168,76,0.35)"
+            fill="rgba(123,131,99,0.35)"
           />
           <path
             d="M3 14 Q8 10 14 14 Q8 18 3 14Z"
-            fill="rgba(201,168,76,0.35)"
+            fill="rgba(123,131,99,0.35)"
           />
           <path
             d="M14 14 Q20 10 25 14 Q20 18 14 14Z"
-            fill="rgba(201,168,76,0.5)"
+            fill="rgba(123,131,99,0.5)"
           />
-          <circle cx="14" cy="14" r="2.5" fill="#C9A84C" />
+          <circle cx="14" cy="14" r="2.5" fill="#7B8363" />
         </svg>
-        <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
+        <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(123,131,99,0.4))" }} />
       </motion.div>
 
       {/* Date */}

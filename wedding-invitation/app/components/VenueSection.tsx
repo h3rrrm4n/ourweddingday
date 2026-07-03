@@ -11,7 +11,7 @@ const VENUES = [
     mapsUrl: "https://maps.google.com/?q=Սուրբ+Գրիգոր+Լուսավորիչ+Մայր+Տաճար+Երևան",
     icon: (
       <svg viewBox="0 0 48 48" width="36" height="36">
-        <g fill="none" stroke="#b9925f" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <g fill="none" stroke="#7B8363" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M24 6v10" /><path d="M19 11h10" />
           <path d="M14 44V24l10-8 10 8v20" />
           <path d="M14 44h20" />
@@ -29,7 +29,7 @@ const VENUES = [
     mapsUrl: "https://maps.google.com/?q=Այվազովսկի+Ռեստորան+Երևան",
     icon: (
       <svg viewBox="0 0 48 48" width="36" height="36">
-        <g fill="none" stroke="#b9925f" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <g fill="none" stroke="#7B8363" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 6v16a4 4 0 0 0 4 4v18" />
           <path d="M14 6v10" /><path d="M18 6v10" />
           <path d="M34 6c-4 0-6 4-6 9s2 8 6 8" />
@@ -61,7 +61,7 @@ export default function VenueSection() {
           style={{
             fontFamily: "var(--font-playfair), serif",
             fontSize: "clamp(1.3rem, 4vw, 1.8rem)",
-            color: "#3D3530",
+            color: "#1E1B16",
             textAlign: "center",
           }}
         >
@@ -99,7 +99,7 @@ export default function VenueSection() {
                 fontSize: "10px",
                 letterSpacing: "0.25em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#7B8363",
               }}
             >
               {v.kind}
@@ -111,7 +111,7 @@ export default function VenueSection() {
                 fontSize: "17px",
                 fontWeight: 500,
                 lineHeight: 1.35,
-                color: "#3D3530",
+                color: "#1E1B16",
               }}
             >
               {v.title}
@@ -121,7 +121,7 @@ export default function VenueSection() {
                 margin: "2px 0 0",
                 fontFamily: "var(--font-inter), sans-serif",
                 fontSize: "13px",
-                color: "#8B7355",
+                color: "#7A6E64",
                 lineHeight: 1.5,
               }}
             >
@@ -133,7 +133,7 @@ export default function VenueSection() {
                 fontFamily: "var(--font-inter), sans-serif",
                 fontSize: "13px",
                 letterSpacing: "0.04em",
-                color: "#3D3530",
+                color: "#1E1B16",
               }}
             >
               20 Սեպտեմբերի &middot; {v.time}
@@ -147,7 +147,7 @@ export default function VenueSection() {
                 fontFamily: "var(--font-inter), sans-serif",
                 fontSize: "12px",
                 letterSpacing: "0.05em",
-                color: "#832525",
+                color: "#7B2020",
                 textDecoration: "none",
                 borderBottom: "1px solid rgba(131,37,37,0.32)",
                 paddingBottom: 1,
@@ -171,7 +171,7 @@ export default function VenueSection() {
           fontFamily: "var(--font-playfair), serif",
           fontSize: "clamp(0.85rem, 2vw, 0.98rem)",
           fontStyle: "italic",
-          color: "#8B7355",
+          color: "#7A6E64",
           lineHeight: 1.65,
         }}
       >

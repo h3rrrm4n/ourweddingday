@@ -45,7 +45,7 @@ function CountdownCard({ value, label }: TimeUnit) {
           width: "clamp(70px, 18vw, 96px)",
           height: "clamp(70px, 18vw, 96px)",
           background: "linear-gradient(135deg, rgba(253,249,240,0.95) 0%, rgba(245,230,200,0.85) 100%)",
-          border: "1.5px solid rgba(201,168,76,0.45)",
+          border: "1.5px solid rgba(123,131,99,0.45)",
           borderRadius: 14,
           boxShadow: "0 4px 24px rgba(140,100,40,0.12), inset 0 1px 0 rgba(255,255,255,0.8)",
           backdropFilter: "blur(10px)",
@@ -56,7 +56,7 @@ function CountdownCard({ value, label }: TimeUnit) {
           className="absolute w-full"
           style={{
             height: 1,
-            background: "rgba(201,168,76,0.2)",
+            background: "rgba(123,131,99,0.2)",
             top: "50%",
           }}
         />
@@ -70,7 +70,7 @@ function CountdownCard({ value, label }: TimeUnit) {
             style={{
               fontFamily: "var(--font-playfair), serif",
               fontSize: "clamp(1.8rem, 5vw, 2.6rem)",
-              color: "#3D3530",
+              color: "#1E1B16",
               fontWeight: "700",
               lineHeight: 1,
             }}
@@ -80,17 +80,17 @@ function CountdownCard({ value, label }: TimeUnit) {
         </AnimatePresence>
 
         {/* Corner accents */}
-        <div className="absolute top-2 left-2 w-2 h-2 border-t border-l" style={{ borderColor: "rgba(201,168,76,0.5)" }} />
-        <div className="absolute top-2 right-2 w-2 h-2 border-t border-r" style={{ borderColor: "rgba(201,168,76,0.5)" }} />
-        <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l" style={{ borderColor: "rgba(201,168,76,0.5)" }} />
-        <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r" style={{ borderColor: "rgba(201,168,76,0.5)" }} />
+        <div className="absolute top-2 left-2 w-2 h-2 border-t border-l" style={{ borderColor: "rgba(123,131,99,0.5)" }} />
+        <div className="absolute top-2 right-2 w-2 h-2 border-t border-r" style={{ borderColor: "rgba(123,131,99,0.5)" }} />
+        <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l" style={{ borderColor: "rgba(123,131,99,0.5)" }} />
+        <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r" style={{ borderColor: "rgba(123,131,99,0.5)" }} />
       </div>
       <span
         className="mt-3 uppercase tracking-widest"
         style={{
           fontFamily: "var(--font-inter), sans-serif",
           fontSize: "clamp(0.6rem, 1.5vw, 0.72rem)",
-          color: "#A07830",
+          color: "#5E6650",
           letterSpacing: "0.18em",
         }}
       >
@@ -125,7 +125,7 @@ export default function Countdown() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 100% 70% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%)",
+            "radial-gradient(ellipse 100% 70% at 50% 50%, rgba(123,131,99,0.05) 0%, transparent 70%)",
         }}
       />
 
@@ -139,17 +139,17 @@ export default function Countdown() {
       >
         {/* Ornamental top */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-16 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.6))" }} />
+          <div className="w-16 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(123,131,99,0.6))" }} />
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-            <path d="M12 2 L13.5 9 L20 9 L14.5 13.5 L16.5 20 L12 16 L7.5 20 L9.5 13.5 L4 9 L10.5 9 Z" fill="rgba(201,168,76,0.7)" />
+            <path d="M12 2 L13.5 9 L20 9 L14.5 13.5 L16.5 20 L12 16 L7.5 20 L9.5 13.5 L4 9 L10.5 9 Z" fill="rgba(123,131,99,0.7)" />
           </svg>
-          <div className="w-16 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.6))" }} />
+          <div className="w-16 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(123,131,99,0.6))" }} />
         </div>
         <h2
           style={{
             fontFamily: "var(--font-playfair), serif",
             fontSize: "clamp(1.4rem, 4vw, 2rem)",
-            color: "#3D3530",
+            color: "#1E1B16",
             textAlign: "center",
           }}
         >
@@ -157,7 +157,7 @@ export default function Countdown() {
         </h2>
         <div
           className="mt-3 h-px w-24"
-          style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.7), transparent)" }}
+          style={{ background: "linear-gradient(to right, transparent, rgba(123,131,99,0.7), transparent)" }}
         />
       </motion.div>
 
@@ -178,7 +178,7 @@ export default function Countdown() {
                 transition={{ duration: 1, repeat: Infinity }}
                 style={{
                   fontSize: "clamp(1.5rem, 4vw, 2rem)",
-                  color: "rgba(201,168,76,0.7)",
+                  color: "rgba(123,131,99,0.7)",
                   fontFamily: "var(--font-playfair), serif",
                   lineHeight: "clamp(70px, 18vw, 96px)",
                   fontWeight: "bold",

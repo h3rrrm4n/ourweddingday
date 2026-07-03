@@ -69,11 +69,11 @@ export default function Timeline() {
         className="flex flex-col items-center mb-16"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-16 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.6))" }} />
+          <div className="w-16 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(123,131,99,0.6))" }} />
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-            <path d="M12 2 L13.5 9 L20 9 L14.5 13.5 L16.5 20 L12 16 L7.5 20 L9.5 13.5 L4 9 L10.5 9 Z" fill="rgba(201,168,76,0.7)" />
+            <path d="M12 2 L13.5 9 L20 9 L14.5 13.5 L16.5 20 L12 16 L7.5 20 L9.5 13.5 L4 9 L10.5 9 Z" fill="rgba(123,131,99,0.7)" />
           </svg>
-          <div className="w-16 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.6))" }} />
+          <div className="w-16 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(123,131,99,0.6))" }} />
         </div>
         <h2
           style={{
@@ -87,7 +87,7 @@ export default function Timeline() {
         </h2>
         <div
           className="mt-3 h-px w-24"
-          style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.7), transparent)" }}
+          style={{ background: "linear-gradient(to right, transparent, rgba(123,131,99,0.7), transparent)" }}
         />
       </motion.div>
 
@@ -98,7 +98,7 @@ export default function Timeline() {
           className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
           style={{
             transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, transparent, rgba(201,168,76,0.35) 10%, rgba(201,168,76,0.35) 90%, transparent)",
+            background: "linear-gradient(to bottom, transparent, rgba(123,131,99,0.35) 10%, rgba(123,131,99,0.35) 90%, transparent)",
           }}
         />
 
@@ -113,9 +113,9 @@ export default function Timeline() {
                   width: 14,
                   height: 14,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg, #E8D5A3, #C9A84C)",
+                  background: "linear-gradient(135deg, #E8D5A3, #7B8363)",
                   border: "2px solid #FDF9F0",
-                  boxShadow: "0 0 0 3px rgba(201,168,76,0.25)",
+                  boxShadow: "0 0 0 3px rgba(123,131,99,0.25)",
                 }}
               />
 

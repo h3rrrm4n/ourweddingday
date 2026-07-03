@@ -14,19 +14,19 @@ export default function Divider() {
       <div
         className="flex-1 h-px"
         style={{
-          background: "linear-gradient(to right, transparent, rgba(201,168,76,0.45))",
+          background: "linear-gradient(to right, transparent, rgba(123,131,99,0.45))",
         }}
       />
       <svg viewBox="0 0 60 20" width="60" height="20" fill="none">
-        <path d="M5 10 Q15 2 30 10 Q45 18 55 10" stroke="rgba(201,168,76,0.6)" strokeWidth="0.8" fill="none" />
-        <circle cx="30" cy="10" r="3" fill="rgba(201,168,76,0.5)" />
-        <circle cx="10" cy="9" r="1.5" fill="rgba(201,168,76,0.35)" />
-        <circle cx="50" cy="9" r="1.5" fill="rgba(201,168,76,0.35)" />
+        <path d="M5 10 Q15 2 30 10 Q45 18 55 10" stroke="rgba(123,131,99,0.6)" strokeWidth="0.8" fill="none" />
+        <circle cx="30" cy="10" r="3" fill="rgba(123,131,99,0.5)" />
+        <circle cx="10" cy="9" r="1.5" fill="rgba(123,131,99,0.35)" />
+        <circle cx="50" cy="9" r="1.5" fill="rgba(123,131,99,0.35)" />
       </svg>
       <div
         className="flex-1 h-px"
         style={{
-          background: "linear-gradient(to left, transparent, rgba(201,168,76,0.45))",
+          background: "linear-gradient(to left, transparent, rgba(123,131,99,0.45))",
         }}
       />
     </motion.div>
