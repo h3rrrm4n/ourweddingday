@@ -1,8 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Countdown from "./Countdown";
+import MapButton from "./MapButton";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+const WEDDING_DATE = new Date("2026-09-12T16:00:00");
+const VENUE_ADDRESS = "Villa Rosé, Tuscany, Italy";
+const VENUE_MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent(VENUE_ADDRESS);
 
 const container = {
   hidden: {},
@@ -56,8 +64,18 @@ export default function WeddingHero() {
         variants={item}
         className="text-[11px] tracking-[0.2em] uppercase text-ink/55 mt-3"
       >
-        Villa Rosé · Tuscany, Italy
+        {VENUE_ADDRESS}
       </motion.p>
+
+      <motion.div variants={item} className="mt-6">
+        <MapButton address={VENUE_ADDRESS} mapUrl={VENUE_MAP_URL} />
+      </motion.div>
+
+      <motion.div variants={item} className="w-12 h-px bg-ink/25 my-10" />
+
+      <motion.div variants={item}>
+        <Countdown target={WEDDING_DATE} />
+      </motion.div>
     </motion.div>
   );
 }
