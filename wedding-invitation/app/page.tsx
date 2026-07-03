@@ -81,7 +81,7 @@ export default function Home() {
               <h1 style={{
                 fontFamily: "var(--font-cormorant), var(--font-playfair), serif",
                 fontSize: "clamp(2.4rem, 7vw, 3.8rem)",
-                color: "#1E1B16",
+                color: "#7D6248",
                 fontStyle: "italic",
                 fontWeight: 400,
                 letterSpacing: "0.03em",
@@ -90,7 +90,7 @@ export default function Home() {
               }}>
                 Անի{" "}
                 <motion.span
-                  style={{ color: "#7B8363", fontStyle: "normal", display: "inline-block" }}
+                  style={{ color: "#9A8060", fontStyle: "normal", display: "inline-block" }}
                   animate={{ opacity: [0.55, 1, 0.55] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 >

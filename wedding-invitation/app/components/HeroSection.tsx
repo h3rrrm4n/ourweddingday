@@ -83,7 +83,7 @@ export default function HeroSection() {
         style={{
           fontFamily: "var(--font-cormorant), var(--font-playfair), serif",
           fontSize: "clamp(2.6rem, 8vw, 4.8rem)",
-          color: "#1E1B16",
+          color: "#7D6248",
           fontStyle: "italic",
           fontWeight: 400,
           letterSpacing: "0.02em",
@@ -92,7 +92,7 @@ export default function HeroSection() {
       >
         Անի{" "}
         <motion.span
-          style={{ color: "#7B8363", fontStyle: "normal", display: "inline-block" }}
+          style={{ color: "#9A8060", fontStyle: "normal", display: "inline-block" }}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         >
