@@ -113,6 +113,7 @@ export default function Home() {
                 width: "clamp(280px, 82vw, 540px)",
                 zIndex: 2,
                 perspective: 1400,
+                overflow: "visible",
               }}
             >
               {/* Float */}

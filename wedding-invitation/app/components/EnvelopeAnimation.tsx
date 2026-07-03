@@ -38,7 +38,8 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
         style={{
           position: "relative",
           width: "100%",
-          paddingBottom: "75%", // 4:3 aspect ratio — envelope height = 75% of width
+          paddingBottom: "75%",
+          overflow: "visible", // flap must be able to extend above the envelope
         }}
       >
         {/* ── Layer 1: Body + inner folds ── */}
@@ -104,44 +105,80 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
           <line x1="400" y1="300" x2="200" y2="150" stroke="rgba(130,108,60,0.24)" strokeWidth="1"/>
         </svg>
 
-        {/* ── Layer 2: Flap that folds open (rotates around top edge) ── */}
+        {/* ── Layer 2: Flap that folds UP and over (stays visible all the way) ── */}
         <motion.div
           animate={{ rotateX: flapOpen ? -180 : 0 }}
-          transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1] }}
+          transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }}
           style={{
             position: "absolute",
             top: 0,
             left: 0,
             width: "100%",
-            height: "50%", // flap height = 150/300 = 50%
+            height: "50%",
             transformOrigin: "center top",
             transformStyle: "preserve-3d",
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            zIndex: 2,
+            // DO NOT hide backface — flap must stay visible all the way open
+            backfaceVisibility: "visible",
+            WebkitBackfaceVisibility: "visible",
+            zIndex: 30,           // high z so it goes over the text
+            overflow: "visible",
           }}
         >
+          {/* Front face — visible while closing (0° → -90°) */}
           <svg
             viewBox="0 0 400 150"
             fill="none"
-            style={{ width: "100%", height: "100%", display: "block" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              display: "block",
+            }}
           >
             <defs>
-              <linearGradient id="flapG" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="flapFront" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%"   stopColor="#FAF8F0" />
                 <stop offset="100%" stopColor="#E8DBBE" />
               </linearGradient>
             </defs>
-            {/* Flap triangle: top edge → center point */}
             <polygon
               points="0,0 400,0 200,150"
-              fill="url(#flapG)"
+              fill="url(#flapFront)"
               stroke="rgba(155,132,82,0.22)"
               strokeWidth="0.8"
-              strokeLinejoin="round"
             />
-            {/* Top edge highlight */}
-            <line x1="0" y1="0.5" x2="400" y2="0.5" stroke="rgba(255,252,240,0.7)" strokeWidth="1"/>
+            <line x1="0" y1="0.5" x2="400" y2="0.5" stroke="rgba(255,252,240,0.65)" strokeWidth="1"/>
+          </svg>
+
+          {/* Back face — visible while fully open (-90° → -180°), slightly darker inner side */}
+          <svg
+            viewBox="0 0 400 150"
+            fill="none"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              display: "block",
+              transform: "rotateX(180deg)", // pre-flip so it shows when parent is -180°
+              backfaceVisibility: "visible",
+              WebkitBackfaceVisibility: "visible",
+            }}
+          >
+            <defs>
+              <linearGradient id="flapBack" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%"   stopColor="#F0EAD6" />
+                <stop offset="100%" stopColor="#E2D8BE" />
+              </linearGradient>
+            </defs>
+            {/* Mirrored horizontally so it looks like the inside of the flap */}
+            <polygon
+              points="400,0 0,0 200,150"
+              fill="url(#flapBack)"
+              stroke="rgba(140,118,72,0.18)"
+              strokeWidth="0.8"
+            />
           </svg>
         </motion.div>
 
