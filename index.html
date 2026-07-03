@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah & James — Wedding Invitation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #FAF8F5;
+      --milk:    #F5F2ED;
+      --linen:   #EDE8DF;
+      --sand:    #C9BFB0;
+      --stone:   #8C8278;
+      --ink:     #2E2A26;
+      --gold:    #B89A6A;
+      --gold-lt: #D4BC94;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Typography helpers ── */
+    .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(.4,0,.2,1),
+                  transform 0.9s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      background: linear-gradient(160deg, #FDFCFA 0%, #F0EBE2 100%);
+      overflow: hidden;
+    }
+
+    /* Decorative soft circle */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,154,106,.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 12vw, 130px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+
+    .hero-names em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-ampersand {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 7vw, 80px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sand);
+      margin: 4px 0;
+    }
+
+    .hero-date {
+      margin-top: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      color: var(--stone);
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-lt);
+      margin: 40px auto;
+    }
+
+    .hero-location {
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--sand);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: var(--sand);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      40%       { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      60%       { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+      100%      { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ════════════════════════════════════════
+       SECTIONS — shared
+    ════════════════════════════════════════ */
+    section {
+      padding: 120px 24px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .section-heading em { font-style: italic; color: var(--gold); }
+
+    .section-body {
+      margin-top: 24px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--stone);
+      max-width: 560px;
+      line-height: 1.85;
+    }
+
+    /* ════════════════════════════════════════
+       STORY SECTION
+    ════════════════════════════════════════ */
+    .story { text-align: center; }
+    .story .section-body { margin-left: auto; margin-right: auto; }
+
+    /* ════════════════════════════════════════
+       EVENT DETAILS CARDS
+    ════════════════════════════════════════ */
+    .details-section { text-align: center; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+
+    .card {
+      background: var(--milk);
+      border: 1px solid var(--linen);
+      border-radius: 20px;
+      padding: 48px 32px;
+      text-align: center;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.06);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .card-detail {
+      font-size: 14px;
+      color: var(--stone);
+      line-height: 1.8;
+    }
+
+    .card-detail strong {
+      display: block;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    /* ════════════════════════════════════════
+       TIMELINE / ORDER OF DAY
+    ════════════════════════════════════════ */
+    .timeline { max-width: 640px; }
+
+    .timeline-list {
+      list-style: none;
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      left: 72px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--linen);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .timeline-time {
+      min-width: 72px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: .05em;
+      color: var(--gold);
+      padding-top: 3px;
+      text-align: right;
+    }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 10px; height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: var(--gold-lt);
+      margin-top: 6px;
+    }
+
+    .timeline-content h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .timeline-content p {
+      font-size: 14px;
+      color: var(--stone);
+      line-height: 1.7;
+    }
+
+    /* ════════════════════════════════════════
+       RSVP SECTION
+    ════════════════════════════════════════ */
+    .rsvp-section {
+      text-align: center;
+      background: linear-gradient(160deg, #F5F2ED 0%, #EDE8DF 100%);
+      max-width: 100%;
+      padding: 120px 24px;
+    }
+
+    .rsvp-section > .inner { max-width: 580px; margin: 0 auto; }
+
+    .rsvp-form {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: var(--cream);
+      border: 1px solid var(--linen);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--gold-lt);
+      box-shadow: 0 0 0 4px rgba(184,154,106,.12);
+    }
+
+    .field textarea { resize: vertical; min-height: 100px; }
+
+    .btn-primary {
+      margin-top: 8px;
+      padding: 16px 40px;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .25s, transform .2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: scale(1.02);
+    }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 64px 24px;
+      border-top: 1px solid var(--linen);
+    }
+
+    .footer-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--sand);
+      letter-spacing: .1em;
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .timeline-list::before { left: 60px; }
+      .timeline-time { min-width: 60px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HERO ══ -->
+  <header class="hero">
+    <p class="hero-eyebrow fade-in">You are cordially invited to celebrate</p>
+
+    <h1 class="hero-names fade-in">
+      <em>Sarah</em>
+      <span class="hero-ampersand">&amp;</span>
+      <em>James</em>
+    </h1>
+
+    <div class="divider fade-in"></div>
+
+    <p class="hero-date fade-in">Saturday, the Twelfth of September, 2026</p>
+    <p class="hero-location fade-in" style="margin-top:12px;">Villa Rosé — Tuscany, Italy</p>
+
+    <div class="scroll-cue">scroll</div>
+  </header>
+
+
+  <!-- ══ STORY ══ -->
+  <section class="story">
+    <span class="section-label fade-in">Our Story</span>
+    <h2 class="section-heading fade-in">A love written<br><em>in the stars</em></h2>
+    <p class="section-body fade-in">
+      What began as a chance encounter at a tiny bookshop in Florence grew into a lifetime
+      of adventure, laughter, and an unshakeable bond. We believe love is best shared —
+      and we cannot imagine celebrating this day without you by our side.
+    </p>
+  </section>
+
+
+  <!-- ══ EVENT DETAILS ══ -->
+  <section class="details-section">
+    <span class="section-label fade-in">Event Details</span>
+    <h2 class="section-heading fade-in">Everything you need<br><em>to know</em></h2>
+
+    <div class="cards">
+      <div class="card fade-in">
+        <span class="card-icon">🕊</span>
+        <h3 class="card-title">Ceremony</h3>
+        <p class="card-detail">
+          <strong>4:00 PM</strong>
+          Villa Rosé Chapel<br>
+          Via della Rosa 12<br>
+          Siena, Tuscany
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <span class="card-icon">🥂</span>
+        <h3 class="card-title">Reception</h3>
+        <p class="card-detail">
+          <strong>6:30 PM</strong>
+          Garden Terrace<br>
+          Dinner, dancing &amp;<br>
+          celebration till midnight
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <span class="card-icon">🌿</span>
+        <h3 class="card-title">Dress Code</h3>
+        <p class="card-detail">
+          <strong>Garden Formal</strong>
+          Soft florals &amp; pastels<br>
+          warmly encouraged.<br>
+          Heels &amp; flats provided.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ ORDER OF THE DAY ══ -->
+  <section class="timeline">
+    <span class="section-label fade-in">Schedule</span>
+    <h2 class="section-heading fade-in">Order of<br><em>the day</em></h2>
+
+    <ul class="timeline-list">
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">3:30 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Guest Arrival</h4>
+          <p>Welcome drinks &amp; nibbles in the olive grove</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">4:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>The Ceremony</h4>
+          <p>Exchange of vows in the historic chapel</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">5:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Cocktail Hour</h4>
+          <p>Champagne &amp; canapés on the terrace</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">6:30 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Dinner &amp; Speeches</h4>
+          <p>Five-course Italian feast under the stars</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">9:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Dancing</h4>
+          <p>Live music &amp; dancing until midnight</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+
+  <!-- ══ RSVP ══ -->
+  <div class="rsvp-section">
+    <div class="inner">
+      <span class="section-label fade-in">RSVP</span>
+      <h2 class="section-heading fade-in">Will you<br><em>join us?</em></h2>
+      <p class="section-body fade-in" style="margin: 16px auto 0;">
+        Kindly reply by <strong>August 1st, 2026</strong>. We'd love to save a seat just for you.
+      </p>
+
+      <form class="rsvp-form fade-in" onsubmit="handleRsvp(event)">
+        <div class="form-row">
+          <div class="field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Emma" required />
+          </div>
+          <div class="field">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Johnson" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="emma@example.com" required />
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="attend">Attending?</label>
+            <select id="attend" required>
+              <option value="" disabled selected>Please select</option>
+              <option value="yes">Joyfully accepts ✓</option>
+              <option value="no">Regretfully declines</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="guests">Number of Guests</label>
+            <select id="guests">
+              <option value="1">1 — Just me</option>
+              <option value="2">2 — Plus one</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="dietary">Dietary Requirements</label>
+          <input type="text" id="dietary" placeholder="Vegetarian, allergies, etc." />
+        </div>
+
+        <div class="field">
+          <label for="message">A Note for the Couple</label>
+          <textarea id="message" placeholder="Share a wish, a memory, or a song request…"></textarea>
+        </div>
+
+        <button class="btn-primary" type="submit">Send my RSVP</button>
+      </form>
+
+      <!-- Success message (hidden by default) -->
+      <div id="rsvp-success" style="display:none; margin-top:32px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--ink);">
+          Thank you so much!
+        </p>
+        <p style="margin-top:8px; font-size:14px; color:var(--stone);">
+          We've received your RSVP and can't wait to celebrate with you.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <p class="footer-names">Sarah &amp; James</p>
+    <p class="footer-note">September 12, 2026 · Villa Rosé, Tuscany</p>
+    <div class="divider" style="margin-top:32px;"></div>
+    <p style="font-size:12px; color:var(--sand); margin-top:24px; letter-spacing:.08em;">
+      Made with love &amp; a little bit of magic
+    </p>
+  </footer>
+
+
+  <script>
+    /* ── Scroll-triggered fade-in ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── Hero elements visible immediately ── */
+    document.querySelectorAll('.hero .fade-in').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 200 + i * 180);
+    });
+
+    /* ── RSVP form handler ── */
+    function handleRsvp(e) {
+      e.preventDefault();
+      document.querySelector('.rsvp-form').style.display = 'none';
+      document.getElementById('rsvp-success').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
