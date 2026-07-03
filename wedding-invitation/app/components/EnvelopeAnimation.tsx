@@ -8,51 +8,50 @@ interface EnvelopeAnimationProps {
 }
 
 export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
-  const [phase, setPhase] = useState<"idle" | "lifting" | "opening" | "sliding" | "done">("idle");
+  const [phase, setPhase] = useState<
+    "idle" | "lifting" | "opening" | "sliding" | "done"
+  >("idle");
 
   const handleClick = () => {
     if (phase !== "idle") return;
     setPhase("lifting");
-    setTimeout(() => setPhase("opening"), 400);
+    setTimeout(() => setPhase("opening"), 350);
     setTimeout(() => setPhase("sliding"), 900);
-    setTimeout(() => setPhase("done"), 1600);
-    setTimeout(() => onOpen(), 1800);
+    setTimeout(() => setPhase("done"), 1700);
+    setTimeout(() => onOpen(), 1900);
   };
 
-  const envelopeY = phase === "idle" ? 0 : phase === "lifting" ? -20 : -26;
-  const flapOpen = phase === "opening" || phase === "sliding" || phase === "done";
-  const cardVisible = phase === "sliding" || phase === "done";
-
-  // Flap path: closed = triangle pointing down, open = flat line at top
-  const flapClosed = "M 0 0 L 340 0 L 170 130 Z";
-  const flapFlat   = "M 0 0 L 340 0 L 170 0 Z";
+  const flapOpen   = phase === "opening" || phase === "sliding" || phase === "done";
+  const cardVisible= phase === "sliding"  || phase === "done";
+  const envelopeY  = phase === "idle" ? 0 : -18;
 
   return (
     <div
       className="relative flex flex-col items-center justify-center cursor-pointer select-none"
       onClick={handleClick}
       role="button"
-      aria-label="Բացել հրավերը"
       tabIndex={0}
+      aria-label="Բացել հրավերը"
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); }
       }}
     >
-      {/* Hint text */}
+      {/* ── Tap hint ── */}
       <AnimatePresence>
         {phase === "idle" && (
           <motion.p
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="absolute text-center uppercase"
+            transition={{ duration: 0.7, delay: 0.7 }}
             style={{
-              top: -52,
+              position: "absolute",
+              top: -50,
               fontFamily: "var(--font-inter), sans-serif",
               fontSize: "0.68rem",
               color: "#A07830",
               letterSpacing: "0.22em",
+              textTransform: "uppercase",
               animation: "hintPulse 3s ease-in-out infinite",
             }}
           >
@@ -61,41 +60,92 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
         )}
       </AnimatePresence>
 
-      {/* Envelope wrapper */}
+      {/* ── Envelope + card container ── */}
       <motion.div
         animate={{ y: envelopeY }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="relative"
-        style={{ width: 340, height: 240 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        style={{ position: "relative", width: 340, height: 240 }}
       >
-        {/* Card that slides out */}
+
+        {/* ── Preview card (slides up out of envelope) ── */}
         <AnimatePresence>
           {cardVisible && (
             <motion.div
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: -110, opacity: 1 }}
+              initial={{ y: 80, opacity: 0 }}
+              animate={{ y: -148, opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-1/2 z-20 pointer-events-none"
-              style={{ width: 280, bottom: 0, transform: "translateX(-50%)" }}
+              transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: 288,
+                zIndex: 5,
+                pointerEvents: "none",
+              }}
             >
               <div style={{
-                background: "linear-gradient(160deg, #FFFFFF 0%, #FAF8F5 60%, #F5EED8 100%)",
-                border: "1px solid rgba(201,168,76,0.4)",
-                borderRadius: 12,
-                boxShadow: "0 12px 40px rgba(120,88,30,0.18), inset 0 1px 0 rgba(255,255,255,1)",
-                padding: "20px 24px 18px",
+                background: "linear-gradient(160deg, #FFFFFF 0%, #FAF8F5 70%, #F5EDD8 100%)",
+                border: "1px solid rgba(201,168,76,0.38)",
+                borderRadius: 16,
+                boxShadow: "0 16px 48px rgba(100,70,20,0.18), inset 0 1px 0 #fff",
+                padding: "24px 22px 20px",
                 textAlign: "center",
               }}>
-                <div style={{ color: "#C9A84C", fontSize: "9.5px", letterSpacing: "0.38em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginBottom: 9 }}>
-                  Հարսանյաց Հրավեր
+                {/* Photo circle */}
+                <div style={{
+                  width: 72, height: 72,
+                  borderRadius: "50%",
+                  margin: "0 auto 14px",
+                  background: "linear-gradient(135deg, #F5E6C8 0%, #EDD9A8 100%)",
+                  border: "2px solid rgba(201,168,76,0.45)",
+                  boxShadow: "0 4px 16px rgba(140,100,40,0.15), 0 0 0 5px rgba(201,168,76,0.08)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                  <svg viewBox="0 0 48 48" width="32" height="32" fill="none">
+                    <circle cx="24" cy="17" r="9" fill="rgba(201,168,76,0.35)" />
+                    <path d="M6 44 Q6 32 24 32 Q42 32 42 44" fill="rgba(201,168,76,0.22)" />
+                  </svg>
                 </div>
-                <div style={{ fontFamily: "var(--font-playfair), serif", fontSize: "21px", color: "#3D3530", lineHeight: 1.3 }}>
+
+                {/* Thin divider */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, rgba(201,168,76,0.45))" }} />
+                  <svg viewBox="0 0 12 12" width="10" height="10">
+                    <path d="M6 1 L7 5 L11 5 L8 7.5 L9 11 L6 9 L3 11 L4 7.5 L1 5 L5 5 Z" fill="rgba(201,168,76,0.65)" />
+                  </svg>
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to left, transparent, rgba(201,168,76,0.45))" }} />
+                </div>
+
+                {/* Names */}
+                <div style={{
+                  fontFamily: "var(--font-playfair), serif",
+                  fontSize: "clamp(1.2rem, 5vw, 1.45rem)",
+                  color: "#3D3530",
+                  lineHeight: 1.2,
+                  letterSpacing: "0.02em",
+                }}>
                   Անի{" "}
-                  <motion.span style={{ color: "#C9A84C" }} animate={{ scale: [1, 1.18, 1] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="inline-block">♥</motion.span>
+                  <motion.span
+                    style={{ color: "#C9A84C", display: "inline-block" }}
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >♥</motion.span>
                   {" "}Արման
                 </div>
-                <div style={{ color: "#9A7240", fontSize: "11.5px", marginTop: 8, fontFamily: "var(--font-inter), sans-serif", letterSpacing: "0.1em" }}>
+
+                {/* Date */}
+                <div style={{
+                  fontFamily: "var(--font-inter), sans-serif",
+                  fontSize: "0.72rem",
+                  color: "#9A7240",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  marginTop: 10,
+                }}>
                   20 Սեպտեմբերի 2026
                 </div>
               </div>
@@ -103,7 +153,7 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
           )}
         </AnimatePresence>
 
-        {/* ── Main envelope SVG ── */}
+        {/* ── Envelope SVG (body + fold lines) ── */}
         <svg
           viewBox="0 0 340 240"
           fill="none"
@@ -113,139 +163,165 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
             inset: 0,
             width: "100%",
             height: "100%",
-            filter: "drop-shadow(0 18px 44px rgba(100,75,20,0.22))",
+            zIndex: 10,
+            filter: "drop-shadow(0 14px 36px rgba(90,65,15,0.20))",
             overflow: "visible",
           }}
         >
           <defs>
-            {/* Milky white envelope body */}
-            <linearGradient id="envBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="#FFFFFF" />
-              <stop offset="55%"  stopColor="#FAF8F4" />
-              <stop offset="100%" stopColor="#F2EAD8" />
+            {/* Linen / off-white body — matches reference exactly */}
+            <linearGradient id="envBody2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#F9F4EA" />
+              <stop offset="100%" stopColor="#EFE5CC" />
             </linearGradient>
 
-            {/* Flap — slightly warmer than body so it reads as a fold */}
-            <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="#F8F4EC" />
-              <stop offset="100%" stopColor="#EBD898" stopOpacity="0.6" />
+            {/* Left inner fold */}
+            <linearGradient id="foldL2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stopColor="#C8B070" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#E8D8A8" stopOpacity="0.05" />
+            </linearGradient>
+            {/* Right inner fold */}
+            <linearGradient id="foldR2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stopColor="#E8D8A8" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#C8B070" stopOpacity="0.22" />
+            </linearGradient>
+            {/* Bottom fold */}
+            <linearGradient id="foldB2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#E8D8A8" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="#C8B070" stopOpacity="0.28" />
             </linearGradient>
 
-            {/* Inner fold triangles */}
-            <linearGradient id="foldL" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stopColor="#DDD0A8" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#EDE5C8" stopOpacity="0.15" />
-            </linearGradient>
-            <linearGradient id="foldR" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stopColor="#EDE5C8" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#DDD0A8" stopOpacity="0.45" />
+            {/* Flap gradient */}
+            <linearGradient id="flapGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#EDE3CD" />
+              <stop offset="100%" stopColor="#E0D0AC" />
             </linearGradient>
 
-            {/* Gold border */}
-            <linearGradient id="goldBorder" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stopColor="#D4B060" />
-              <stop offset="50%"  stopColor="#EDD898" />
-              <stop offset="100%" stopColor="#B8902A" />
-            </linearGradient>
-
-            {/* Wax seal */}
-            <radialGradient id="waxBody" cx="38%" cy="30%" r="72%">
-              <stop offset="0%"   stopColor="#C04040" />
-              <stop offset="45%"  stopColor="#982020" />
-              <stop offset="78%"  stopColor="#7A1818" />
-              <stop offset="100%" stopColor="#521010" />
+            {/* Wax seal — dark crimson heart */}
+            <radialGradient id="waxHeart" cx="38%" cy="30%" r="72%">
+              <stop offset="0%"   stopColor="#B83030" />
+              <stop offset="40%"  stopColor="#901818" />
+              <stop offset="75%"  stopColor="#721010" />
+              <stop offset="100%" stopColor="#4E0C0C" />
             </radialGradient>
-            <radialGradient id="waxSheen" cx="35%" cy="26%" r="42%">
-              <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.5" />
+            <radialGradient id="waxGlow" cx="35%" cy="28%" r="40%">
+              <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.42" />
               <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </radialGradient>
-            <filter id="waxDrop" x="-25%" y="-25%" width="150%" height="150%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#3a0f0f" floodOpacity="0.35" />
+            <filter id="sealShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#3a0808" floodOpacity="0.38" />
             </filter>
           </defs>
 
-          {/* ── Body ── */}
-          <rect x="1" y="1" width="338" height="238" rx="10" fill="url(#envBody)" stroke="url(#goldBorder)" strokeWidth="1.2" />
+          {/* Envelope body */}
+          <rect x="0" y="0" width="340" height="240" rx="3"
+            fill="url(#envBody2)"
+            stroke="rgba(180,155,90,0.35)"
+            strokeWidth="1"
+          />
 
-          {/* Subtle inner envelope rectangle */}
-          <rect x="5" y="5" width="330" height="230" rx="8" fill="none" stroke="rgba(201,168,76,0.12)" strokeWidth="0.8" />
+          {/* Inner fold triangles — left, right, bottom — like reference */}
+          <path d="M0 0 L170 138 L0 240"   fill="url(#foldL2)" />
+          <path d="M340 0 L170 138 L340 240" fill="url(#foldR2)" />
+          <path d="M0 240 L170 138 L340 240" fill="url(#foldB2)" />
 
-          {/* ── Inner fold triangles (bottom half) ── */}
-          <path d="M1 10 L170 138 L1 238"   fill="url(#foldL)" />
-          <path d="M339 10 L170 138 L339 238" fill="url(#foldR)" />
-          {/* fold crease lines */}
-          <line x1="1"   y1="238" x2="170" y2="138" stroke="rgba(180,150,70,0.18)" strokeWidth="0.7" />
-          <line x1="339" y1="238" x2="170" y2="138" stroke="rgba(180,150,70,0.18)" strokeWidth="0.7" />
+          {/* Fold crease lines (very subtle) */}
+          <line x1="0"   y1="240" x2="170" y2="138" stroke="rgba(160,130,60,0.20)" strokeWidth="0.8" />
+          <line x1="340" y1="240" x2="170" y2="138" stroke="rgba(160,130,60,0.20)" strokeWidth="0.8" />
+          <line x1="0"   y1="0"   x2="170" y2="138" stroke="rgba(160,130,60,0.12)" strokeWidth="0.6" />
+          <line x1="340" y1="0"   x2="170" y2="138" stroke="rgba(160,130,60,0.12)" strokeWidth="0.6" />
 
-          {/* ── Botanical corner ornaments ── */}
-          <g stroke="#C9AB6A" strokeWidth="0.6" fill="none" opacity="0.4">
-            {/* top-left */}
-            <path d="M14 22 Q22 12 34 20 Q37 27 28 30 Q16 32 14 22Z" />
-            <path d="M12 20 Q7 14 4 6" />
-            {/* top-right */}
-            <path d="M326 22 Q318 12 306 20 Q303 27 312 30 Q324 32 326 22Z" />
-            <path d="M328 20 Q333 14 336 6" />
-            {/* bottom-left */}
-            <path d="M14 218 Q22 228 34 221 Q37 214 28 210 Q16 208 14 218Z" />
-            <path d="M12 220 Q7 226 4 234" />
-            {/* bottom-right */}
-            <path d="M326 218 Q318 228 306 221 Q303 214 312 210 Q324 208 326 218Z" />
-            <path d="M328 220 Q333 226 336 234" />
-          </g>
-
-          {/* ── Wax seal (hidden while flap is open) ── */}
+          {/* ── Heart wax seal (hidden when flap is open) ── */}
           {!flapOpen && (
-            <g transform="translate(118, 90)">
+            <g transform="translate(170,138)" filter="url(#sealShadow)">
+              {/* Heart shape, centered at 0,0 */}
               <path
-                filter="url(#waxDrop)"
-                fill="url(#waxBody)"
-                d="M52 4c5 0 9 5 14 6s11-3 15 1s0 11 3 14s8 8 6 13s-8 6-10 10s1 12-4 14s-11-2-15 0s-7 9-12 9s-8-7-12-9s-11 2-15 0s-1-10-4-14s-10-5-10-10s6-9 6-13s-3-10 0-14s11-2 15-1s9-6 14-6z"
+                fill="url(#waxHeart)"
+                d="M0,-10
+                   C0,-18 -10,-24 -20,-18
+                   C-30,-12 -30,0 -20,12
+                   C-14,20 -6,26 0,30
+                   C6,26 14,20 20,12
+                   C30,0 30,-12 20,-18
+                   C10,-24 0,-18 0,-10 Z"
               />
-              <ellipse cx="37" cy="29" rx="24" ry="16" fill="url(#waxSheen)" />
-              <circle cx="52" cy="52" r="36" fill="none" stroke="#3a0f0f" strokeWidth="0.9" opacity="0.45" />
-              <circle cx="52" cy="52" r="31" fill="none" stroke="#d09060" strokeWidth="0.6" opacity="0.3" />
-              {/* Rose emblem shadow */}
-              <g fill="none" stroke="#3a0f0f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" transform="translate(1.5 1.5)">
-                <path d="M52 30c-11 2-13 14-6 19c-9 2-13 11-6 18c3 3 7 4 10 1c1 7 7 10 12 7c5 8 14 7 15-2" />
-                <path d="M52 30c3-4 11-4 12 0c2 4 0 8-4 9" />
-                <path d="M40 43c-4 2-6 8-2 11" />
-                <path d="M52 30v38" />
-                <path d="M43 62c3-3 7-3 9-1c2-3 6-3 9 1" />
-              </g>
-              {/* Rose emblem highlight */}
-              <g fill="none" stroke="#E8B88A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.55">
-                <path d="M52 30c-11 2-13 14-6 19c-9 2-13 11-6 18c3 3 7 4 10 1c1 7 7 10 12 7c5 8 14 7 15-2" />
-                <path d="M52 30c3-4 11-4 12 0c2 4 0 8-4 9" />
-                <path d="M40 43c-4 2-6 8-2 11" />
-                <path d="M52 30v38" />
-                <path d="M43 62c3-3 7-3 9-1c2-3 6-3 9 1" />
+              {/* Gloss highlight */}
+              <path
+                fill="url(#waxGlow)"
+                d="M0,-10
+                   C0,-18 -10,-24 -20,-18
+                   C-30,-12 -30,0 -20,12
+                   C-14,20 -6,26 0,30
+                   C6,26 14,20 20,12
+                   C30,0 30,-12 20,-18
+                   C10,-24 0,-18 0,-10 Z"
+              />
+              {/* Botanical engraving inside heart */}
+              <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                {/* Shadow pass */}
+                <g stroke="#3a0808" strokeWidth="1.3" opacity="0.45" transform="translate(0.8,0.8)">
+                  <path d="M0,12 C0,4 -6,-2 -12,-4 C-8,2 -4,8 0,12 Z" />
+                  <path d="M0,12 C0,4 6,-2 12,-4 C8,2 4,8 0,12 Z" />
+                  <path d="M-12,-4 C-16,-8 -14,-14 -10,-16" />
+                  <path d="M12,-4 C16,-8 14,-14 10,-16" />
+                  <path d="M-10,-16 C-8,-20 -2,-22 0,-20" />
+                  <path d="M10,-16 C8,-20 2,-22 0,-20" />
+                  <circle cx="-16" cy="-6" r="1.5" fill="#3a0808" />
+                  <circle cx="16"  cy="-6" r="1.5" fill="#3a0808" />
+                  <circle cx="0"   cy="-21" r="1.5" fill="#3a0808" />
+                </g>
+                {/* Highlight pass */}
+                <g stroke="#E8A880" strokeWidth="0.9" opacity="0.6">
+                  <path d="M0,12 C0,4 -6,-2 -12,-4 C-8,2 -4,8 0,12 Z" />
+                  <path d="M0,12 C0,4 6,-2 12,-4 C8,2 4,8 0,12 Z" />
+                  <path d="M-12,-4 C-16,-8 -14,-14 -10,-16" />
+                  <path d="M12,-4 C16,-8 14,-14 10,-16" />
+                  <path d="M-10,-16 C-8,-20 -2,-22 0,-20" />
+                  <path d="M10,-16 C8,-20 2,-22 0,-20" />
+                  <circle cx="-16" cy="-6" r="1.5" fill="#E8A880" />
+                  <circle cx="16"  cy="-6" r="1.5" fill="#E8A880" />
+                  <circle cx="0"   cy="-21" r="1.5" fill="#E8A880" />
+                </g>
               </g>
             </g>
           )}
 
-          {/* ── Animated flap (SVG motion.path — stays in the same SVG so z-index is correct) ── */}
+          {/* ── Animated flap (morphs open) ── */}
           <motion.path
-            d={flapOpen ? flapFlat : flapClosed}
-            fill="url(#flapGrad)"
-            stroke="url(#goldBorder)"
-            strokeWidth="1.1"
-            animate={{ d: flapOpen ? flapFlat : flapClosed }}
-            transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
-            style={{ transformOrigin: "170px 0px" }}
+            fill="url(#flapGrad2)"
+            stroke="rgba(160,135,65,0.4)"
+            strokeWidth="0.9"
+            d={flapOpen
+              ? "M0,0 L340,0 L170,0 Z"
+              : "M0,0 L340,0 L170,138 Z"
+            }
+            animate={{
+              d: flapOpen
+                ? "M0,0 L340,0 L170,0 Z"
+                : "M0,0 L340,0 L170,138 Z",
+            }}
+            transition={{ duration: 0.85, ease: [0.65, 0, 0.35, 1] }}
           />
-
-          {/* thin top edge line so body rect border shows through flap seam */}
-          <line x1="1" y1="1" x2="339" y2="1" stroke="rgba(201,168,76,0.25)" strokeWidth="0.8" />
         </svg>
 
-        {/* Idle pulse ring */}
+        {/* Idle pulse */}
         <AnimatePresence>
           {phase === "idle" && (
             <motion.div
-              className="absolute inset-0 pointer-events-none"
-              style={{ borderRadius: 10 }}
-              animate={{ boxShadow: ["0 0 0 0 rgba(201,168,76,0.4)", "0 0 0 18px rgba(201,168,76,0)"] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                borderRadius: 3,
+                zIndex: 20,
+                pointerEvents: "none",
+              }}
+              animate={{
+                boxShadow: [
+                  "0 0 0 0px rgba(201,168,76,0.38)",
+                  "0 0 0 16px rgba(201,168,76,0)",
+                ],
+              }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
             />
           )}
         </AnimatePresence>
@@ -253,8 +329,8 @@ export default function EnvelopeAnimation({ onOpen }: EnvelopeAnimationProps) {
 
       <style>{`
         @keyframes hintPulse {
-          0%, 100% { opacity: 0.45; }
-          50% { opacity: 1; }
+          0%, 100% { opacity: 0.4; }
+          50%       { opacity: 1;   }
         }
       `}</style>
     </div>
