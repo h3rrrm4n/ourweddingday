@@ -60,7 +60,7 @@ export default function Home() {
               initial={{ opacity: 0, y: -18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 0.3 }}
-              style={{ textAlign: "center", marginBottom: 52, zIndex: 10 }}
+              style={{ textAlign: "center", marginBottom: 80, zIndex: 10 }}
             >
               {/* Label */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginBottom: 20 }}>
@@ -130,6 +130,30 @@ export default function Home() {
                 </motion.div>
               </motion.div>
             </motion.div>
+
+            {/* ── Hint text (below envelope) ── */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 1.3 }}
+              style={{
+                marginTop: 28,
+                fontFamily: "var(--font-inter), sans-serif",
+                fontSize: "0.6rem",
+                color: "#9A8E7A",
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                animation: "hintPulse 3.5s ease-in-out infinite",
+              }}
+            >
+              Հպվեք ծրարը բացելու համար
+            </motion.p>
+            <style>{`
+              @keyframes hintPulse {
+                0%, 100% { opacity: 0.38; }
+                50%       { opacity: 1; }
+              }
+            `}</style>
           </motion.div>
         ) : (
           <motion.div
