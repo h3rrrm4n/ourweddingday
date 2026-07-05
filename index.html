@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#F2F1EA" />
+  <!-- If added to the home screen, this lets the site launch with zero
+       Safari browser chrome (address bar / toolbar) at all — the only
+       way to get a truly gap-free fullscreen on iOS, since a page
+       viewed as a normal Safari tab always reserves native UI space
+       that no amount of CSS/meta tags can remove. -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Վահե &amp; Մարիամ — Wedding Invitation</title>
 
   <!-- Google Fonts -->
@@ -27,7 +34,15 @@
       --blush:   #C98F87;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      /* Matches the video/envelope tone so any sliver still shown by
+         the browser itself (status bar area, iOS overscroll bounce,
+         etc.) reads as intentional background rather than a gap. */
+      background-color: #F2F1EA;
+      height: 100%;
+      overscroll-behavior-y: none;
+    }
 
     body {
       background-color: var(--cream);
@@ -36,6 +51,10 @@
       font-weight: 300;
       line-height: 1.7;
       overflow-x: hidden;
+      min-height: 100%;
+      /* Stop iOS Safari's rubber-band bounce from revealing whatever
+         sits behind the page at the very top/bottom of the scroll. */
+      overscroll-behavior-y: none;
     }
 
     /* ── Typography helpers ── */
