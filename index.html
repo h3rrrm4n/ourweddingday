@@ -356,9 +356,96 @@
       .timeline-list::before { left: 60px; }
       .timeline-time { min-width: 60px; font-size: 12px; }
     }
+
+    /* ════════════════════════════════════════
+       VIDEO LANDING — envelope opening intro
+    ════════════════════════════════════════ */
+    #video-landing {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: #F2F1EA;
+      overflow: hidden;
+      transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
+    }
+
+    #video-landing.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #envelope-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #seal-tap {
+      position: absolute;
+      left: 48.4%;
+      top: 61.2%;
+      width: 34%;
+      aspect-ratio: 1 / 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #seal-tap.is-hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
+
+  <!-- ══ VIDEO LANDING — tap the seal to open ══ -->
+  <div id="video-landing">
+    <video
+      id="envelope-video"
+      src="assets/envelope-opening.mp4"
+      poster="assets/envelope-poster.jpg"
+      muted
+      playsinline
+      webkit-playsinline="true"
+      preload="auto"
+    ></video>
+    <button id="seal-tap" type="button" aria-label="Open invitation"></button>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('video-landing');
+      var video = document.getElementById('envelope-video');
+      var sealTap = document.getElementById('seal-tap');
+
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+
+      function revealInvitation() {
+        overlay.classList.add('is-hidden');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      sealTap.addEventListener('click', function () {
+        sealTap.classList.add('is-hidden');
+        var playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(revealInvitation);
+        }
+      });
+
+      video.addEventListener('ended', revealInvitation);
+      // Never trap a guest behind a broken/unsupported video.
+      video.addEventListener('error', revealInvitation);
+    })();
+  </script>
 
   <!-- ══ HERO ══ -->
   <header class="hero">
