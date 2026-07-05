@@ -374,6 +374,11 @@
       pointer-events: none;
     }
 
+    /* All three layers stay mounted (never display:none) so clip2 keeps
+       buffering silently in the background the whole time — swapping
+       via opacity only means there is real, already-decoded video data
+       ready the instant it needs to appear, instead of the browser
+       having to start fetching/decoding it from a standing start. */
     #video-landing video,
     #video-landing img {
       position: absolute;
@@ -381,18 +386,19 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.28s ease;
     }
 
-    #clip1-video,
-    #clip2-video,
-    #clip1-poster {
-      display: none;
+    #clip1-video {
+      opacity: 1;
+      z-index: 2;
     }
 
-    #clip1-video.is-active,
-    #clip2-video.is-active,
-    #clip1-poster.is-active {
-      display: block;
+    #video-landing .is-active {
+      opacity: 1;
+      z-index: 3;
     }
 
     #seal-tap {
@@ -464,6 +470,9 @@
         document.body.style.overflow = '';
       }
 
+      // clip1 and the poster share an identical frame, so simply
+      // crossfading their opacity (both already painted, nothing to
+      // wait for) is enough to make the swap invisible.
       function showTapState() {
         clip1.classList.remove('is-active');
         poster.classList.add('is-active');
@@ -475,14 +484,31 @@
       clip1.addEventListener('ended', showTapState);
       clip1.addEventListener('error', showTapState);
 
+      // clip2 has been silently buffering in the background since page
+      // load (it's mounted with opacity:0, never display:none, so the
+      // browser keeps fetching/decoding it the whole time). We still
+      // wait for its own 'playing' event — proof frames are actually
+      // being rendered — before crossfading away from the poster, so
+      // there is never a gap of blank/black video showing through.
+      var revealedClip2 = false;
+      function revealClip2() {
+        if (revealedClip2) return;
+        revealedClip2 = true;
+        clip2.classList.add('is-active');
+        poster.classList.remove('is-active');
+      }
+
       sealTap.addEventListener('click', function () {
         sealTap.classList.remove('is-active');
-        poster.classList.remove('is-active');
-        clip2.classList.add('is-active');
+        clip2.currentTime = 0;
+        clip2.addEventListener('playing', revealClip2, { once: true });
         var playPromise = clip2.play();
         if (playPromise && typeof playPromise.catch === 'function') {
           playPromise.catch(revealInvitation);
         }
+        // Safety net: on the rare chance 'playing' never fires, don't
+        // leave the guest stuck looking at a static screen forever.
+        setTimeout(revealClip2, 500);
       });
 
       clip2.addEventListener('ended', revealInvitation);
