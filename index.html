@@ -349,129 +349,6 @@
     }
 
     /* ════════════════════════════════════════
-       HERO
-    ════════════════════════════════════════ */
-    .hero {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 24px;
-      position: relative;
-      background: linear-gradient(160deg, #FDFCFA 0%, #F0EBE2 100%);
-      overflow: hidden;
-    }
-
-    /* Leaner variant used once the names have already been shown in the
-       photo hero above — this section now only carries date/location. */
-    .hero-compact {
-      min-height: 60svh;
-      padding: 64px 24px;
-    }
-
-    /* Decorative soft circle */
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(184,154,106,.12) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--blush);
-      margin-bottom: 32px;
-    }
-
-    .hero-names {
-      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
-      font-size: clamp(64px, 12vw, 130px);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -.01em;
-      color: var(--ink);
-    }
-
-    .hero-names em {
-      font-style: italic;
-      color: var(--blush);
-    }
-
-    .hero-ampersand {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 7vw, 80px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--sand);
-      margin: 4px 0;
-    }
-
-    .hero-date {
-      margin-top: 40px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(18px, 2.5vw, 24px);
-      font-weight: 400;
-      letter-spacing: .08em;
-      color: var(--stone);
-    }
-
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: var(--gold-lt);
-      margin: 40px auto;
-    }
-
-    .hero-location {
-      font-size: 13px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--stone);
-    }
-
-    /* Scroll cue */
-    .scroll-cue {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--sand);
-      font-size: 10px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-    }
-
-    .scroll-cue::after {
-      content: '';
-      width: 1px;
-      height: 36px;
-      background: var(--sand);
-      animation: scrollLine 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollLine {
-      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-      40%       { opacity: 1; transform: scaleY(1); transform-origin: top; }
-      60%       { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
-      100%      { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
-    }
-
-    /* ════════════════════════════════════════
        SECTIONS — shared
     ════════════════════════════════════════ */
     section {
@@ -500,6 +377,13 @@
 
     .section-heading em { font-style: italic; color: var(--blush); }
 
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-lt);
+      margin: 40px auto;
+    }
+
     .section-body {
       margin-top: 24px;
       font-size: 16px;
@@ -508,12 +392,6 @@
       max-width: 560px;
       line-height: 1.85;
     }
-
-    /* ════════════════════════════════════════
-       STORY SECTION
-    ════════════════════════════════════════ */
-    .story { text-align: center; }
-    .story .section-body { margin-left: auto; margin-right: auto; }
 
     /* ════════════════════════════════════════
        EVENT DETAILS CARDS
@@ -997,30 +875,6 @@
     </div>
   </section>
 
-  <!-- ══ HERO ══ (date & location) -->
-  <header class="hero hero-compact">
-    <p class="hero-eyebrow fade-in">Save the Date</p>
-
-    <p class="hero-date fade-in">Monday, the Fifteenth of September, 2026</p>
-    <div class="divider fade-in"></div>
-    <p class="hero-location fade-in">Villa Rosé — Tuscany, Italy</p>
-
-    <div class="scroll-cue">scroll</div>
-  </header>
-
-
-  <!-- ══ STORY ══ -->
-  <section class="story">
-    <span class="section-label fade-in">Our Story</span>
-    <h2 class="section-heading fade-in">A love written<br><em>in the stars</em></h2>
-    <p class="section-body fade-in">
-      What began as a chance encounter at a tiny bookshop in Florence grew into a lifetime
-      of adventure, laughter, and an unshakeable bond. We believe love is best shared —
-      and we cannot imagine celebrating this day without you by our side.
-    </p>
-  </section>
-
-
   <!-- ══ EVENT DETAILS ══ -->
   <section class="details-section">
     <span class="section-label fade-in">Event Details</span>
@@ -1141,7 +995,7 @@
 
     /* ── Photo hero + save-the-date visible immediately (above the fold,
        revealed the moment the video intro finishes) ── */
-    document.querySelectorAll('.save-the-date-hero .fade-in, .wedding-countdown.fade-in, .hero .fade-in').forEach((el, i) => {
+    document.querySelectorAll('.save-the-date-hero .fade-in, .wedding-countdown.fade-in').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
 
