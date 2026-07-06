@@ -18,6 +18,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+Armenian:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
+  <link rel="dns-prefetch" href="https://yandex.com" />
+  <link rel="preconnect" href="https://yandex.com" crossorigin />
+  <link rel="preconnect" href="https://yandex.ru" crossorigin />
+
   <style>
     /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -476,6 +480,23 @@
       border: 0;
     }
 
+    .map-preload {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 640px;
+      visibility: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .map-preload iframe {
+      display: block;
+      width: 100%;
+      height: 220px;
+      border: 0;
+    }
+
     @media (max-width: 600px) {
       .timeline-map iframe {
         height: 200px;
@@ -640,6 +661,31 @@
   </style>
 </head>
 <body>
+
+  <!-- Yandex maps preload — starts during envelope intro -->
+  <div id="map-preload" class="map-preload" aria-hidden="true">
+    <iframe
+      src="https://yandex.com/map-widget/v1/-/CTqOYUpK"
+      title="Հարսի Տուն — Yandex Maps"
+      allowfullscreen
+      loading="eager"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <iframe
+      src="https://yandex.com/map-widget/v1/-/CTqOaWOY"
+      title="Պսակադրություն — Yandex Maps"
+      allowfullscreen
+      loading="eager"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <iframe
+      src="https://yandex.com/map-widget/v1/-/CTqOiVnu"
+      title="Հարսանյաց սրահ — Yandex Maps"
+      allowfullscreen
+      loading="eager"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
 
   <div id="hero-top-fill" aria-hidden="true"></div>
 
@@ -895,15 +941,7 @@
         <div class="timeline-content">
           <h4>Հարսի Տուն</h4>
           <p>Ցովակալ Իսակովի պողոտա 83/23, Երևան</p>
-          <div class="timeline-map">
-            <iframe
-              src="https://yandex.com/map-widget/v1/-/CTqOYUpK"
-              title="Հարսի Տուն — Yandex Maps"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+          <div class="timeline-map"></div>
         </div>
       </li>
       <li class="timeline-item fade-in">
@@ -912,15 +950,7 @@
         <div class="timeline-content">
           <h4>Պսակադրություն</h4>
           <p>Խոր Վիրապ վանք</p>
-          <div class="timeline-map">
-            <iframe
-              src="https://yandex.com/map-widget/v1/-/CTqOaWOY"
-              title="Պսակադրություն — Yandex Maps"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+          <div class="timeline-map"></div>
         </div>
       </li>
       <li class="timeline-item fade-in">
@@ -929,15 +959,7 @@
         <div class="timeline-content">
           <h4>Հարսանյաց սրահ</h4>
           <p>Կոնտինենտալ, Այնթապ</p>
-          <div class="timeline-map">
-            <iframe
-              src="https://yandex.com/map-widget/v1/-/CTqOiVnu"
-              title="Հարսանյաց սրահ — Yandex Maps"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+          <div class="timeline-map"></div>
         </div>
       </li>
     </ul>
@@ -951,6 +973,27 @@
 
 
   <script>
+    /* ── Mount preloaded Yandex map iframes into timeline slots ── */
+    (function () {
+      var preload = document.getElementById('map-preload');
+      if (!preload) return;
+
+      function mountMaps() {
+        var iframes = preload.querySelectorAll('iframe');
+        var slots = document.querySelectorAll('.timeline-map');
+        iframes.forEach(function (iframe, index) {
+          if (slots[index]) slots[index].appendChild(iframe);
+        });
+        preload.remove();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mountMaps);
+      } else {
+        mountMaps();
+      }
+    })();
+
     /* ── Scroll-triggered fade-in ── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
