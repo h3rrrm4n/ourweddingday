@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  /* Dusty rose / "pudra" palette */
+  --pudra: #D9C4BB;
+  --pudra-light: #E3D3CB;
+  --pudra-deep: #C7AEA3;
+  --seal: #C6A179;
+  --seal-deep: #9A7850;
+  --ink: #2E2118;
+  --milk: #F8F6F2;
+  --paper: #FBFAF6;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+@theme inline {
+  --color-pudra: var(--pudra);
+  --color-milk: var(--milk);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--pudra);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+/* Subtle editorial paper grain, applied at very low opacity so it
+   reads as texture rather than a visible pattern. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+.paper-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
