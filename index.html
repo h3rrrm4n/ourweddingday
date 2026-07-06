@@ -38,7 +38,7 @@
       --blush:   #8B7362;
       /* Sampled from the envelope video edges (rgb 210, 202, 173) */
       --envelope-edge: #D2CAAD;
-      --milky-white: #FAF8F5;
+      --milky-white: #F8F6F2;
     }
 
     html.envelope-phase {
@@ -205,7 +205,7 @@
       width: 100%;
       margin-top: -2px;
       height: var(--hero-fade-height);
-      background-color: #F8F6F2;
+      background-color: var(--milky-white);
       background-image: linear-gradient(
         180deg,
         #000000 0%,
@@ -249,7 +249,7 @@
     ════════════════════════════════════════ */
     .wedding-countdown {
       margin-top: -1px;
-      background: #F8F6F2;
+      background: var(--milky-white);
       padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(28px, 5vw, 40px);
       text-align: center;
     }
@@ -370,7 +370,7 @@
     ════════════════════════════════════════ */
     .wedding-calendar {
       margin-top: -1px;
-      background: #F8F6F2;
+      background: var(--milky-white);
       padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 11vw, 96px);
       text-align: center;
     }
@@ -500,7 +500,10 @@
     /* ════════════════════════════════════════
        TIMELINE / ORDER OF DAY
     ════════════════════════════════════════ */
-    .timeline { max-width: 640px; }
+    .timeline {
+      max-width: 640px;
+      background: var(--milky-white);
+    }
 
     .timeline-list {
       --timeline-time-col: 72px;
@@ -657,6 +660,7 @@
       text-align: center;
       padding: 64px 24px;
       border-top: 1px solid var(--linen);
+      background: var(--milky-white);
     }
 
     .footer-names {
@@ -1087,7 +1091,7 @@
         document.body.classList.add('invitation-phase');
 
         var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute('content', '#FAF8F5');
+        if (themeMeta) themeMeta.setAttribute('content', '#F8F6F2');
 
         overlay.classList.add('is-revealing');
         clip1.style.opacity = '0';
@@ -1399,7 +1403,7 @@
       heroTopFill.classList.toggle('is-visible', heroAtTop);
 
       if (themeMeta && onInvitation) {
-        themeMeta.setAttribute('content', heroAtTop ? '#000000' : '#FAF8F5');
+        themeMeta.setAttribute('content', heroAtTop ? '#000000' : '#F8F6F2');
       }
     }
 
