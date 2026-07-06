@@ -143,12 +143,64 @@
       opacity: 1;
     }
 
+    /* Shared fade height — top & bottom of hero */
+    :root {
+      --hero-fade-height: clamp(104px, 17vh, 156px);
+    }
+
+    /* Smooth blend from top black letterbox into the image */
+    .hero-top-fade {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      height: var(--hero-fade-height);
+      pointer-events: none;
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 6%,
+        rgba(0, 0, 0, 0.9969) 9%,
+        rgba(0, 0, 0, 0.9881) 12.1%,
+        rgba(0, 0, 0, 0.9737) 15.1%,
+        rgba(0, 0, 0, 0.9543) 18.1%,
+        rgba(0, 0, 0, 0.9303) 21.2%,
+        rgba(0, 0, 0, 0.9021) 24.2%,
+        rgba(0, 0, 0, 0.8701) 27.2%,
+        rgba(0, 0, 0, 0.8346) 30.3%,
+        rgba(0, 0, 0, 0.7961) 33.3%,
+        rgba(0, 0, 0, 0.755) 36.3%,
+        rgba(0, 0, 0, 0.7116) 39.4%,
+        rgba(0, 0, 0, 0.6665) 42.4%,
+        rgba(0, 0, 0, 0.6199) 45.4%,
+        rgba(0, 0, 0, 0.5724) 48.5%,
+        rgba(0, 0, 0, 0.5242) 51.5%,
+        rgba(0, 0, 0, 0.4758) 54.5%,
+        rgba(0, 0, 0, 0.4276) 57.5%,
+        rgba(0, 0, 0, 0.3801) 60.6%,
+        rgba(0, 0, 0, 0.3335) 63.6%,
+        rgba(0, 0, 0, 0.2884) 66.6%,
+        rgba(0, 0, 0, 0.245) 69.7%,
+        rgba(0, 0, 0, 0.2039) 72.7%,
+        rgba(0, 0, 0, 0.1654) 75.7%,
+        rgba(0, 0, 0, 0.1299) 78.8%,
+        rgba(0, 0, 0, 0.0979) 81.8%,
+        rgba(0, 0, 0, 0.0697) 84.8%,
+        rgba(0, 0, 0, 0.0457) 87.9%,
+        rgba(0, 0, 0, 0.0263) 90.9%,
+        rgba(0, 0, 0, 0.0119) 93.9%,
+        rgba(0, 0, 0, 0.0031) 97%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
     /* Smooth blend from hero black letterbox into countdown ivory */
     .hero-countdown-fade {
       display: block;
       width: 100%;
       margin-top: -2px;
-      height: clamp(104px, 17vh, 156px);
+      height: var(--hero-fade-height);
       background-color: #F8F6F2;
       background-image: linear-gradient(
         180deg,
@@ -914,6 +966,7 @@
 
   <!-- ══ SAVE THE DATE — full-screen, first thing after the envelope ══ -->
   <section class="save-the-date-hero fade-in">
+    <div class="hero-top-fade" aria-hidden="true"></div>
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
 
