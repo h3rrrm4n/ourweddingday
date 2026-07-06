@@ -143,12 +143,30 @@
       opacity: 1;
     }
 
+    /* Smooth blend from hero black letterbox into countdown ivory */
+    .hero-countdown-fade {
+      display: block;
+      width: 100%;
+      height: clamp(96px, 16vh, 152px);
+      background: linear-gradient(
+        180deg,
+        #000000 0%,
+        #1a1816 10%,
+        #3a3530 24%,
+        #6a6258 42%,
+        #9a9186 58%,
+        #c8c0b4 76%,
+        #ece8e2 90%,
+        #F8F6F2 100%
+      );
+    }
+
     /* ════════════════════════════════════════
        WEDDING COUNTDOWN — classic luxury invitation
     ════════════════════════════════════════ */
     .wedding-countdown {
       background: #F8F6F2;
-      padding: clamp(64px, 11vw, 112px) clamp(20px, 5vw, 48px);
+      padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(64px, 11vw, 112px);
       text-align: center;
     }
 
@@ -870,6 +888,8 @@
   <section class="save-the-date-hero fade-in">
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
+
+  <div class="hero-countdown-fade" aria-hidden="true"></div>
 
   <section class="wedding-countdown fade-in">
     <h2 class="countdown-heading">ՄԻՆՉԵՎ ՄԵՐ ՀԱՐՍԱՆԻՔԸ ՄՆԱՑԵԼ Է</h2>
