@@ -185,6 +185,100 @@
     }
 
     /* ════════════════════════════════════════
+       WEDDING COUNTDOWN
+    ════════════════════════════════════════ */
+    .wedding-countdown {
+      background: #F8F6F2;
+      padding: clamp(52px, 9vw, 96px) clamp(16px, 4vw, 40px);
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: clamp(10px, 2.2vw, 22px);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .countdown__unit {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 132px;
+    }
+
+    .countdown__pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: clamp(76px, 18vw, 112px);
+      padding: clamp(16px, 3vw, 26px) clamp(14px, 3vw, 28px);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(184, 154, 106, 0.14);
+      border-radius: 999px;
+      box-shadow:
+        0 10px 32px rgba(46, 42, 38, 0.05),
+        0 2px 8px rgba(46, 42, 38, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      transition: box-shadow 0.4s ease, transform 0.4s ease;
+    }
+
+    .countdown__unit:hover .countdown__pill {
+      box-shadow:
+        0 14px 40px rgba(46, 42, 38, 0.07),
+        0 3px 10px rgba(46, 42, 38, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      transform: translateY(-1px);
+    }
+
+    .countdown__value {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(34px, 7.5vw, 62px);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      display: block;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .countdown__value.is-tick {
+      animation: countdown-tick 0.5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    @keyframes countdown-tick {
+      0%   { opacity: 0.55; transform: translateY(6px) scale(0.94); }
+      45%  { opacity: 1;   transform: translateY(-3px) scale(1.03); }
+      100% { opacity: 1;   transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 520px) {
+      .wedding-countdown {
+        padding: 40px 12px 44px;
+      }
+
+      .countdown {
+        gap: 8px;
+      }
+
+      .countdown__unit {
+        max-width: none;
+      }
+
+      .countdown__pill {
+        min-height: 68px;
+        padding: 14px 10px;
+        border-radius: 20px;
+      }
+
+      .countdown__value {
+        font-size: clamp(28px, 8.5vw, 36px);
+      }
+    }
+
+    /* ════════════════════════════════════════
        HERO
     ════════════════════════════════════════ */
     .hero {
@@ -816,6 +910,31 @@
     </div>
   </section>
 
+  <section class="wedding-countdown fade-in" aria-hidden="true">
+    <div class="countdown" id="wedding-countdown">
+      <div class="countdown__unit">
+        <div class="countdown__pill">
+          <span class="countdown__value" data-unit="days">00</span>
+        </div>
+      </div>
+      <div class="countdown__unit">
+        <div class="countdown__pill">
+          <span class="countdown__value" data-unit="hours">00</span>
+        </div>
+      </div>
+      <div class="countdown__unit">
+        <div class="countdown__pill">
+          <span class="countdown__value" data-unit="minutes">00</span>
+        </div>
+      </div>
+      <div class="countdown__unit">
+        <div class="countdown__pill">
+          <span class="countdown__value" data-unit="seconds">00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ HERO ══ (date & location) -->
   <header class="hero hero-compact">
     <p class="hero-eyebrow fade-in">Save the Date</p>
@@ -960,9 +1079,50 @@
 
     /* ── Photo hero + save-the-date visible immediately (above the fold,
        revealed the moment the video intro finishes) ── */
-    document.querySelectorAll('.save-the-date-hero .fade-in, .invite-section .fade-in, .hero .fade-in').forEach((el, i) => {
+    document.querySelectorAll('.save-the-date-hero .fade-in, .invite-section .fade-in, .wedding-countdown.fade-in, .hero .fade-in').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
+
+    /* ── Wedding countdown — August 15, 2026, 00:00 local ── */
+    (function () {
+      var target = new Date(2026, 7, 15, 0, 0, 0, 0);
+      var values = document.querySelectorAll('#wedding-countdown .countdown__value');
+      var prev = { days: '', hours: '', minutes: '', seconds: '' };
+
+      function format(unit, n) {
+        if (unit === 'days' && n >= 100) return String(n);
+        return String(n).padStart(2, '0');
+      }
+
+      function setValue(el, unit, text) {
+        if (prev[unit] === text) return;
+        prev[unit] = text;
+        el.textContent = text;
+        el.classList.remove('is-tick');
+        void el.offsetWidth;
+        el.classList.add('is-tick');
+      }
+
+      function tick() {
+        var now = new Date();
+        var diff = target - now;
+        if (diff < 0) diff = 0;
+
+        var days = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var minutes = Math.floor((diff % 3600000) / 60000);
+        var seconds = Math.floor((diff % 60000) / 1000);
+
+        values.forEach(function (el) {
+          var unit = el.getAttribute('data-unit');
+          var n = { days: days, hours: hours, minutes: minutes, seconds: seconds }[unit];
+          setValue(el, unit, format(unit, n));
+        });
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
 
     /* ── Dynamic Island top fill: black while hero is at top, gone once scrolled ── */
     const heroTopFill = document.getElementById('hero-top-fill');
