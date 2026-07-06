@@ -478,25 +478,30 @@
     .timeline-item {
       display: grid;
       grid-template-columns: var(--timeline-time-col) var(--timeline-track-col) 1fr;
+      grid-template-rows: auto auto;
       column-gap: var(--timeline-col-gap);
-      align-items: start;
+      row-gap: 8px;
+      align-items: center;
       margin-bottom: 40px;
     }
 
     .timeline-time {
       grid-column: 1;
+      grid-row: 1;
+      align-self: center;
       flex-shrink: 0;
       font-family: 'Cormorant Garamond', serif;
       font-size: 17px;
       font-variant-numeric: tabular-nums;
       letter-spacing: .05em;
       color: var(--blush);
-      padding-top: 3px;
       text-align: left;
     }
 
     .timeline-dot {
       grid-column: 2;
+      grid-row: 1;
+      align-self: center;
       position: relative;
       z-index: 1;
       justify-self: center;
@@ -504,23 +509,26 @@
       height: 10px;
       border-radius: 50%;
       background: var(--gold-lt);
-      margin-top: 6px;
     }
 
     .timeline-content {
-      grid-column: 3;
-      min-width: 0;
+      display: contents;
     }
 
     .timeline-content h4 {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
       font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
       font-size: 20px;
       font-weight: 400;
       color: #2E2A26;
-      margin-bottom: 4px;
+      margin-bottom: 0;
     }
 
     .timeline-content p {
+      grid-column: 3;
+      grid-row: 2;
       font-size: 14px;
       color: var(--stone);
       line-height: 1.7;
