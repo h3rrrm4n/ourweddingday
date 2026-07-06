@@ -592,6 +592,37 @@
     #seal-tap.is-active {
       display: block;
     }
+
+    /* ── Background music toggle ── */
+    #music-toggle {
+      position: fixed;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+      right: calc(env(safe-area-inset-right, 0px) + 20px);
+      z-index: 400;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(20, 20, 20, 0.45);
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease, background 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(8px);
+    }
+
+    #music-toggle.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #music-toggle.is-playing {
+      background: rgba(20, 20, 20, 0.65);
+    }
   </style>
 </head>
 <body>
@@ -628,6 +659,9 @@
     <button id="seal-tap" type="button" aria-label="Open invitation"></button>
   </div>
 
+  <audio id="wedding-music" loop preload="auto" src="assets/wedding-music.mp3"></audio>
+  <button id="music-toggle" type="button" aria-label="Toggle music" title="Music">♫</button>
+
   <script>
     (function () {
       var overlay = document.getElementById('video-landing');
@@ -635,6 +669,39 @@
       var poster = document.getElementById('clip1-poster');
       var clip2 = document.getElementById('clip2-video');
       var sealTap = document.getElementById('seal-tap');
+      var weddingMusic = document.getElementById('wedding-music');
+      var musicToggle = document.getElementById('music-toggle');
+      var musicStarted = false;
+
+      function startWeddingMusic() {
+        if (!weddingMusic || musicStarted) return;
+        musicStarted = true;
+        weddingMusic.volume = 0.65;
+        var playPromise = weddingMusic.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(function () {
+            if (musicToggle) {
+              musicToggle.classList.add('is-visible', 'is-playing');
+              musicToggle.textContent = '♫';
+            }
+          }).catch(function () {
+            musicStarted = false;
+            if (musicToggle) musicToggle.classList.add('is-visible');
+          });
+        }
+      }
+
+      if (musicToggle && weddingMusic) {
+        musicToggle.addEventListener('click', function () {
+          if (weddingMusic.paused) {
+            weddingMusic.play();
+            musicToggle.classList.add('is-playing');
+          } else {
+            weddingMusic.pause();
+            musicToggle.classList.remove('is-playing');
+          }
+        });
+      }
 
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
@@ -666,6 +733,7 @@
         document.body.style.overflow = '';
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
         window.dispatchEvent(new Event('hero-top-update'));
+        if (musicToggle) musicToggle.classList.add('is-visible');
       }
 
       // Hold clip1 on its last decoded frame — identical pixels, no img swap.
@@ -713,6 +781,7 @@
       }
 
       sealTap.addEventListener('click', function () {
+        startWeddingMusic();
         sealTap.classList.remove('is-active');
         clip2.currentTime = 0;
         clip2.addEventListener('playing', revealClip2, { once: true });
