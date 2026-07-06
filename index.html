@@ -368,7 +368,7 @@
 
     .calendar-month {
       font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(13px, 2.4vw, 16px);
+      font-size: clamp(14px, 2.6vw, 18px);
       font-weight: 500;
       letter-spacing: 0.22em;
       color: #8B7362;
@@ -378,38 +378,26 @@
     .calendar {
       max-width: 360px;
       margin: 0 auto;
-      border: 1px solid rgba(139, 115, 98, 0.28);
-      border-radius: 14px;
-      overflow: hidden;
-      background: rgba(255, 253, 250, 0.5);
-      box-shadow: 0 10px 36px rgba(46, 42, 38, 0.04);
     }
 
     .calendar__weekdays,
     .calendar__days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 0;
+      gap: 6px;
     }
 
     .calendar__weekdays {
-      margin-bottom: 0;
-      border-bottom: 1px solid rgba(139, 115, 98, 0.3);
-      background: rgba(255, 255, 255, 0.28);
+      margin-bottom: 10px;
     }
 
     .calendar__weekday {
       font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       color: #9B8574;
-      padding: 10px 0 8px;
-      border-right: 1px solid rgba(139, 115, 98, 0.16);
-    }
-
-    .calendar__weekday:last-child {
-      border-right: none;
+      padding: 4px 0;
     }
 
     .calendar__day {
@@ -418,20 +406,10 @@
       align-items: center;
       justify-content: center;
       font-family: 'Cormorant Garamond', 'Noto Serif Armenian', Georgia, serif;
-      font-size: clamp(16px, 4.2vw, 20px);
+      font-size: clamp(18px, 4.8vw, 23px);
       font-weight: 400;
       color: #8D7666;
       position: relative;
-      border-right: 1px solid rgba(139, 115, 98, 0.16);
-      border-bottom: 1px solid rgba(139, 115, 98, 0.16);
-    }
-
-    .calendar__day:nth-child(7n) {
-      border-right: none;
-    }
-
-    .calendar__day:last-child {
-      border-bottom: none;
     }
 
     .calendar__day.is-empty {
@@ -469,13 +447,17 @@
         max-width: 300px;
       }
 
+      .calendar__weekdays,
+      .calendar__days {
+        gap: 4px;
+      }
+
       .calendar__weekday {
-        font-size: 10px;
-        padding: 8px 0 6px;
+        font-size: 11px;
       }
 
       .calendar__day {
-        font-size: 15px;
+        font-size: 17px;
       }
     }
 
