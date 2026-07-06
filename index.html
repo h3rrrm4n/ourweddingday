@@ -53,6 +53,14 @@
       overscroll-behavior-y: none;
     }
 
+    body.envelope-phase {
+      background-color: var(--envelope-edge);
+    }
+
+    body.invitation-phase {
+      background-color: var(--milky-white);
+    }
+
     body {
       background-color: var(--milky-white);
       color: var(--ink);
@@ -500,6 +508,21 @@
     #video-landing.is-hidden {
       opacity: 0;
       pointer-events: none;
+      visibility: hidden;
+    }
+
+    #video-landing.is-revealing {
+      background: var(--milky-white);
+    }
+
+    #video-landing.is-revealing .envelope-backdrop {
+      background: var(--milky-white);
+    }
+
+    #video-landing.is-revealing video,
+    #video-landing.is-revealing img {
+      opacity: 0 !important;
+      transition: none;
     }
 
     /* Solid fill behind media — matches envelope edge color exactly */
@@ -598,15 +621,30 @@
 
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('envelope-phase');
 
       var tapReady = false;
+      var invitationRevealed = false;
 
       function revealInvitation() {
-        overlay.classList.add('is-hidden');
+        if (invitationRevealed) return;
+        invitationRevealed = true;
+
+        // Snap page chrome to milky white before the overlay fades out
         document.documentElement.classList.remove('envelope-phase');
         document.documentElement.classList.add('invitation-phase');
+        document.body.classList.remove('envelope-phase');
+        document.body.classList.add('invitation-phase');
+
         var themeMeta = document.querySelector('meta[name="theme-color"]');
         if (themeMeta) themeMeta.setAttribute('content', '#FAF8F5');
+
+        overlay.classList.add('is-revealing');
+        clip1.style.opacity = '0';
+        clip2.style.opacity = '0';
+        poster.style.opacity = '0';
+
+        overlay.classList.add('is-hidden');
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
