@@ -536,7 +536,7 @@
 
   <!-- ══ VIDEO LANDING ══
        1. clip1 plays automatically ("Open This" text forming over the sealed envelope)
-       2. it freezes on a static screenshot of its own last frame — this is where the tap lives
+       2. it freezes on its own last frame — this is where the tap lives
        3. tapping the seal plays clip2 (the envelope opening)
        4. clip2's ending (a near-white frame) crossfades into the invitation page -->
   <div id="video-landing">
@@ -574,6 +574,8 @@
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
 
+      var tapReady = false;
+
       function revealInvitation() {
         overlay.classList.add('is-hidden');
         document.documentElement.style.overflow = '';
@@ -581,19 +583,35 @@
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
       }
 
-      // clip1 and the poster share an identical frame, so simply
-      // crossfading their opacity (both already painted, nothing to
-      // wait for) is enough to make the swap invisible.
+      // Hold clip1 on its last decoded frame — identical pixels, no img swap.
+      function freezeClip1() {
+        if (!clip1.duration || !isFinite(clip1.duration)) return;
+        clip1.pause();
+        clip1.currentTime = Math.max(0, clip1.duration - 0.04);
+      }
+
       function showTapState() {
-        clip1.classList.remove('is-active');
-        poster.classList.add('is-active');
+        if (tapReady) return;
+        tapReady = true;
+        freezeClip1();
         sealTap.classList.add('is-active');
       }
 
-      // If clip1 can't play for any reason, skip straight to the static
-      // tap screen rather than leaving a blank overlay.
+      // Pause one frame before the end so the browser never clears the canvas.
+      clip1.addEventListener('timeupdate', function () {
+        if (!tapReady && clip1.duration && clip1.currentTime >= clip1.duration - 0.1) {
+          showTapState();
+        }
+      });
       clip1.addEventListener('ended', showTapState);
-      clip1.addEventListener('error', showTapState);
+      clip1.addEventListener('error', function () {
+        poster.classList.add('is-active');
+        showTapState();
+      });
+
+      if (poster.decode) {
+        poster.decode().catch(function () {});
+      }
 
       // clip2 has been silently buffering in the background since page
       // load (it's mounted with opacity:0, never display:none, so the
