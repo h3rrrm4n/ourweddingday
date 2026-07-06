@@ -873,125 +873,13 @@
         background-color: #F7F4EF;
       }
     }
-
-    /* ════════════════════════════════════════
-       IN-APP BROWSER GATE — Telegram, etc.
-    ════════════════════════════════════════ */
-    #inapp-browser-gate {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 28px 64px;
-      text-align: center;
-      background-color: #F7F4EF;
-      background-image:
-        radial-gradient(rgba(46, 42, 38, 0.04) 0.6px, transparent 0.6px);
-      background-size: 3px 3px;
-    }
-
-    html.inapp-browser-phase #inapp-browser-gate {
-      display: flex;
-    }
-
-    html.inapp-browser-phase #mobile-invitation > :not(#inapp-browser-gate) {
-      display: none !important;
-    }
-
-    html.inapp-browser-phase,
-    html.inapp-browser-phase body {
-      overflow: hidden;
-    }
-
-    .inapp-browser-gate__heading {
-      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
-      font-size: clamp(24px, 5vw, 34px);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink);
-      line-height: 1.35;
-      max-width: 14em;
-      margin-bottom: 20px;
-    }
-
-    .inapp-browser-gate__sub {
-      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
-      font-size: clamp(17px, 4vw, 21px);
-      font-weight: 400;
-      color: var(--stone);
-      line-height: 1.6;
-      max-width: 22em;
-      margin-bottom: 32px;
-    }
-
-    .inapp-browser-gate__hint {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--stone);
-      line-height: 1.65;
-      max-width: 24em;
-      margin-top: 20px;
-    }
-
-    .inapp-browser-gate__actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: min(100%, 280px);
-    }
-
-    .inapp-browser-gate__button {
-      display: block;
-      width: 100%;
-      padding: 14px 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(139, 115, 98, 0.35);
-      background: #8B7362;
-      color: #fff;
-      font-family: 'Noto Serif Armenian', 'Inter', system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .inapp-browser-gate__button--secondary {
-      background: rgba(255, 255, 255, 0.72);
-      color: #8B7362;
-    }
-
-    .inapp-browser-gate__button.is-copied {
-      background: rgba(255, 255, 255, 0.72);
-      color: #8B7362;
-    }
   </style>
   <script>
     (function () {
       var mq = window.matchMedia('(max-width: 767px) and (orientation: portrait)');
-
-      function isInAppBrowser() {
-        var ua = navigator.userAgent || '';
-        if (/Telegram/i.test(ua)) return true;
-        if (window.TelegramWebview) return true;
-        return false;
-      }
-
       function updateView() {
-        var mobileInvitation = mq.matches;
-        document.documentElement.classList.toggle('mobile-invitation-view', mobileInvitation);
-        document.documentElement.classList.toggle(
-          'inapp-browser-phase',
-          mobileInvitation && isInAppBrowser()
-        );
+        document.documentElement.classList.toggle('mobile-invitation-view', mq.matches);
       }
-
       updateView();
       if (mq.addEventListener) mq.addEventListener('change', updateView);
       else mq.addListener(updateView);
@@ -1014,21 +902,6 @@
   </div>
 
   <div id="mobile-invitation">
-
-  <div id="inapp-browser-gate">
-    <h1 class="inapp-browser-gate__heading">Բացեք բրաուզերում</h1>
-    <p class="inapp-browser-gate__sub">Հրավերատոմսը Telegram-ի ներսում չի աշխատում։ Բացեք այն Ձեր հեռախոսի սովորական բրաուզերում։</p>
-    <div class="inapp-browser-gate__actions">
-      <a id="open-external-browser" class="inapp-browser-gate__button" href="#">Բացել բրաուզերում</a>
-      <button id="copy-invitation-link" class="inapp-browser-gate__button inapp-browser-gate__button--secondary" type="button">Պատճենել հղումը</button>
-    </div>
-    <p id="inapp-browser-ios-hint" class="inapp-browser-gate__hint" hidden>
-      Եթե չի բացվում ավտոմատ, սեղմեք ⋯ վերևի աջ անկյունում → «Բացել Safari-ում»։
-    </p>
-    <p id="inapp-browser-android-hint" class="inapp-browser-gate__hint" hidden>
-      Եթե չի բացվում ավտոմատ, սեղմեք ⋯ մենյուից → «Բացել արտաքին բրաուզերում»։
-    </p>
-  </div>
 
   <!-- Yandex maps preload — starts during envelope intro -->
   <div id="map-preload" class="map-preload" aria-hidden="true">
@@ -1093,7 +966,6 @@
   <script>
     (function () {
       if (!window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
-      if (document.documentElement.classList.contains('inapp-browser-phase')) return;
 
       var overlay = document.getElementById('video-landing');
       var clip1 = document.getElementById('clip1-video');
@@ -1400,73 +1272,9 @@
 
 
   <script>
-    /* ── Telegram / in-app browser → open in system browser ── */
-    (function () {
-      if (!document.documentElement.classList.contains('inapp-browser-phase')) return;
-
-      var gate = document.getElementById('inapp-browser-gate');
-      var openLink = document.getElementById('open-external-browser');
-      var copyButton = document.getElementById('copy-invitation-link');
-      var iosHint = document.getElementById('inapp-browser-ios-hint');
-      var androidHint = document.getElementById('inapp-browser-android-hint');
-      var ua = navigator.userAgent || '';
-      var isAndroid = /android/i.test(ua);
-      var isIOS = /iphone|ipad|ipod/i.test(ua);
-      var pageUrl = window.location.href.split('#')[0];
-
-      if (!gate || !openLink || !copyButton) return;
-
-      if (isIOS && iosHint) iosHint.hidden = false;
-      if (isAndroid && androidHint) androidHint.hidden = false;
-
-      function buildAndroidIntent(url) {
-        var stripped = url.replace(/^https?:\/\//, '');
-        return 'intent://' + stripped + '#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end';
-      }
-
-      function openInExternalBrowser(event) {
-        if (event) event.preventDefault();
-
-        if (isAndroid) {
-          window.location.href = buildAndroidIntent(pageUrl);
-          return;
-        }
-
-        if (isIOS) {
-          window.location.href = 'x-safari-https://' + pageUrl.replace(/^https?:\/\//, '');
-          window.setTimeout(function () {
-            window.location.href = 'googlechromes://' + pageUrl.replace(/^https?:\/\//, '');
-          }, 700);
-          return;
-        }
-
-        window.open(pageUrl, '_blank', 'noopener');
-      }
-
-      openLink.addEventListener('click', openInExternalBrowser);
-
-      copyButton.addEventListener('click', function () {
-        function markCopied() {
-          copyButton.textContent = 'Հղումը պատճենված է';
-          copyButton.classList.add('is-copied');
-        }
-
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(pageUrl).then(markCopied).catch(function () {
-            window.prompt('Պատճենեք հղումը', pageUrl);
-          });
-          return;
-        }
-
-        window.prompt('Պատճենեք հղումը', pageUrl);
-        markCopied();
-      });
-    })();
-
     /* ── Mount preloaded Yandex map iframes into timeline slots ── */
     (function () {
       if (!window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
-      if (document.documentElement.classList.contains('inapp-browser-phase')) return;
 
       var preload = document.getElementById('map-preload');
       if (!preload) return;
