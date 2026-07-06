@@ -116,12 +116,23 @@
       /* Show the full graphic — no side cropping */
       object-fit: contain;
       object-position: center center;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 2.8s cubic-bezier(.22, 1, .36, 1),
+                  transform 3.4s cubic-bezier(.22, 1, .36, 1);
+      will-change: opacity, transform;
     }
 
-    /* No slide-up on the hero — only a gentle fade so it stays full-screen */
+    .save-the-date-hero.is-revealed img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Hero section stays in place — image handles the reveal */
     .save-the-date-hero.fade-in {
       transform: none;
-      transition: opacity 1s cubic-bezier(.4,0,.2,1);
+      opacity: 1;
+      transition: none;
     }
 
     .save-the-date-hero.fade-in.visible {
@@ -1103,6 +1114,13 @@
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
         window.dispatchEvent(new Event('hero-top-update'));
         if (musicToggle) musicToggle.classList.add('is-visible');
+
+        var hero = document.querySelector('.save-the-date-hero');
+        if (hero) {
+          window.setTimeout(function () {
+            hero.classList.add('is-revealed', 'visible');
+          }, 200);
+        }
       }
 
       // Hold clip1 on its last decoded frame — identical pixels, no img swap.
@@ -1339,9 +1357,8 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    /* ── Photo hero + save-the-date visible immediately (above the fold,
-       revealed the moment the video intro finishes) ── */
-    document.querySelectorAll('.save-the-date-hero .fade-in, .wedding-countdown.fade-in').forEach((el, i) => {
+    /* ── Countdown visible after envelope (hero reveals from revealInvitation) ── */
+    document.querySelectorAll('.wedding-countdown.fade-in').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
 
