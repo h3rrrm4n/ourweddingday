@@ -143,42 +143,70 @@
       opacity: 1;
     }
 
-    /* Smooth blend from hero black letterbox into countdown ivory */
+    /* Smoke-style blend from hero black into countdown ivory */
     .hero-countdown-fade {
-      display: block;
-      width: 100%;
       position: relative;
       z-index: 2;
-      /* Overlap the hero bottom so black continues seamlessly from the image */
-      margin-top: clamp(-96px, -16vh, -148px);
-      height: clamp(180px, 30vh, 260px);
-      background: linear-gradient(
-        180deg,
-        #000000 0%,
-        #000000 54%,
-        #080706 60%,
-        #141210 66%,
-        #221f1c 71%,
-        #342f2b 76%,
-        #4a443e 80%,
-        #625a52 84%,
-        #7a7268 87%,
-        #928a80 90%,
-        #a8a095 92.5%,
-        #bcb5ab 94.5%,
-        #cec7bd 96%,
-        #ddd7cf 97.5%,
-        #e8e4dc 98.5%,
-        #f0ece6 99.2%,
-        #F8F6F2 100%
-      );
+      width: 100%;
+      margin-top: clamp(-72px, -12vh, -112px);
+      height: clamp(132px, 24vh, 200px);
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    /* Continue pure black from the image — no brown band */
+    .hero-countdown-fade::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52%;
+      background: #000000;
+    }
+
+    .hero-countdown-fade__smoke {
+      position: absolute;
+      left: -20%;
+      right: -20%;
+      bottom: 0;
+      display: block;
+      border-radius: 50%;
+      background: #F8F6F2;
+      pointer-events: none;
+    }
+
+    /* Layered blur = soft smoke rising into the black */
+    .hero-countdown-fade__smoke--a {
+      height: clamp(100px, 18vh, 160px);
+      bottom: -20%;
+      filter: blur(52px);
+      opacity: 0.42;
+      transform: scaleX(1.15);
+    }
+
+    .hero-countdown-fade__smoke--b {
+      height: clamp(72px, 13vh, 120px);
+      bottom: -8%;
+      filter: blur(30px);
+      opacity: 0.62;
+      transform: scaleX(1.08);
+    }
+
+    .hero-countdown-fade__smoke--c {
+      height: clamp(48px, 9vh, 80px);
+      bottom: 4%;
+      filter: blur(14px);
+      opacity: 0.88;
     }
 
     /* ════════════════════════════════════════
        WEDDING COUNTDOWN — classic luxury invitation
     ════════════════════════════════════════ */
     .wedding-countdown {
-      margin-top: -1px;
+      position: relative;
+      z-index: 1;
+      margin-top: clamp(-28px, -5vh, -44px);
       background: #F8F6F2;
       padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(64px, 11vw, 112px);
       text-align: center;
@@ -903,7 +931,11 @@
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
 
-  <div class="hero-countdown-fade" aria-hidden="true"></div>
+  <div class="hero-countdown-fade" aria-hidden="true">
+    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--a"></span>
+    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--b"></span>
+    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--c"></span>
+  </div>
 
   <section class="wedding-countdown fade-in">
     <h2 class="countdown-heading">ՄԻՆՉԵՎ ՄԵՐ ՀԱՐՍԱՆԻՔԸ ՄՆԱՑԵԼ Է</h2>
