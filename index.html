@@ -250,7 +250,7 @@
     .wedding-countdown {
       margin-top: -1px;
       background: #F8F6F2;
-      padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(64px, 11vw, 112px);
+      padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(28px, 5vw, 40px);
       text-align: center;
     }
 
@@ -353,6 +353,122 @@
     }
 
     /* ════════════════════════════════════════
+       WEDDING CALENDAR — August 2026
+    ════════════════════════════════════════ */
+    .wedding-calendar {
+      margin-top: -1px;
+      background: #F8F6F2;
+      padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 11vw, 96px);
+      text-align: center;
+    }
+
+    .wedding-countdown + .wedding-calendar {
+      padding-top: 0;
+    }
+
+    .calendar-month {
+      font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(13px, 2.4vw, 16px);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: #8B7362;
+      margin: 0 auto clamp(28px, 5vw, 40px);
+    }
+
+    .calendar {
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .calendar__weekdays,
+    .calendar__days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .calendar__weekdays {
+      margin-bottom: 10px;
+    }
+
+    .calendar__weekday {
+      font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #9B8574;
+      padding: 4px 0;
+    }
+
+    .calendar__day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', Georgia, serif;
+      font-size: clamp(16px, 4.2vw, 20px);
+      font-weight: 400;
+      color: #8D7666;
+      position: relative;
+    }
+
+    .calendar__day.is-empty {
+      visibility: hidden;
+    }
+
+    .calendar__day.is-wedding {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .calendar__day.is-wedding::before {
+      content: '';
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 88%;
+      height: 88%;
+      transform: translate(-50%, -54%);
+      background-color: #8B7362;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.4-8-11.2C4 6.1 6.7 4 9.5 4c1.7 0 3.3.9 4.1 2.3.8-1.4 2.4-2.3 4.1-2.3C20.3 4 23 6.1 23 9.8 23 15.6 12 21 12 21z'/%3E%3C/svg%3E");
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.4-8-11.2C4 6.1 6.7 4 9.5 4c1.7 0 3.3.9 4.1 2.3.8-1.4 2.4-2.3 4.1-2.3C20.3 4 23 6.1 23 9.8 23 15.6 12 21 12 21z'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+    }
+
+    .calendar__num {
+      position: relative;
+      z-index: 1;
+      line-height: 1;
+    }
+
+    @media (max-width: 480px) {
+      .wedding-calendar {
+        padding-bottom: 56px;
+      }
+
+      .calendar {
+        max-width: 300px;
+      }
+
+      .calendar__weekdays,
+      .calendar__days {
+        gap: 4px;
+      }
+
+      .calendar__weekday {
+        font-size: 10px;
+      }
+
+      .calendar__day {
+        font-size: 15px;
+      }
+    }
+
+    /* ════════════════════════════════════════
        SECTIONS — shared
     ════════════════════════════════════════ */
     section {
@@ -361,6 +477,7 @@
       margin: 0 auto;
     }
 
+    .divider {
       width: 60px;
       height: 1px;
       background: var(--gold-lt);
@@ -376,6 +493,8 @@
       line-height: 1.85;
     }
 
+    /* ════════════════════════════════════════
+       TIMELINE / ORDER OF DAY
     ════════════════════════════════════════ */
     .timeline { max-width: 640px; }
 
@@ -1049,6 +1168,59 @@
       <div class="countdown__block">
         <span class="countdown__value" data-unit="seconds">00</span>
         <span class="countdown__label">վայրկյան</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wedding-calendar fade-in" aria-label="Օգոստոս 2026">
+    <h2 class="calendar-month">ՕԳՈՍՏՈՍ 2026</h2>
+    <div class="calendar">
+      <div class="calendar__weekdays" aria-hidden="true">
+        <span class="calendar__weekday">Երկ</span>
+        <span class="calendar__weekday">Երք</span>
+        <span class="calendar__weekday">Չոր</span>
+        <span class="calendar__weekday">Հնգ</span>
+        <span class="calendar__weekday">Ուրբ</span>
+        <span class="calendar__weekday">Շաբ</span>
+        <span class="calendar__weekday">Կիր</span>
+      </div>
+      <div class="calendar__days">
+        <span class="calendar__day is-empty"></span>
+        <span class="calendar__day is-empty"></span>
+        <span class="calendar__day is-empty"></span>
+        <span class="calendar__day is-empty"></span>
+        <span class="calendar__day is-empty"></span>
+        <span class="calendar__day"><span class="calendar__num">1</span></span>
+        <span class="calendar__day"><span class="calendar__num">2</span></span>
+        <span class="calendar__day"><span class="calendar__num">3</span></span>
+        <span class="calendar__day"><span class="calendar__num">4</span></span>
+        <span class="calendar__day"><span class="calendar__num">5</span></span>
+        <span class="calendar__day"><span class="calendar__num">6</span></span>
+        <span class="calendar__day"><span class="calendar__num">7</span></span>
+        <span class="calendar__day"><span class="calendar__num">8</span></span>
+        <span class="calendar__day"><span class="calendar__num">9</span></span>
+        <span class="calendar__day"><span class="calendar__num">10</span></span>
+        <span class="calendar__day"><span class="calendar__num">11</span></span>
+        <span class="calendar__day"><span class="calendar__num">12</span></span>
+        <span class="calendar__day"><span class="calendar__num">13</span></span>
+        <span class="calendar__day"><span class="calendar__num">14</span></span>
+        <span class="calendar__day is-wedding" aria-label="Հարսանիք՝ օգոստոսի 15"><span class="calendar__num">15</span></span>
+        <span class="calendar__day"><span class="calendar__num">16</span></span>
+        <span class="calendar__day"><span class="calendar__num">17</span></span>
+        <span class="calendar__day"><span class="calendar__num">18</span></span>
+        <span class="calendar__day"><span class="calendar__num">19</span></span>
+        <span class="calendar__day"><span class="calendar__num">20</span></span>
+        <span class="calendar__day"><span class="calendar__num">21</span></span>
+        <span class="calendar__day"><span class="calendar__num">22</span></span>
+        <span class="calendar__day"><span class="calendar__num">23</span></span>
+        <span class="calendar__day"><span class="calendar__num">24</span></span>
+        <span class="calendar__day"><span class="calendar__num">25</span></span>
+        <span class="calendar__day"><span class="calendar__num">26</span></span>
+        <span class="calendar__day"><span class="calendar__num">27</span></span>
+        <span class="calendar__day"><span class="calendar__num">28</span></span>
+        <span class="calendar__day"><span class="calendar__num">29</span></span>
+        <span class="calendar__day"><span class="calendar__num">30</span></span>
+        <span class="calendar__day"><span class="calendar__num">31</span></span>
       </div>
     </div>
   </section>
