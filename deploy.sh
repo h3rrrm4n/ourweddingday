@@ -37,7 +37,9 @@ rsync -avz -e "$RSYNC_SSH" \
   "$LOCAL_DIR/assets/" \
   "$SERVER:$STAGING/assets/"
 
-"${SSH_BASE[@]}" "$SERVER" bash -s <<'REMOTE'
+HERMAN_PASS="$(printenv 'herman pass' 2>/dev/null || true)"
+
+"${SSH_BASE[@]}" "$SERVER" HERMAN_PASS="$HERMAN_PASS" bash -s <<'REMOTE'
 set -euo pipefail
 STAGING="/tmp/ourweddingday-deploy"
 TARGET="/var/www/ourweddingday"
@@ -45,8 +47,8 @@ TARGET="/var/www/ourweddingday"
 sudo_cmd() {
   if sudo -n true 2>/dev/null; then
     sudo "$@"
-  elif [[ -n "${herman pass:-}" ]]; then
-    echo "${herman pass}" | sudo -S "$@"
+  elif [[ -n "${HERMAN_PASS:-}" ]]; then
+    printf '%s\n' "$HERMAN_PASS" | sudo -S "$@"
   else
     sudo "$@"
   fi
