@@ -719,7 +719,7 @@
     <button id="seal-tap" type="button" aria-label="Open invitation"></button>
   </div>
 
-  <audio id="wedding-music" loop preload="auto" src="assets/wedding-music.m4a"></audio>
+  <audio id="wedding-music" loop preload="auto" src="assets/wedding-music.m4a" disableRemotePlayback></audio>
   <button id="music-toggle" type="button" aria-label="Toggle music" title="Music">♫</button>
 
   <script>
@@ -732,10 +732,37 @@
       var weddingMusic = document.getElementById('wedding-music');
       var musicToggle = document.getElementById('music-toggle');
       var musicStarted = false;
+      var WEDDING_MUSIC_SRC = 'assets/wedding-music.m4a';
+
+      function ensureMusicSource() {
+        if (!weddingMusic.src || weddingMusic.src.indexOf('wedding-music') === -1) {
+          weddingMusic.src = WEDDING_MUSIC_SRC;
+          weddingMusic.load();
+        }
+      }
+
+      function clearMediaSession() {
+        if (!('mediaSession' in navigator)) return;
+        try {
+          navigator.mediaSession.metadata = null;
+          navigator.mediaSession.playbackState = 'none';
+        } catch (e) {}
+      }
+
+      function stopWeddingMusic() {
+        if (!weddingMusic) return;
+        weddingMusic.pause();
+        weddingMusic.currentTime = 0;
+        weddingMusic.removeAttribute('src');
+        weddingMusic.load();
+        clearMediaSession();
+        if (musicToggle) musicToggle.classList.remove('is-playing');
+      }
 
       function startWeddingMusic() {
         if (!weddingMusic || musicStarted) return;
         musicStarted = true;
+        ensureMusicSource();
         weddingMusic.volume = 0.65;
         var playPromise = weddingMusic.play();
         if (playPromise && typeof playPromise.then === 'function') {
@@ -751,21 +778,19 @@
         }
       }
 
-      function pauseWeddingMusic() {
-        if (!weddingMusic) return;
-        weddingMusic.pause();
-        if (musicToggle) musicToggle.classList.remove('is-playing');
-      }
-
       document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'hidden') pauseWeddingMusic();
+        if (document.visibilityState === 'hidden') stopWeddingMusic();
       });
 
-      window.addEventListener('pagehide', pauseWeddingMusic);
+      window.addEventListener('pagehide', stopWeddingMusic);
+      window.addEventListener('blur', stopWeddingMusic);
+      document.addEventListener('freeze', stopWeddingMusic);
 
       if (musicToggle && weddingMusic) {
         musicToggle.addEventListener('click', function () {
-          if (weddingMusic.paused) {
+          if (weddingMusic.paused || !weddingMusic.src) {
+            ensureMusicSource();
+            weddingMusic.volume = 0.65;
             weddingMusic.play();
             musicToggle.classList.add('is-playing');
           } else {
