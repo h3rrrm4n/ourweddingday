@@ -143,47 +143,6 @@
       opacity: 1;
     }
 
-    .invite-section {
-      background: #FDFCFA;
-      padding-bottom: 8px;
-    }
-
-    /* Invitation message card below the full-screen image */
-    .invite-card {
-      position: relative;
-      max-width: 560px;
-      margin: 0 auto;
-      background: #FDFCFA;
-      padding: 48px 32px 8px;
-      text-align: center;
-    }
-
-    .invite-card-heading {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--stone);
-      margin-bottom: 10px;
-    }
-
-    .invite-card-script {
-      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
-      font-style: italic;
-      font-size: clamp(28px, 6vw, 40px);
-      color: var(--blush);
-      margin-bottom: 22px;
-    }
-
-    .invite-card-message {
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--stone);
-      max-width: 380px;
-      margin: 0 auto;
-    }
-
     /* ════════════════════════════════════════
        WEDDING COUNTDOWN
     ════════════════════════════════════════ */
@@ -899,17 +858,6 @@
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
 
-  <section class="invite-section">
-    <div class="invite-card fade-in">
-      <p class="invite-card-heading">You are invited to</p>
-      <p class="invite-card-script">our wedding</p>
-      <p class="invite-card-message">
-        We would love for you to be part of this special moment with us —
-        please join us as we begin our new life together.
-      </p>
-    </div>
-  </section>
-
   <section class="wedding-countdown fade-in" aria-hidden="true">
     <div class="countdown" id="wedding-countdown">
       <div class="countdown__unit">
@@ -1079,7 +1027,7 @@
 
     /* ── Photo hero + save-the-date visible immediately (above the fold,
        revealed the moment the video intro finishes) ── */
-    document.querySelectorAll('.save-the-date-hero .fade-in, .invite-section .fade-in, .wedding-countdown.fade-in, .hero .fade-in').forEach((el, i) => {
+    document.querySelectorAll('.save-the-date-hero .fade-in, .wedding-countdown.fade-in, .hero .fade-in').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
 
