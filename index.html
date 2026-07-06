@@ -145,27 +145,22 @@
 
     /* Smooth blend from hero black letterbox into countdown ivory */
     .hero-countdown-fade {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
       display: block;
       width: 100%;
-      height: clamp(108px, 18vh, 168px);
-      pointer-events: none;
+      margin-top: -2px;
+      height: clamp(88px, 14vh, 140px);
       background: linear-gradient(
         180deg,
         #000000 0%,
-        #000000 12%,
-        #1a1816 22%,
-        #3a3530 34%,
-        #6a6258 48%,
-        #9a9186 60%,
-        #c8c0b4 72%,
-        #ddd7cf 82%,
-        #ece8e2 90%,
-        #f4f1eb 96%,
+        #000000 14%,
+        #1a1816 24%,
+        #3a3530 36%,
+        #6a6258 50%,
+        #9a9186 62%,
+        #c8c0b4 74%,
+        #ddd7cf 84%,
+        #ece8e2 92%,
+        #f4f1eb 97%,
         #F8F6F2 100%
       );
     }
@@ -897,8 +892,9 @@
   <!-- ══ SAVE THE DATE — full-screen, first thing after the envelope ══ -->
   <section class="save-the-date-hero fade-in">
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
-    <div class="hero-countdown-fade" aria-hidden="true"></div>
   </section>
+
+  <div class="hero-countdown-fade" aria-hidden="true"></div>
 
   <section class="wedding-countdown fade-in">
     <h2 class="countdown-heading">ՄԻՆՉԵՎ ՄԵՐ ՀԱՐՍԱՆԻՔԸ ՄՆԱՑԵԼ Է</h2>
