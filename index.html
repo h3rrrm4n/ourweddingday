@@ -99,7 +99,7 @@
       min-height: -webkit-fill-available;
       margin: 0;
       padding: 0;
-      overflow: visible;
+      overflow: hidden;
       background: #000;
     }
 
@@ -112,28 +112,6 @@
       /* Show the full graphic — no side cropping */
       object-fit: contain;
       object-position: center center;
-    }
-
-    /* Ivory smoke rising from inside the hero — softens the black letterbox edge */
-    .save-the-date-hero::after {
-      content: '';
-      position: absolute;
-      left: -30%;
-      right: -30%;
-      bottom: -18%;
-      height: 42%;
-      border-radius: 50%;
-      background: radial-gradient(
-        ellipse 120% 90% at 50% 100%,
-        rgba(248, 246, 242, 0.95) 0%,
-        rgba(248, 246, 242, 0.55) 38%,
-        rgba(248, 246, 242, 0.18) 68%,
-        transparent 100%
-      );
-      filter: blur(56px);
-      opacity: 0.72;
-      z-index: 2;
-      pointer-events: none;
     }
 
     /* No slide-up on the hero — only a gentle fade so it stays full-screen */
@@ -165,90 +143,30 @@
       opacity: 1;
     }
 
-    /* Smoke-style blend from hero black into countdown ivory */
+    /* Smooth blend from hero black letterbox into countdown ivory */
     .hero-countdown-fade {
-      position: relative;
-      z-index: 3;
+      display: block;
       width: 100%;
-      margin-top: clamp(-120px, -22vh, -200px);
-      height: clamp(200px, 36vh, 300px);
-      overflow: visible;
-      pointer-events: none;
-    }
-
-    /* Black continues from image, then dissolves — no hard horizontal cut */
-    .hero-countdown-fade::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
+      height: clamp(108px, 18vh, 168px);
       background: linear-gradient(
         180deg,
         #000000 0%,
-        #000000 38%,
-        rgba(0, 0, 0, 0.92) 52%,
-        rgba(0, 0, 0, 0.65) 66%,
-        rgba(0, 0, 0, 0.28) 82%,
-        transparent 100%
+        #1a1816 8%,
+        #3a3530 20%,
+        #6a6258 38%,
+        #9a9186 52%,
+        #c8c0b4 66%,
+        #ddd7cf 78%,
+        #ece8e2 88%,
+        #f4f1eb 95%,
+        #F8F6F2 100%
       );
-    }
-
-    .hero-countdown-fade__smoke {
-      position: absolute;
-      left: -30%;
-      right: -30%;
-      display: block;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(
-        ellipse 130% 95% at 50% 100%,
-        #F8F6F2 0%,
-        rgba(248, 246, 242, 0.72) 42%,
-        rgba(248, 246, 242, 0.28) 72%,
-        transparent 100%
-      );
-    }
-
-    .hero-countdown-fade__smoke--a {
-      height: clamp(160px, 28vh, 240px);
-      bottom: -32%;
-      filter: blur(72px);
-      opacity: 0.58;
-      transform: scaleX(1.2);
-    }
-
-    .hero-countdown-fade__smoke--b {
-      height: clamp(120px, 22vh, 180px);
-      bottom: -14%;
-      filter: blur(48px);
-      opacity: 0.72;
-      transform: scaleX(1.12);
-    }
-
-    .hero-countdown-fade__smoke--c {
-      height: clamp(88px, 16vh, 140px);
-      bottom: 2%;
-      filter: blur(28px);
-      opacity: 0.86;
-    }
-
-    .hero-countdown-fade__smoke--d {
-      height: clamp(200px, 34vh, 280px);
-      bottom: -8%;
-      filter: blur(96px);
-      opacity: 0.38;
-      transform: scaleX(1.35);
     }
 
     /* ════════════════════════════════════════
        WEDDING COUNTDOWN — classic luxury invitation
     ════════════════════════════════════════ */
     .wedding-countdown {
-      position: relative;
-      z-index: 1;
-      margin-top: clamp(-48px, -9vh, -72px);
       background: #F8F6F2;
       padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(64px, 11vw, 112px);
       text-align: center;
@@ -973,12 +891,7 @@
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
 
-  <div class="hero-countdown-fade" aria-hidden="true">
-    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--d"></span>
-    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--a"></span>
-    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--b"></span>
-    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--c"></span>
-  </div>
+  <div class="hero-countdown-fade" aria-hidden="true"></div>
 
   <section class="wedding-countdown fade-in">
     <h2 class="countdown-heading">ՄԻՆՉԵՎ ՄԵՐ ՀԱՐՍԱՆԻՔԸ ՄՆԱՑԵԼ Է</h2>
