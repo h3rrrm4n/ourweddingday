@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#F2F1EA" />
+  <meta name="theme-color" content="#0a0a0a" />
   <!-- If added to the home screen, this lets the site launch with zero
        Safari browser chrome (address bar / toolbar) at all — the only
        way to get a truly gap-free fullscreen on iOS, since a page
@@ -70,76 +70,38 @@
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* ════════════════════════════════════════
-       PHOTO HERO — first thing the guest sees
+       SAVE THE DATE — full-screen hero after envelope
     ════════════════════════════════════════ */
-    .photo-hero {
-      position: relative;
-      background: #FDFCFA;
-    }
-
-    .photo-hero-frame {
+    .save-the-date-hero {
       position: relative;
       width: 100%;
-      aspect-ratio: 4 / 5;
-      max-height: 82vh;
+      height: 100svh;
+      min-height: 100vh;
       overflow: hidden;
+      background: #0a0a0a;
     }
 
-    .photo-hero-frame img {
+    .save-the-date-hero img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 22%;
+      object-position: center center;
     }
 
-    /* Soft scrim so the overlaid names stay legible over any part of the photo */
-    .photo-hero-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(253,252,250,.55) 0%, rgba(253,252,250,0) 30%, rgba(253,252,250,0) 78%, rgba(253,252,250,.65) 100%);
-      pointer-events: none;
+    .invite-section {
+      background: #FDFCFA;
+      padding-bottom: 8px;
     }
 
-    .photo-hero-overlay {
-      position: absolute;
-      top: 8%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      z-index: 1;
-    }
-
-    .photo-hero-names {
-      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
-      font-style: italic;
-      font-size: clamp(38px, 9vw, 64px);
-      font-weight: 400;
-      color: var(--ink);
-      letter-spacing: .01em;
-      text-shadow: 0 2px 24px rgba(253,252,250,.9), 0 1px 3px rgba(253,252,250,.9);
-    }
-
-    .photo-hero-tagline {
-      margin-top: 10px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .32em;
-      text-transform: uppercase;
-      color: var(--blush);
-    }
-
-    /* Invitation message card, overlapping the photo's bottom edge */
+    /* Invitation message card below the full-screen image */
     .invite-card {
       position: relative;
       max-width: 560px;
-      margin: -48px auto 0;
+      margin: 0 auto;
       background: #FDFCFA;
-      border-radius: 24px 24px 0 0;
       padding: 48px 32px 8px;
       text-align: center;
-      box-shadow: 0 -20px 50px -30px rgba(60,45,30,.2);
     }
 
     .invite-card-heading {
@@ -594,6 +556,7 @@
         overlay.classList.add('is-hidden');
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
+        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
       }
 
       // clip1 and the poster share an identical frame, so simply
@@ -643,16 +606,12 @@
     })();
   </script>
 
-  <!-- ══ PHOTO HERO — first thing the guest sees ══ -->
-  <section class="photo-hero">
-    <div class="photo-hero-frame fade-in">
-      <img src="assets/couple-photo-fullbleed.jpg" alt="Վահե and Մարիամ" />
-      <div class="photo-hero-overlay">
-        <p class="photo-hero-names">Վահե &amp; Մարիամ</p>
-        <p class="photo-hero-tagline">We're Getting Married</p>
-      </div>
-    </div>
+  <!-- ══ SAVE THE DATE — full-screen, first thing after the envelope ══ -->
+  <section class="save-the-date-hero fade-in">
+    <img src="assets/save-the-date.jpg" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
+  </section>
 
+  <section class="invite-section">
     <div class="invite-card fade-in">
       <p class="invite-card-heading">You are invited to</p>
       <p class="invite-card-script">our wedding</p>
@@ -663,11 +622,11 @@
     </div>
   </section>
 
-  <!-- ══ HERO ══ (date & location — names already shown in the photo above) -->
+  <!-- ══ HERO ══ (date & location) -->
   <header class="hero hero-compact">
     <p class="hero-eyebrow fade-in">Save the Date</p>
 
-    <p class="hero-date fade-in">Saturday, the Twelfth of September, 2026</p>
+    <p class="hero-date fade-in">Monday, the Fifteenth of September, 2026</p>
     <div class="divider fade-in"></div>
     <p class="hero-location fade-in">Villa Rosé — Tuscany, Italy</p>
 
@@ -784,7 +743,7 @@
   <!-- ══ FOOTER ══ -->
   <footer>
     <p class="footer-names">Վահե &amp; Մարիամ</p>
-    <p class="footer-note">September 12, 2026 · Villa Rosé, Tuscany</p>
+    <p class="footer-note">September 15, 2026 · Villa Rosé, Tuscany</p>
     <div class="divider" style="margin-top:32px;"></div>
     <p style="font-size:12px; color:var(--sand); margin-top:24px; letter-spacing:.08em;">
       Made with love &amp; a little bit of magic
@@ -805,9 +764,9 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    /* ── Photo hero + hero elements visible immediately (above the fold,
+    /* ── Photo hero + save-the-date visible immediately (above the fold,
        revealed the moment the video intro finishes) ── */
-    document.querySelectorAll('.photo-hero .fade-in, .hero .fade-in').forEach((el, i) => {
+    document.querySelectorAll('.save-the-date-hero .fade-in, .invite-section .fade-in, .hero .fade-in').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 180);
     });
 
