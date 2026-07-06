@@ -144,96 +144,109 @@
     }
 
     /* ════════════════════════════════════════
-       WEDDING COUNTDOWN
+       WEDDING COUNTDOWN — classic luxury invitation
     ════════════════════════════════════════ */
     .wedding-countdown {
       background: #F8F6F2;
-      padding: clamp(52px, 9vw, 96px) clamp(16px, 4vw, 40px);
+      padding: clamp(64px, 11vw, 112px) clamp(20px, 5vw, 48px);
+      text-align: center;
+    }
+
+    .countdown-heading {
+      font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(13px, 2.4vw, 16px);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      line-height: 1.65;
+      color: #8B7362;
+      max-width: 28em;
+      margin: 0 auto clamp(40px, 7vw, 64px);
     }
 
     .countdown {
       display: flex;
       justify-content: center;
       align-items: stretch;
-      gap: clamp(10px, 2.2vw, 22px);
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
     }
 
-    .countdown__unit {
+    .countdown__block {
       flex: 1 1 0;
       min-width: 0;
-      max-width: 132px;
-    }
-
-    .countdown__pill {
+      padding: 0 clamp(12px, 3.5vw, 36px);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100%;
-      min-height: clamp(76px, 18vw, 112px);
-      padding: clamp(16px, 3vw, 26px) clamp(14px, 3vw, 28px);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(184, 154, 106, 0.14);
-      border-radius: 999px;
-      box-shadow:
-        0 10px 32px rgba(46, 42, 38, 0.05),
-        0 2px 8px rgba(46, 42, 38, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.92);
-      transition: box-shadow 0.4s ease, transform 0.4s ease;
+      gap: clamp(10px, 2vw, 16px);
     }
 
-    .countdown__unit:hover .countdown__pill {
-      box-shadow:
-        0 14px 40px rgba(46, 42, 38, 0.07),
-        0 3px 10px rgba(46, 42, 38, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
-      transform: translateY(-1px);
+    .countdown__divider {
+      flex: 0 0 1px;
+      align-self: stretch;
+      width: 1px;
+      min-height: clamp(72px, 14vw, 96px);
+      margin: clamp(4px, 1vw, 8px) 0;
+      background: #A08878;
+      opacity: 0.45;
     }
 
     .countdown__value {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(34px, 7.5vw, 62px);
-      font-weight: 300;
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', Georgia, serif;
+      font-size: clamp(42px, 9vw, 72px);
+      font-weight: 400;
       line-height: 1;
-      letter-spacing: -0.03em;
-      color: var(--ink);
+      letter-spacing: -0.02em;
+      color: #8D7666;
       font-variant-numeric: tabular-nums;
       display: block;
-      transition: opacity 0.28s ease, transform 0.28s ease;
+      transition: opacity 0.35s ease;
     }
 
     .countdown__value.is-tick {
-      animation: countdown-tick 0.5s cubic-bezier(.4, 0, .2, 1);
+      animation: countdown-soft 0.45s ease;
     }
 
-    @keyframes countdown-tick {
-      0%   { opacity: 0.55; transform: translateY(6px) scale(0.94); }
-      45%  { opacity: 1;   transform: translateY(-3px) scale(1.03); }
-      100% { opacity: 1;   transform: translateY(0) scale(1); }
+    .countdown__label {
+      font-family: 'Noto Serif Armenian', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12px, 2.2vw, 14px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: #9B8574;
+      line-height: 1;
     }
 
-    @media (max-width: 520px) {
+    @keyframes countdown-soft {
+      0%   { opacity: 0.35; }
+      100% { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
       .wedding-countdown {
-        padding: 40px 12px 44px;
+        padding: 52px 16px 56px;
       }
 
-      .countdown {
+      .countdown-heading {
+        letter-spacing: 0.14em;
+        margin-bottom: 36px;
+      }
+
+      .countdown__block {
+        padding: 0 8px;
         gap: 8px;
       }
 
-      .countdown__unit {
-        max-width: none;
-      }
-
-      .countdown__pill {
-        min-height: 68px;
-        padding: 14px 10px;
-        border-radius: 20px;
-      }
-
       .countdown__value {
-        font-size: clamp(28px, 8.5vw, 36px);
+        font-size: clamp(34px, 10vw, 44px);
+      }
+
+      .countdown__label {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      .countdown__divider {
+        min-height: 64px;
       }
     }
 
@@ -858,27 +871,27 @@
     <img src="assets/IMG_0131.png" alt="Save the Date — Vahe &amp; Mariam, 15 September 2026" />
   </section>
 
-  <section class="wedding-countdown fade-in" aria-hidden="true">
+  <section class="wedding-countdown fade-in">
+    <h2 class="countdown-heading">ՄԻՆՉԵՎ ՄԵՐ ՀԱՐՍԱՆԻՔԸ ՄՆԱՑԵԼ Է</h2>
     <div class="countdown" id="wedding-countdown">
-      <div class="countdown__unit">
-        <div class="countdown__pill">
-          <span class="countdown__value" data-unit="days">00</span>
-        </div>
+      <div class="countdown__block">
+        <span class="countdown__value" data-unit="days">00</span>
+        <span class="countdown__label">օր</span>
       </div>
-      <div class="countdown__unit">
-        <div class="countdown__pill">
-          <span class="countdown__value" data-unit="hours">00</span>
-        </div>
+      <div class="countdown__divider" aria-hidden="true"></div>
+      <div class="countdown__block">
+        <span class="countdown__value" data-unit="hours">00</span>
+        <span class="countdown__label">ժամ</span>
       </div>
-      <div class="countdown__unit">
-        <div class="countdown__pill">
-          <span class="countdown__value" data-unit="minutes">00</span>
-        </div>
+      <div class="countdown__divider" aria-hidden="true"></div>
+      <div class="countdown__block">
+        <span class="countdown__value" data-unit="minutes">00</span>
+        <span class="countdown__label">րոպե</span>
       </div>
-      <div class="countdown__unit">
-        <div class="countdown__pill">
-          <span class="countdown__value" data-unit="seconds">00</span>
-        </div>
+      <div class="countdown__divider" aria-hidden="true"></div>
+      <div class="countdown__block">
+        <span class="countdown__value" data-unit="seconds">00</span>
+        <span class="countdown__label">վայրկյան</span>
       </div>
     </div>
   </section>
