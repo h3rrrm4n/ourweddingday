@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F2F1EA" />
+  <!-- If added to the home screen, this lets the site launch with zero
+       Safari browser chrome (address bar / toolbar) at all — the only
+       way to get a truly gap-free fullscreen on iOS, since a page
+       viewed as a normal Safari tab always reserves native UI space
+       that no amount of CSS/meta tags can remove. -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Վահե &amp; Մարիամ — Wedding Invitation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+Armenian:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #FAF8F5;
+      --milk:    #F5F2ED;
+      --linen:   #EDE8DF;
+      --sand:    #C9BFB0;
+      --stone:   #8C8278;
+      --ink:     #2E2A26;
+      --gold:    #B89A6A;
+      --gold-lt: #D4BC94;
+      --blush:   #C98F87;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      /* Matches the video/envelope tone so any sliver still shown by
+         the browser itself (status bar area, iOS overscroll bounce,
+         etc.) reads as intentional background rather than a gap. */
+      background-color: #F2F1EA;
+      height: 100%;
+      overscroll-behavior-y: none;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      min-height: 100%;
+      /* Stop iOS Safari's rubber-band bounce from revealing whatever
+         sits behind the page at the very top/bottom of the scroll. */
+      overscroll-behavior-y: none;
+    }
+
+    /* ── Typography helpers ── */
+    .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(.4,0,.2,1),
+                  transform 0.9s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════════════
+       PHOTO HERO — first thing the guest sees
+    ════════════════════════════════════════ */
+    .photo-hero {
+      position: relative;
+      background: #FDFCFA;
+    }
+
+    .photo-hero-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      max-height: 82vh;
+      overflow: hidden;
+    }
+
+    .photo-hero-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+    }
+
+    /* Soft scrim so the overlaid names stay legible over any part of the photo */
+    .photo-hero-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(253,252,250,.55) 0%, rgba(253,252,250,0) 30%, rgba(253,252,250,0) 78%, rgba(253,252,250,.65) 100%);
+      pointer-events: none;
+    }
+
+    .photo-hero-overlay {
+      position: absolute;
+      top: 8%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .photo-hero-names {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-style: italic;
+      font-size: clamp(38px, 9vw, 64px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: .01em;
+      text-shadow: 0 2px 24px rgba(253,252,250,.9), 0 1px 3px rgba(253,252,250,.9);
+    }
+
+    .photo-hero-tagline {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--blush);
+    }
+
+    /* Invitation message card, overlapping the photo's bottom edge */
+    .invite-card {
+      position: relative;
+      max-width: 560px;
+      margin: -48px auto 0;
+      background: #FDFCFA;
+      border-radius: 24px 24px 0 0;
+      padding: 48px 32px 8px;
+      text-align: center;
+      box-shadow: 0 -20px 50px -30px rgba(60,45,30,.2);
+    }
+
+    .invite-card-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 10px;
+    }
+
+    .invite-card-script {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-style: italic;
+      font-size: clamp(28px, 6vw, 40px);
+      color: var(--blush);
+      margin-bottom: 22px;
+    }
+
+    .invite-card-message {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--stone);
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      background: linear-gradient(160deg, #FDFCFA 0%, #F0EBE2 100%);
+      overflow: hidden;
+    }
+
+    /* Leaner variant used once the names have already been shown in the
+       photo hero above — this section now only carries date/location. */
+    .hero-compact {
+      min-height: 60svh;
+      padding: 64px 24px;
+    }
+
+    /* Decorative soft circle */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,154,106,.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 32px;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-size: clamp(64px, 12vw, 130px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+
+    .hero-names em {
+      font-style: italic;
+      color: var(--blush);
+    }
+
+    .hero-ampersand {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 7vw, 80px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sand);
+      margin: 4px 0;
+    }
+
+    .hero-date {
+      margin-top: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      color: var(--stone);
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-lt);
+      margin: 40px auto;
+    }
+
+    .hero-location {
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--sand);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: var(--sand);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      40%       { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      60%       { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+      100%      { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ════════════════════════════════════════
+       SECTIONS — shared
+    ════════════════════════════════════════ */
+    section {
+      padding: 120px 24px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--blush);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .section-heading em { font-style: italic; color: var(--blush); }
+
+    .section-body {
+      margin-top: 24px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--stone);
+      max-width: 560px;
+      line-height: 1.85;
+    }
+
+    /* ════════════════════════════════════════
+       STORY SECTION
+    ════════════════════════════════════════ */
+    .story { text-align: center; }
+    .story .section-body { margin-left: auto; margin-right: auto; }
+
+    /* ════════════════════════════════════════
+       EVENT DETAILS CARDS
+    ════════════════════════════════════════ */
+    .details-section { text-align: center; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+
+    .card {
+      background: var(--milk);
+      border: 1px solid var(--linen);
+      border-radius: 20px;
+      padding: 48px 32px;
+      text-align: center;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.06);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .card-detail {
+      font-size: 14px;
+      color: var(--stone);
+      line-height: 1.8;
+    }
+
+    .card-detail strong {
+      display: block;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    /* ════════════════════════════════════════
+       TIMELINE / ORDER OF DAY
+    ════════════════════════════════════════ */
+    .timeline { max-width: 640px; }
+
+    .timeline-list {
+      list-style: none;
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      left: 72px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--linen);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .timeline-time {
+      min-width: 72px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: .05em;
+      color: var(--blush);
+      padding-top: 3px;
+      text-align: right;
+    }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 10px; height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: var(--gold-lt);
+      margin-top: 6px;
+    }
+
+    .timeline-content h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .timeline-content p {
+      font-size: 14px;
+      color: var(--stone);
+      line-height: 1.7;
+    }
+
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 64px 24px;
+      border-top: 1px solid var(--linen);
+    }
+
+    .footer-names {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--blush);
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--sand);
+      letter-spacing: .1em;
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .timeline-list::before { left: 60px; }
+      .timeline-time { min-width: 60px; font-size: 12px; }
+    }
+
+    /* ════════════════════════════════════════
+       VIDEO LANDING — envelope opening intro
+    ════════════════════════════════════════ */
+    #video-landing {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: #F2F1EA;
+      overflow: hidden;
+      transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
+    }
+
+    #video-landing.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* All three layers stay mounted (never display:none) so clip2 keeps
+       buffering silently in the background the whole time — swapping
+       via opacity only means there is real, already-decoded video data
+       ready the instant it needs to appear, instead of the browser
+       having to start fetching/decoding it from a standing start. */
+    #video-landing video,
+    #video-landing img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.28s ease;
+    }
+
+    #clip1-video {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    #video-landing .is-active {
+      opacity: 1;
+      z-index: 3;
+    }
+
+    #seal-tap {
+      position: absolute;
+      left: 48.4%;
+      top: 61.2%;
+      width: 34%;
+      aspect-ratio: 1 / 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      display: none;
+    }
+
+    #seal-tap.is-active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ VIDEO LANDING ══
+       1. clip1 plays automatically ("Open This" text forming over the sealed envelope)
+       2. it freezes on a static screenshot of its own last frame — this is where the tap lives
+       3. tapping the seal plays clip2 (the envelope opening)
+       4. clip2's ending (a near-white frame) crossfades into the invitation page -->
+  <div id="video-landing">
+    <video
+      id="clip1-video"
+      class="is-active"
+      src="assets/clip1-until-1-50.mp4"
+      muted
+      playsinline
+      webkit-playsinline="true"
+      autoplay
+      preload="auto"
+    ></video>
+    <img id="clip1-poster" src="assets/clip1-poster.jpg" alt="" />
+    <video
+      id="clip2-video"
+      src="assets/clip2-fixed.mp4"
+      poster="assets/clip1-poster.jpg"
+      muted
+      playsinline
+      webkit-playsinline="true"
+      preload="auto"
+    ></video>
+    <button id="seal-tap" type="button" aria-label="Open invitation"></button>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('video-landing');
+      var clip1 = document.getElementById('clip1-video');
+      var poster = document.getElementById('clip1-poster');
+      var clip2 = document.getElementById('clip2-video');
+      var sealTap = document.getElementById('seal-tap');
+
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+
+      function revealInvitation() {
+        overlay.classList.add('is-hidden');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      // clip1 and the poster share an identical frame, so simply
+      // crossfading their opacity (both already painted, nothing to
+      // wait for) is enough to make the swap invisible.
+      function showTapState() {
+        clip1.classList.remove('is-active');
+        poster.classList.add('is-active');
+        sealTap.classList.add('is-active');
+      }
+
+      // If clip1 can't play for any reason, skip straight to the static
+      // tap screen rather than leaving a blank overlay.
+      clip1.addEventListener('ended', showTapState);
+      clip1.addEventListener('error', showTapState);
+
+      // clip2 has been silently buffering in the background since page
+      // load (it's mounted with opacity:0, never display:none, so the
+      // browser keeps fetching/decoding it the whole time). We still
+      // wait for its own 'playing' event — proof frames are actually
+      // being rendered — before crossfading away from the poster, so
+      // there is never a gap of blank/black video showing through.
+      var revealedClip2 = false;
+      function revealClip2() {
+        if (revealedClip2) return;
+        revealedClip2 = true;
+        clip2.classList.add('is-active');
+        poster.classList.remove('is-active');
+      }
+
+      sealTap.addEventListener('click', function () {
+        sealTap.classList.remove('is-active');
+        clip2.currentTime = 0;
+        clip2.addEventListener('playing', revealClip2, { once: true });
+        var playPromise = clip2.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(revealInvitation);
+        }
+        // Safety net: on the rare chance 'playing' never fires, don't
+        // leave the guest stuck looking at a static screen forever.
+        setTimeout(revealClip2, 500);
+      });
+
+      clip2.addEventListener('ended', revealInvitation);
+      // Never trap a guest behind a broken/unsupported video.
+      clip2.addEventListener('error', revealInvitation);
+    })();
+  </script>
+
+  <!-- ══ PHOTO HERO — first thing the guest sees ══ -->
+  <section class="photo-hero">
+    <div class="photo-hero-frame fade-in">
+      <img src="assets/couple-photo-fullbleed.jpg" alt="Վահե and Մարիամ" />
+      <div class="photo-hero-overlay">
+        <p class="photo-hero-names">Վահե &amp; Մարիամ</p>
+        <p class="photo-hero-tagline">We're Getting Married</p>
+      </div>
+    </div>
+
+    <div class="invite-card fade-in">
+      <p class="invite-card-heading">You are invited to</p>
+      <p class="invite-card-script">our wedding</p>
+      <p class="invite-card-message">
+        We would love for you to be part of this special moment with us —
+        please join us as we begin our new life together.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ HERO ══ (date & location — names already shown in the photo above) -->
+  <header class="hero hero-compact">
+    <p class="hero-eyebrow fade-in">Save the Date</p>
+
+    <p class="hero-date fade-in">Saturday, the Twelfth of September, 2026</p>
+    <div class="divider fade-in"></div>
+    <p class="hero-location fade-in">Villa Rosé — Tuscany, Italy</p>
+
+    <div class="scroll-cue">scroll</div>
+  </header>
+
+
+  <!-- ══ STORY ══ -->
+  <section class="story">
+    <span class="section-label fade-in">Our Story</span>
+    <h2 class="section-heading fade-in">A love written<br><em>in the stars</em></h2>
+    <p class="section-body fade-in">
+      What began as a chance encounter at a tiny bookshop in Florence grew into a lifetime
+      of adventure, laughter, and an unshakeable bond. We believe love is best shared —
+      and we cannot imagine celebrating this day without you by our side.
+    </p>
+  </section>
+
+
+  <!-- ══ EVENT DETAILS ══ -->
+  <section class="details-section">
+    <span class="section-label fade-in">Event Details</span>
+    <h2 class="section-heading fade-in">Everything you need<br><em>to know</em></h2>
+
+    <div class="cards">
+      <div class="card fade-in">
+        <span class="card-icon">🕊</span>
+        <h3 class="card-title">Ceremony</h3>
+        <p class="card-detail">
+          <strong>4:00 PM</strong>
+          Villa Rosé Chapel<br>
+          Via della Rosa 12<br>
+          Siena, Tuscany
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <span class="card-icon">🥂</span>
+        <h3 class="card-title">Reception</h3>
+        <p class="card-detail">
+          <strong>6:30 PM</strong>
+          Garden Terrace<br>
+          Dinner, dancing &amp;<br>
+          celebration till midnight
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <span class="card-icon">🌿</span>
+        <h3 class="card-title">Dress Code</h3>
+        <p class="card-detail">
+          <strong>Garden Formal</strong>
+          Soft florals &amp; pastels<br>
+          warmly encouraged.<br>
+          Heels &amp; flats provided.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ ORDER OF THE DAY ══ -->
+  <section class="timeline">
+    <span class="section-label fade-in">Schedule</span>
+    <h2 class="section-heading fade-in">Order of<br><em>the day</em></h2>
+
+    <ul class="timeline-list">
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">3:30 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Guest Arrival</h4>
+          <p>Welcome drinks &amp; nibbles in the olive grove</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">4:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>The Ceremony</h4>
+          <p>Exchange of vows in the historic chapel</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">5:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Cocktail Hour</h4>
+          <p>Champagne &amp; canapés on the terrace</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">6:30 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Dinner &amp; Speeches</h4>
+          <p>Five-course Italian feast under the stars</p>
+        </div>
+      </li>
+      <li class="timeline-item fade-in">
+        <span class="timeline-time">9:00 PM</span>
+        <span class="timeline-dot"></span>
+        <div class="timeline-content">
+          <h4>Dancing</h4>
+          <p>Live music &amp; dancing until midnight</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <p class="footer-names">Վահե &amp; Մարիամ</p>
+    <p class="footer-note">September 12, 2026 · Villa Rosé, Tuscany</p>
+    <div class="divider" style="margin-top:32px;"></div>
+    <p style="font-size:12px; color:var(--sand); margin-top:24px; letter-spacing:.08em;">
+      Made with love &amp; a little bit of magic
+    </p>
+  </footer>
+
+
+  <script>
+    /* ── Scroll-triggered fade-in ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── Photo hero + hero elements visible immediately (above the fold,
+       revealed the moment the video intro finishes) ── */
+    document.querySelectorAll('.photo-hero .fade-in, .hero .fade-in').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 200 + i * 180);
+    });
+
+  </script>
+
+</body>
+</html>
