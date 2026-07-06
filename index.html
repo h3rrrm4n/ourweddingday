@@ -99,7 +99,7 @@
       min-height: -webkit-fill-available;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow: visible;
       background: #000;
     }
 
@@ -112,6 +112,28 @@
       /* Show the full graphic — no side cropping */
       object-fit: contain;
       object-position: center center;
+    }
+
+    /* Ivory smoke rising from inside the hero — softens the black letterbox edge */
+    .save-the-date-hero::after {
+      content: '';
+      position: absolute;
+      left: -30%;
+      right: -30%;
+      bottom: -18%;
+      height: 42%;
+      border-radius: 50%;
+      background: radial-gradient(
+        ellipse 120% 90% at 50% 100%,
+        rgba(248, 246, 242, 0.95) 0%,
+        rgba(248, 246, 242, 0.55) 38%,
+        rgba(248, 246, 242, 0.18) 68%,
+        transparent 100%
+      );
+      filter: blur(56px);
+      opacity: 0.72;
+      z-index: 2;
+      pointer-events: none;
     }
 
     /* No slide-up on the hero — only a gentle fade so it stays full-screen */
@@ -146,58 +168,78 @@
     /* Smoke-style blend from hero black into countdown ivory */
     .hero-countdown-fade {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       width: 100%;
-      margin-top: clamp(-72px, -12vh, -112px);
-      height: clamp(132px, 24vh, 200px);
+      margin-top: clamp(-120px, -22vh, -200px);
+      height: clamp(200px, 36vh, 300px);
       overflow: visible;
       pointer-events: none;
     }
 
-    /* Continue pure black from the image — no brown band */
+    /* Black continues from image, then dissolves — no hard horizontal cut */
     .hero-countdown-fade::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 52%;
-      background: #000000;
+      height: 100%;
+      background: linear-gradient(
+        180deg,
+        #000000 0%,
+        #000000 38%,
+        rgba(0, 0, 0, 0.92) 52%,
+        rgba(0, 0, 0, 0.65) 66%,
+        rgba(0, 0, 0, 0.28) 82%,
+        transparent 100%
+      );
     }
 
     .hero-countdown-fade__smoke {
       position: absolute;
-      left: -20%;
-      right: -20%;
-      bottom: 0;
+      left: -30%;
+      right: -30%;
       display: block;
       border-radius: 50%;
-      background: #F8F6F2;
       pointer-events: none;
+      background: radial-gradient(
+        ellipse 130% 95% at 50% 100%,
+        #F8F6F2 0%,
+        rgba(248, 246, 242, 0.72) 42%,
+        rgba(248, 246, 242, 0.28) 72%,
+        transparent 100%
+      );
     }
 
-    /* Layered blur = soft smoke rising into the black */
     .hero-countdown-fade__smoke--a {
-      height: clamp(100px, 18vh, 160px);
-      bottom: -20%;
-      filter: blur(52px);
-      opacity: 0.42;
-      transform: scaleX(1.15);
+      height: clamp(160px, 28vh, 240px);
+      bottom: -32%;
+      filter: blur(72px);
+      opacity: 0.58;
+      transform: scaleX(1.2);
     }
 
     .hero-countdown-fade__smoke--b {
-      height: clamp(72px, 13vh, 120px);
-      bottom: -8%;
-      filter: blur(30px);
-      opacity: 0.62;
-      transform: scaleX(1.08);
+      height: clamp(120px, 22vh, 180px);
+      bottom: -14%;
+      filter: blur(48px);
+      opacity: 0.72;
+      transform: scaleX(1.12);
     }
 
     .hero-countdown-fade__smoke--c {
-      height: clamp(48px, 9vh, 80px);
-      bottom: 4%;
-      filter: blur(14px);
-      opacity: 0.88;
+      height: clamp(88px, 16vh, 140px);
+      bottom: 2%;
+      filter: blur(28px);
+      opacity: 0.86;
+    }
+
+    .hero-countdown-fade__smoke--d {
+      height: clamp(200px, 34vh, 280px);
+      bottom: -8%;
+      filter: blur(96px);
+      opacity: 0.38;
+      transform: scaleX(1.35);
     }
 
     /* ════════════════════════════════════════
@@ -206,7 +248,7 @@
     .wedding-countdown {
       position: relative;
       z-index: 1;
-      margin-top: clamp(-28px, -5vh, -44px);
+      margin-top: clamp(-48px, -9vh, -72px);
       background: #F8F6F2;
       padding: clamp(56px, 9vw, 88px) clamp(20px, 5vw, 48px) clamp(64px, 11vw, 112px);
       text-align: center;
@@ -932,6 +974,7 @@
   </section>
 
   <div class="hero-countdown-fade" aria-hidden="true">
+    <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--d"></span>
     <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--a"></span>
     <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--b"></span>
     <span class="hero-countdown-fade__smoke hero-countdown-fade__smoke--c"></span>
