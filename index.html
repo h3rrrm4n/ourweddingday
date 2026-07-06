@@ -498,17 +498,12 @@
       object-fit: cover;
       opacity: 0;
       z-index: 1;
-      /* Instant layer swaps — crossfade between non-matching frames reads as a blink */
-      transition: none;
+      transition: opacity 0.28s ease;
     }
 
     #clip1-video {
       opacity: 1;
       z-index: 2;
-    }
-
-    #clip1-video.is-faded {
-      opacity: 0;
     }
 
     #video-landing .is-active {
@@ -559,6 +554,7 @@
     <video
       id="clip2-video"
       src="assets/clip2-fixed.mp4"
+      poster="assets/clip1-poster.jpg"
       muted
       playsinline
       webkit-playsinline="true"
@@ -578,10 +574,6 @@
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
 
-      var tapReady = false;
-      var clip2Primed = false;
-      var clip2Started = false;
-
       function revealInvitation() {
         overlay.classList.add('is-hidden');
         document.documentElement.style.overflow = '';
@@ -589,100 +581,49 @@
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
       }
 
-      // Freeze clip1 on its own last decoded frame — no swap to a mismatched poster.
-      function freezeClip1() {
-        if (!clip1.duration || !isFinite(clip1.duration)) return;
-        clip1.pause();
-        clip1.currentTime = Math.max(0, clip1.duration - 0.04);
-      }
-
+      // clip1 and the poster share an identical frame, so simply
+      // crossfading their opacity (both already painted, nothing to
+      // wait for) is enough to make the swap invisible.
       function showTapState() {
-        if (tapReady) return;
-        tapReady = true;
-        freezeClip1();
+        clip1.classList.remove('is-active');
+        poster.classList.add('is-active');
         sealTap.classList.add('is-active');
       }
 
-      clip1.addEventListener('timeupdate', function () {
-        if (!tapReady && clip1.duration && clip1.currentTime >= clip1.duration - 0.1) {
-          showTapState();
-        }
-      });
+      // If clip1 can't play for any reason, skip straight to the static
+      // tap screen rather than leaving a blank overlay.
       clip1.addEventListener('ended', showTapState);
-      clip1.addEventListener('error', function () {
-        poster.classList.add('is-active');
-        clip1.classList.add('is-faded');
-        showTapState();
-      });
+      clip1.addEventListener('error', showTapState);
 
-      // Decode clip2 frame 0 in the background so play() paints instantly on tap.
-      function primeClip2() {
-        if (clip2Primed) return;
-        function onSeeked() {
-          clip2.pause();
-          clip2Primed = true;
-        }
-        function seekToStart() {
-          clip2.addEventListener('seeked', onSeeked, { once: true });
-          clip2.currentTime = 0;
-        }
-        if (clip2.readyState >= 1) {
-          seekToStart();
-        } else {
-          clip2.addEventListener('loadeddata', seekToStart, { once: true });
-        }
-      }
-      primeClip2();
-
-      function hideClip1UnderClip2() {
-        clip1.classList.add('is-faded');
+      // clip2 has been silently buffering in the background since page
+      // load (it's mounted with opacity:0, never display:none, so the
+      // browser keeps fetching/decoding it the whole time). We still
+      // wait for its own 'playing' event — proof frames are actually
+      // being rendered — before crossfading away from the poster, so
+      // there is never a gap of blank/black video showing through.
+      var revealedClip2 = false;
+      function revealClip2() {
+        if (revealedClip2) return;
+        revealedClip2 = true;
+        clip2.classList.add('is-active');
         poster.classList.remove('is-active');
       }
 
-      function waitForClip2Paint(then) {
-        if (typeof clip2.requestVideoFrameCallback === 'function') {
-          clip2.requestVideoFrameCallback(function () { then(); });
-          return;
-        }
-        function onFrame() {
-          if (clip2.currentTime > 0 || clip2.readyState >= 3) {
-            clip2.removeEventListener('timeupdate', onFrame);
-            then();
-          }
-        }
-        clip2.addEventListener('timeupdate', onFrame);
-        setTimeout(then, 120);
-      }
-
       sealTap.addEventListener('click', function () {
-        if (clip2Started) return;
-        clip2Started = true;
         sealTap.classList.remove('is-active');
-
-        // Show clip2 (first frame already decoded) before play() so nothing flashes through.
-        clip2.classList.add('is-active');
-
-        function playClip2() {
-          var playPromise = clip2.play();
-          function afterPlay() {
-            waitForClip2Paint(hideClip1UnderClip2);
-          }
-          if (playPromise && typeof playPromise.then === 'function') {
-            playPromise.then(afterPlay).catch(revealInvitation);
-          } else {
-            clip2.addEventListener('playing', afterPlay, { once: true });
-          }
+        clip2.currentTime = 0;
+        clip2.addEventListener('playing', revealClip2, { once: true });
+        var playPromise = clip2.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(revealInvitation);
         }
-
-        if (clip2Primed) {
-          playClip2();
-        } else {
-          clip2.addEventListener('seeked', playClip2, { once: true });
-          primeClip2();
-        }
+        // Safety net: on the rare chance 'playing' never fires, don't
+        // leave the guest stuck looking at a static screen forever.
+        setTimeout(revealClip2, 500);
       });
 
       clip2.addEventListener('ended', revealInvitation);
+      // Never trap a guest behind a broken/unsupported video.
       clip2.addEventListener('error', revealInvitation);
     })();
   </script>
