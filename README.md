@@ -9,15 +9,15 @@ Wedding invitation site for **Վահե & Մարիամ**, live at [ourweddingday.
 
 ## Background music
 
-The site plays `assets/wedding-music.mp3` when a guest taps the envelope seal (required for iOS autoplay). A ♫ button in the bottom-right lets guests pause or resume.
+The site plays `assets/wedding-music.m4a` when a guest taps the envelope seal (required for iOS autoplay). A ♫ button in the bottom-right lets guests pause or resume.
 
 **You cannot use a YouTube link directly** — mobile browsers block autoplay from YouTube and it won't loop cleanly.
 
 To add *Alex Warren – Ordinary* (or any song):
 
 1. Obtain an **MP3 legally** (iTunes, Amazon Music, or a file you own the rights to use on your wedding site).
-2. Save it as `assets/wedding-music.mp3`.
-3. Deploy with `./deploy.sh` or upload to the server at `/var/www/ourweddingday/assets/wedding-music.mp3`.
+2. Save it as `assets/wedding-music.m4a` (or `.mp3`).
+3. Deploy with `./deploy.sh` or upload to the server at `/var/www/ourweddingday/assets/wedding-music.m4a`.
 
 ## Deploy to server
 
