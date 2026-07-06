@@ -671,9 +671,117 @@
     #music-toggle.is-playing {
       background: rgba(20, 20, 20, 0.65);
     }
+
+    /* ════════════════════════════════════════
+       DESKTOP GATE — QR scan to open on phone
+    ════════════════════════════════════════ */
+    #desktop-gate {
+      display: none;
+      min-height: 100dvh;
+      min-height: 100svh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 28px 64px;
+      text-align: center;
+      background-color: #F7F4EF;
+      background-image:
+        radial-gradient(rgba(46, 42, 38, 0.04) 0.6px, transparent 0.6px);
+      background-size: 3px 3px;
+    }
+
+    .desktop-gate__note {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--stone);
+      max-width: 22em;
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    .desktop-gate__heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.35;
+      max-width: 14em;
+      margin-bottom: 28px;
+    }
+
+    .desktop-gate__sub {
+      font-family: 'Cormorant Garamond', 'Noto Serif Armenian', serif;
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.5;
+      max-width: 20em;
+      margin-bottom: 44px;
+    }
+
+    .desktop-gate__qr {
+      display: block;
+      width: min(220px, 56vw);
+      height: auto;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid rgba(46, 42, 38, 0.08);
+      box-shadow: 0 10px 40px rgba(46, 42, 38, 0.06);
+    }
+
+    #mobile-invitation {
+      display: block;
+    }
+
+    @media (min-width: 768px), (orientation: landscape) and (max-width: 767px) {
+      #desktop-gate {
+        display: flex;
+      }
+
+      #mobile-invitation {
+        display: none !important;
+      }
+
+      html.envelope-phase,
+      html.invitation-phase,
+      body.envelope-phase,
+      body.invitation-phase {
+        background-color: #F7F4EF;
+      }
+    }
   </style>
+  <script>
+    (function () {
+      var mq = window.matchMedia('(max-width: 767px) and (orientation: portrait)');
+      function updateView() {
+        document.documentElement.classList.toggle('mobile-invitation-view', mq.matches);
+      }
+      updateView();
+      if (mq.addEventListener) mq.addEventListener('change', updateView);
+      else mq.addListener(updateView);
+    })();
+  </script>
 </head>
 <body>
+
+  <div id="desktop-gate">
+    <p class="desktop-gate__note">Այս էջը հասանելի է միայն սմարթֆոններում՝ ուղղահայաց դիրքով</p>
+    <h1 class="desktop-gate__heading">Հրավերդատորագրից<br>դիտելու համար</h1>
+    <p class="desktop-gate__sub">սկանավորեք QR կոդը Ձեր հեռախոսի տեսախցիկով</p>
+    <img
+      class="desktop-gate__qr"
+      src="assets/qr-ourweddingday.png"
+      width="220"
+      height="220"
+      alt="QR կոդ՝ https://ourweddingday.am"
+    />
+  </div>
+
+  <div id="mobile-invitation">
 
   <!-- Yandex maps preload — starts during envelope intro -->
   <div id="map-preload" class="map-preload" aria-hidden="true">
@@ -737,6 +845,8 @@
 
   <script>
     (function () {
+      if (!window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
+
       var overlay = document.getElementById('video-landing');
       var clip1 = document.getElementById('clip1-video');
       var poster = document.getElementById('clip1-poster');
@@ -985,10 +1095,14 @@
     <p class="footer-thanks">Շնորհակալ ենք, որ կիսում եք մեզ հետ մեր կյանքի ամենասիրելի օրը։</p>
   </footer>
 
+  </div><!-- /#mobile-invitation -->
+
 
   <script>
     /* ── Mount preloaded Yandex map iframes into timeline slots ── */
     (function () {
+      if (!window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches) return;
+
       var preload = document.getElementById('map-preload');
       if (!preload) return;
 
