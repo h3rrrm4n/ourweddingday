@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#F2F1EA" />
   <!-- If added to the home screen, this lets the site launch with zero
        Safari browser chrome (address bar / toolbar) at all — the only
        way to get a truly gap-free fullscreen on iOS, since a page
@@ -39,7 +39,7 @@
       /* Matches the video/envelope tone so any sliver still shown by
          the browser itself (status bar area, iOS overscroll bounce,
          etc.) reads as intentional background rather than a gap. */
-      background-color: #000;
+      background-color: #F2F1EA;
       height: 100%;
       overscroll-behavior-y: none;
     }
@@ -469,11 +469,20 @@
 
     /* ════════════════════════════════════════
        VIDEO LANDING — envelope opening intro
+       Edge-to-edge on iPhone notch / Dynamic Island (viewport-fit=cover)
     ════════════════════════════════════════ */
     #video-landing {
       position: fixed;
       inset: 0;
       z-index: 999;
+      width: 100vw;
+      max-width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      height: 100svh;
+      min-height: -webkit-fill-available;
+      margin: 0;
+      padding: 0;
       background: #F2F1EA;
       overflow: hidden;
       transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
@@ -484,18 +493,17 @@
       pointer-events: none;
     }
 
-    /* All three layers stay mounted (never display:none) so clip2 keeps
-       buffering silently in the background the whole time — swapping
-       via opacity only means there is real, already-decoded video data
-       ready the instant it needs to appear, instead of the browser
-       having to start fetching/decoding it from a standing start. */
+    /* All layers stay mounted so clip2 keeps buffering in the background */
+    /* Bleed media into safe-area insets so nothing shows around the island */
     #video-landing video,
     #video-landing img {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: calc(-1 * env(safe-area-inset-top, 0px));
+      left: calc(-1 * env(safe-area-inset-left, 0px));
+      width: calc(100% + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
+      height: calc(100% + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
       object-fit: cover;
+      object-position: center center;
       opacity: 0;
       z-index: 1;
       transition: opacity 0.28s ease;
