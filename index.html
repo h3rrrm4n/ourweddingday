@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="envelope-phase">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -34,20 +34,27 @@
       --blush:   #C98F87;
       /* Sampled from the envelope video edges (rgb 210, 202, 173) */
       --envelope-edge: #D2CAAD;
+      --milky-white: #FAF8F5;
+    }
+
+    html.envelope-phase {
+      background-color: var(--envelope-edge);
+    }
+
+    html.invitation-phase {
+      background-color: var(--milky-white);
     }
 
     html {
       scroll-behavior: smooth;
-      /* Matches the envelope edge tone so any sliver still shown by
-         the browser itself (status bar area, iOS overscroll bounce,
-         Dynamic Island margins, etc.) reads as intentional background. */
-      background-color: var(--envelope-edge);
+      /* Overscroll / status-bar sliver uses phase-specific color via class on html */
+      background-color: transparent;
       height: 100%;
       overscroll-behavior-y: none;
     }
 
     body {
-      background-color: var(--cream);
+      background-color: var(--milky-white);
       color: var(--ink);
       font-family: 'Inter', system-ui, sans-serif;
       font-weight: 300;
@@ -596,6 +603,10 @@
 
       function revealInvitation() {
         overlay.classList.add('is-hidden');
+        document.documentElement.classList.remove('envelope-phase');
+        document.documentElement.classList.add('invitation-phase');
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute('content', '#FAF8F5');
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
