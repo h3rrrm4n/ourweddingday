@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#CFC6A8" />
+  <meta name="theme-color" content="#D2CAAD" />
   <!-- If added to the home screen, this lets the site launch with zero
        Safari browser chrome (address bar / toolbar) at all — the only
        way to get a truly gap-free fullscreen on iOS, since a page
@@ -32,20 +32,13 @@
       --gold:    #B89A6A;
       --gold-lt: #D4BC94;
       --blush:   #C98F87;
-      /* Envelope letterbox — bottom/sides sampled ~y=120; top from clip1 row-0 pixels */
+      /* Sampled from the envelope video edges (rgb 210, 202, 173) */
       --envelope-edge: #D2CAAD;
-      --envelope-edge-top: #CFC6A8;
       --milky-white: #FAF8F5;
     }
 
     html.envelope-phase {
-      background: linear-gradient(
-        180deg,
-        var(--envelope-edge-top) 0%,
-        var(--envelope-edge-top) calc(env(safe-area-inset-top, 59px) + 14vh),
-        var(--envelope-edge) calc(env(safe-area-inset-top, 59px) + 30vh),
-        var(--envelope-edge) 100%
-      );
+      background-color: var(--envelope-edge);
     }
 
     html.invitation-phase {
@@ -522,13 +515,7 @@
       min-height: -webkit-fill-available;
       margin: 0;
       padding: 0;
-      background: linear-gradient(
-        180deg,
-        var(--envelope-edge-top) 0%,
-        var(--envelope-edge-top) 22%,
-        var(--envelope-edge) 38%,
-        var(--envelope-edge) 100%
-      );
+      background: var(--envelope-edge);
       overflow: hidden;
       transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
     }
@@ -557,13 +544,7 @@
     .envelope-backdrop {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        180deg,
-        var(--envelope-edge-top) 0%,
-        var(--envelope-edge-top) 22%,
-        var(--envelope-edge) 38%,
-        var(--envelope-edge) 100%
-      );
+      background: var(--envelope-edge);
       z-index: 0;
     }
 
