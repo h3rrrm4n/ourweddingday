@@ -600,6 +600,32 @@
       border: 0;
     }
 
+    .timeline-map-open {
+      grid-column: 3;
+      grid-row: 4;
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(139, 115, 98, 0.32);
+      background: rgba(255, 255, 255, 0.55);
+      color: #8B7362;
+      font-family: 'Noto Serif Armenian', 'Inter', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-align: center;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .timeline-map-open:active {
+      background: rgba(139, 115, 98, 0.1);
+      border-color: rgba(139, 115, 98, 0.45);
+    }
+
     .map-preload {
       position: absolute;
       left: -9999px;
@@ -1238,6 +1264,7 @@
           <h4>Հարսի Տուն</h4>
           <p>Ցովակալ Իսակովի պողոտա 83/23, Երևան</p>
           <div class="timeline-map"></div>
+          <a class="timeline-map-open" href="https://yandex.com/maps/-/CTqOYUpK" target="_blank" rel="noopener noreferrer">Բացել քարտեզում</a>
         </div>
       </li>
       <li class="timeline-item fade-in">
@@ -1247,6 +1274,7 @@
           <h4>Պսակադրություն</h4>
           <p>Խոր Վիրապ վանք</p>
           <div class="timeline-map"></div>
+          <a class="timeline-map-open" href="https://yandex.com/maps/-/CTqOaWOY" target="_blank" rel="noopener noreferrer">Բացել քարտեզում</a>
         </div>
       </li>
       <li class="timeline-item fade-in">
@@ -1256,6 +1284,7 @@
           <h4>Հարսանյաց սրահ</h4>
           <p>Կոնտինենտալ, Այնթապ</p>
           <div class="timeline-map"></div>
+          <a class="timeline-map-open" href="https://yandex.com/maps/-/CTqOiVnu" target="_blank" rel="noopener noreferrer">Բացել քարտեզում</a>
         </div>
       </li>
     </ul>
