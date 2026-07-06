@@ -147,16 +147,19 @@
     .hero-countdown-fade {
       display: block;
       width: 100%;
-      height: clamp(96px, 16vh, 152px);
+      position: relative;
+      z-index: 2;
+      /* Overlap the hero bottom so black continues seamlessly from the image */
+      margin-top: clamp(-80px, -14vh, -128px);
+      height: clamp(148px, 24vh, 208px);
       background: linear-gradient(
         180deg,
         #000000 0%,
-        #1a1816 10%,
-        #3a3530 24%,
-        #6a6258 42%,
-        #9a9186 58%,
-        #c8c0b4 76%,
-        #ece8e2 90%,
+        #000000 48%,
+        #12100e 58%,
+        #322e2a 70%,
+        #6e665c 82%,
+        #b8b0a4 93%,
         #F8F6F2 100%
       );
     }
