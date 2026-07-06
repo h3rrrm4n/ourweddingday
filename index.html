@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#F2F1EA" />
+  <meta name="theme-color" content="#D2CAAD" />
   <!-- If added to the home screen, this lets the site launch with zero
        Safari browser chrome (address bar / toolbar) at all — the only
        way to get a truly gap-free fullscreen on iOS, since a page
@@ -32,14 +32,16 @@
       --gold:    #B89A6A;
       --gold-lt: #D4BC94;
       --blush:   #C98F87;
+      /* Sampled from the envelope video edges (rgb 210, 202, 173) */
+      --envelope-edge: #D2CAAD;
     }
 
     html {
       scroll-behavior: smooth;
-      /* Matches the video/envelope tone so any sliver still shown by
+      /* Matches the envelope edge tone so any sliver still shown by
          the browser itself (status bar area, iOS overscroll bounce,
-         etc.) reads as intentional background rather than a gap. */
-      background-color: #F2F1EA;
+         Dynamic Island margins, etc.) reads as intentional background. */
+      background-color: var(--envelope-edge);
       height: 100%;
       overscroll-behavior-y: none;
     }
@@ -483,7 +485,7 @@
       min-height: -webkit-fill-available;
       margin: 0;
       padding: 0;
-      background: #F2F1EA;
+      background: var(--envelope-edge);
       overflow: hidden;
       transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
     }
@@ -493,16 +495,23 @@
       pointer-events: none;
     }
 
+    /* Solid fill behind media — matches envelope edge color exactly */
+    .envelope-backdrop {
+      position: absolute;
+      inset: 0;
+      background: var(--envelope-edge);
+      z-index: 0;
+    }
+
     /* All layers stay mounted so clip2 keeps buffering in the background */
-    /* Bleed media into safe-area insets so nothing shows around the island */
     #video-landing video,
     #video-landing img {
       position: absolute;
-      top: calc(-1 * env(safe-area-inset-top, 0px));
-      left: calc(-1 * env(safe-area-inset-left, 0px));
-      width: calc(100% + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
-      height: calc(100% + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
-      object-fit: cover;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      /* contain + matching backdrop = gaps look like part of the envelope */
+      object-fit: contain;
       object-position: center center;
       opacity: 0;
       z-index: 1;
@@ -548,6 +557,7 @@
        3. tapping the seal plays clip2 (the envelope opening)
        4. clip2's ending (a near-white frame) crossfades into the invitation page -->
   <div id="video-landing">
+    <div class="envelope-backdrop" aria-hidden="true"></div>
     <video
       id="clip1-video"
       class="is-active"
