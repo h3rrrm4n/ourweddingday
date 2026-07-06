@@ -458,6 +458,9 @@
     }
 
     .timeline-list {
+      --timeline-time-col: 72px;
+      --timeline-track-col: 36px;
+      --timeline-col-gap: 20px;
       list-style: none;
       margin-top: 56px;
       position: relative;
@@ -466,39 +469,49 @@
     .timeline-list::before {
       content: '';
       position: absolute;
-      left: 72px;
-      top: 0; bottom: 0;
+      left: calc(var(--timeline-time-col) + var(--timeline-col-gap) + (var(--timeline-track-col) / 2));
+      top: 0;
+      bottom: 0;
       width: 1px;
       background: var(--linen);
+      transform: translateX(-50%);
     }
 
     .timeline-item {
-      display: flex;
-      gap: 32px;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: var(--timeline-time-col) var(--timeline-track-col) 1fr;
+      column-gap: var(--timeline-col-gap);
+      align-items: start;
       margin-bottom: 40px;
     }
 
     .timeline-time {
+      grid-column: 1;
       flex-shrink: 0;
-      min-width: 72px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 17px;
       font-variant-numeric: tabular-nums;
       letter-spacing: .05em;
       color: var(--blush);
       padding-top: 3px;
-      text-align: right;
+      text-align: left;
     }
 
     .timeline-dot {
+      grid-column: 2;
       position: relative;
       z-index: 1;
-      width: 10px; height: 10px;
-      min-width: 10px;
+      justify-self: center;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: var(--gold-lt);
       margin-top: 6px;
+    }
+
+    .timeline-content {
+      grid-column: 3;
+      min-width: 0;
     }
 
     .timeline-content h4 {
@@ -538,9 +551,12 @@
     ════════════════════════════════════════ */
     @media (max-width: 600px) {
       .form-row { grid-template-columns: 1fr; }
-      .timeline-item { gap: 24px; }
-      .timeline-list::before { left: 92px; }
-      .timeline-time { min-width: 92px; width: 92px; font-size: 22px; }
+      .timeline-list {
+        --timeline-time-col: 68px;
+        --timeline-track-col: 32px;
+        --timeline-col-gap: 16px;
+      }
+      .timeline-time { font-size: 22px; }
     }
 
     /* ════════════════════════════════════════
@@ -899,7 +915,7 @@
         </div>
       </li>
       <li class="timeline-item fade-in">
-        <span class="timeline-time">5:00 PM</span>
+        <span class="timeline-time">17:30</span>
         <span class="timeline-dot"></span>
         <div class="timeline-content">
           <h4>Հարսանյաց սրահ</h4>
