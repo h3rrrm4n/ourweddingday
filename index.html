@@ -1023,6 +1023,15 @@
       var musicToggle = document.getElementById('music-toggle');
       var musicStarted = false;
       var WEDDING_MUSIC_SRC = 'assets/wedding-music.m4a';
+      var CLIP1_EXTRA_SECONDS = 1;
+
+      function applyClip1Slowdown() {
+        if (!clip1.duration || !isFinite(clip1.duration)) return;
+        clip1.playbackRate = clip1.duration / (clip1.duration + CLIP1_EXTRA_SECONDS);
+      }
+
+      clip1.addEventListener('loadedmetadata', applyClip1Slowdown, { once: true });
+      if (clip1.readyState >= 1) applyClip1Slowdown();
 
       function ensureMusicSource() {
         if (!weddingMusic.src || weddingMusic.src.indexOf('wedding-music') === -1) {
