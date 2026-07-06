@@ -751,6 +751,18 @@
         }
       }
 
+      function pauseWeddingMusic() {
+        if (!weddingMusic) return;
+        weddingMusic.pause();
+        if (musicToggle) musicToggle.classList.remove('is-playing');
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') pauseWeddingMusic();
+      });
+
+      window.addEventListener('pagehide', pauseWeddingMusic);
+
       if (musicToggle && weddingMusic) {
         musicToggle.addEventListener('click', function () {
           if (weddingMusic.paused) {
