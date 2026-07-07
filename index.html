@@ -145,25 +145,6 @@
       transform: none;
     }
 
-    /* Black strip over Dynamic Island / notch — blends with hero top, hides on scroll */
-    #hero-top-fill {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: env(safe-area-inset-top, 0px);
-      min-height: 0;
-      background: #000;
-      z-index: 500;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    #hero-top-fill.is-visible {
-      opacity: 1;
-    }
-
     /* Shared fade height — top & bottom of hero */
     :root {
       --hero-fade-height: clamp(104px, 17vh, 156px);
@@ -975,8 +956,6 @@
     ></iframe>
   </div>
 
-  <div id="hero-top-fill" aria-hidden="true"></div>
-
   <!-- ══ VIDEO LANDING ══
        1. clip1 plays automatically ("Open This" text forming over the sealed envelope)
        2. it freezes on its own last frame — this is where the tap lives
@@ -1127,7 +1106,6 @@
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
         window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
-        window.dispatchEvent(new Event('hero-top-update'));
         if (musicToggle) musicToggle.classList.add('is-visible');
 
         var hero = document.querySelector('.save-the-date-hero');
@@ -1417,31 +1395,6 @@
       tick();
       setInterval(tick, 1000);
     })();
-
-    /* ── Dynamic Island top fill: black while hero is at top, gone once scrolled ── */
-    const heroTopFill = document.getElementById('hero-top-fill');
-    const saveTheDateHero = document.querySelector('.save-the-date-hero');
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-    function updateHeroTopFill() {
-      if (!heroTopFill || !saveTheDateHero) return;
-
-      const onInvitation = document.documentElement.classList.contains('invitation-phase');
-      const rect = saveTheDateHero.getBoundingClientRect();
-      // Black bar only while the hero is pinned at the top; gone once user scrolls down
-      const heroAtTop = onInvitation && window.scrollY < 48 && rect.bottom > 0;
-
-      heroTopFill.classList.toggle('is-visible', heroAtTop);
-
-      if (themeMeta && onInvitation) {
-        themeMeta.setAttribute('content', heroAtTop ? '#000000' : '#F8F6F2');
-      }
-    }
-
-    window.addEventListener('hero-top-update', updateHeroTopFill);
-    window.addEventListener('scroll', updateHeroTopFill, { passive: true });
-    window.addEventListener('resize', updateHeroTopFill);
-    updateHeroTopFill();
 
   </script>
 
