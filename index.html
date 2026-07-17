@@ -49,6 +49,10 @@
       background-color: var(--milky-white);
     }
 
+    html.is-scroll-hint-animating {
+      scroll-behavior: auto;
+    }
+
     html {
       scroll-behavior: smooth;
       /* Overscroll / status-bar sliver uses phase-specific color via class on html */
@@ -1086,15 +1090,40 @@
       var scrollHintTimer = null;
       var scrollHintAnimCancel = null;
 
-      function easeInOutCubic(t) {
-        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      function getScrollY() {
+        return window.pageYOffset
+          || document.documentElement.scrollTop
+          || document.body.scrollTop
+          || 0;
+      }
+
+      function setScrollY(y) {
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      }
+
+      function easeInOutSine(t) {
+        return -(Math.cos(Math.PI * t) - 1) / 2;
       }
 
       function smoothScrollTo(targetY, duration, onComplete) {
-        var startY = window.scrollY;
+        var root = document.documentElement;
+        var previousScrollBehavior = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        root.classList.add('is-scroll-hint-animating');
+
+        var startY = getScrollY();
         var distance = targetY - startY;
-        if (Math.abs(distance) < 4) {
+
+        function finish() {
+          root.classList.remove('is-scroll-hint-animating');
+          root.style.scrollBehavior = previousScrollBehavior;
+          scrollHintAnimCancel = null;
           if (onComplete) onComplete();
+        }
+
+        if (Math.abs(distance) < 4) {
+          finish();
           return null;
         }
 
@@ -1104,13 +1133,12 @@
         function step(timestamp) {
           if (!startTime) startTime = timestamp;
           var progress = Math.min((timestamp - startTime) / duration, 1);
-          window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+          setScrollY(startY + distance * easeInOutSine(progress));
           if (progress < 1) {
             frameId = window.requestAnimationFrame(step);
           } else {
             frameId = null;
-            scrollHintAnimCancel = null;
-            if (onComplete) onComplete();
+            finish();
           }
         }
 
@@ -1120,8 +1148,7 @@
             window.cancelAnimationFrame(frameId);
             frameId = null;
           }
-          scrollHintAnimCancel = null;
-          if (onComplete) onComplete();
+          finish();
         };
       }
 
@@ -1183,7 +1210,7 @@
             window.scrollTo(0, targetY);
           } else {
             window.addEventListener('touchstart', cancelScrollAnim, { passive: true });
-            scrollHintAnimCancel = smoothScrollTo(targetY, 2200, function () {
+            scrollHintAnimCancel = smoothScrollTo(targetY, 3000, function () {
               window.removeEventListener('touchstart', cancelScrollAnim, { passive: true });
             });
           }
