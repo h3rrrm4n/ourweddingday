@@ -3,6 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>
+    (function () {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      function resetPageScroll() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }
+
+      resetPageScroll();
+      window.addEventListener('pageshow', resetPageScroll);
+      window.addEventListener('DOMContentLoaded', resetPageScroll);
+      window.addEventListener('load', resetPageScroll);
+      window.addEventListener('beforeunload', resetPageScroll);
+    })();
+  </script>
   <meta name="theme-color" content="#D2CAAD" />
   <!-- If added to the home screen, this lets the site launch with zero
        Safari browser chrome (address bar / toolbar) at all — the only
@@ -1102,6 +1121,8 @@
         document.body.scrollTop = y;
       }
 
+      setScrollY(0);
+
       function easeInOutSine(t) {
         return -(Math.cos(Math.PI * t) - 1) / 2;
       }
@@ -1246,7 +1267,7 @@
         overlay.classList.add('is-hidden');
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
-        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+        setScrollY(0);
         if (musicToggle) musicToggle.classList.add('is-visible');
 
         var hero = document.querySelector('.save-the-date-hero');
