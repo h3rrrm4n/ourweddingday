@@ -1084,21 +1084,78 @@
       var tapReady = false;
       var invitationRevealed = false;
       var scrollHintTimer = null;
+      var scrollHintAnimCancel = null;
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function smoothScrollTo(targetY, duration, onComplete) {
+        var startY = window.scrollY;
+        var distance = targetY - startY;
+        if (Math.abs(distance) < 4) {
+          if (onComplete) onComplete();
+          return null;
+        }
+
+        var startTime = null;
+        var frameId = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+          if (progress < 1) {
+            frameId = window.requestAnimationFrame(step);
+          } else {
+            frameId = null;
+            scrollHintAnimCancel = null;
+            if (onComplete) onComplete();
+          }
+        }
+
+        frameId = window.requestAnimationFrame(step);
+        return function cancel() {
+          if (frameId) {
+            window.cancelAnimationFrame(frameId);
+            frameId = null;
+          }
+          scrollHintAnimCancel = null;
+          if (onComplete) onComplete();
+        };
+      }
 
       function scheduleInvitationScrollHint() {
         if (scrollHintTimer) window.clearTimeout(scrollHintTimer);
 
         var hintCancelled = false;
 
-        function cancelScrollHint() {
-          if (hintCancelled) return;
-          hintCancelled = true;
+        function clearScrollHintSchedule() {
           if (scrollHintTimer) {
             window.clearTimeout(scrollHintTimer);
             scrollHintTimer = null;
           }
           window.removeEventListener('scroll', onUserScroll, { passive: true });
           window.removeEventListener('touchstart', cancelScrollHint, { passive: true });
+        }
+
+        function cancelScrollHint() {
+          if (hintCancelled) return;
+          hintCancelled = true;
+          clearScrollHintSchedule();
+          if (scrollHintAnimCancel) {
+            scrollHintAnimCancel();
+            scrollHintAnimCancel = null;
+          }
+          window.removeEventListener('touchstart', cancelScrollAnim, { passive: true });
+        }
+
+        function cancelScrollAnim() {
+          if (scrollHintAnimCancel) {
+            scrollHintAnimCancel();
+            scrollHintAnimCancel = null;
+          }
+          window.removeEventListener('touchstart', cancelScrollAnim, { passive: true });
         }
 
         function onUserScroll() {
@@ -1108,6 +1165,8 @@
         function runScrollHint() {
           scrollHintTimer = null;
           if (hintCancelled || window.scrollY > 16) return;
+
+          clearScrollHintSchedule();
 
           var heading = document.querySelector('.wedding-countdown .countdown-heading');
           var targetY;
@@ -1119,8 +1178,15 @@
           }
 
           targetY = Math.max(0, Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight));
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-          cancelScrollHint();
+
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.scrollTo(0, targetY);
+          } else {
+            window.addEventListener('touchstart', cancelScrollAnim, { passive: true });
+            scrollHintAnimCancel = smoothScrollTo(targetY, 2200, function () {
+              window.removeEventListener('touchstart', cancelScrollAnim, { passive: true });
+            });
+          }
         }
 
         window.addEventListener('scroll', onUserScroll, { passive: true });
