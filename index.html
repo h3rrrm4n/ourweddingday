@@ -1083,6 +1083,50 @@
 
       var tapReady = false;
       var invitationRevealed = false;
+      var scrollHintTimer = null;
+
+      function scheduleInvitationScrollHint() {
+        if (scrollHintTimer) window.clearTimeout(scrollHintTimer);
+
+        var hintCancelled = false;
+
+        function cancelScrollHint() {
+          if (hintCancelled) return;
+          hintCancelled = true;
+          if (scrollHintTimer) {
+            window.clearTimeout(scrollHintTimer);
+            scrollHintTimer = null;
+          }
+          window.removeEventListener('scroll', onUserScroll, { passive: true });
+          window.removeEventListener('touchstart', cancelScrollHint, { passive: true });
+        }
+
+        function onUserScroll() {
+          if (window.scrollY > 16) cancelScrollHint();
+        }
+
+        function runScrollHint() {
+          scrollHintTimer = null;
+          if (hintCancelled || window.scrollY > 16) return;
+
+          var heading = document.querySelector('.wedding-countdown .countdown-heading');
+          var targetY;
+
+          if (heading) {
+            targetY = heading.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.58;
+          } else {
+            targetY = window.innerHeight * 0.28;
+          }
+
+          targetY = Math.max(0, Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight));
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          cancelScrollHint();
+        }
+
+        window.addEventListener('scroll', onUserScroll, { passive: true });
+        window.addEventListener('touchstart', cancelScrollHint, { passive: true });
+        scrollHintTimer = window.setTimeout(runScrollHint, 5000);
+      }
 
       function revealInvitation() {
         if (invitationRevealed) return;
@@ -1114,6 +1158,8 @@
             hero.classList.add('is-revealed', 'visible');
           }, 200);
         }
+
+        scheduleInvitationScrollHint();
       }
 
       // Hold clip1 on its last decoded frame — identical pixels, no img swap.
