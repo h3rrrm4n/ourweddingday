@@ -1196,12 +1196,16 @@
           clearScrollHintSchedule();
 
           var heading = document.querySelector('.wedding-countdown .countdown-heading');
+          var countdownSection = document.querySelector('.wedding-countdown');
+          var topOffset = 12;
           var targetY;
 
           if (heading) {
-            targetY = heading.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.58;
+            targetY = heading.getBoundingClientRect().top + getScrollY() - topOffset;
+          } else if (countdownSection) {
+            targetY = countdownSection.getBoundingClientRect().top + getScrollY() - topOffset;
           } else {
-            targetY = window.innerHeight * 0.28;
+            targetY = window.innerHeight * 0.85;
           }
 
           targetY = Math.max(0, Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight));
@@ -1210,7 +1214,7 @@
             window.scrollTo(0, targetY);
           } else {
             window.addEventListener('touchstart', cancelScrollAnim, { passive: true });
-            scrollHintAnimCancel = smoothScrollTo(targetY, 3000, function () {
+            scrollHintAnimCancel = smoothScrollTo(targetY, 5000, function () {
               window.removeEventListener('touchstart', cancelScrollAnim, { passive: true });
             });
           }
