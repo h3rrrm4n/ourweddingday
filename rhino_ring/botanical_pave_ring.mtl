@@ -1,0 +1,20 @@
+newmtl white_metal
+Ka 0.2 0.2 0.22
+Kd 0.78 0.79 0.82
+Ks 0.95 0.95 0.97
+Ns 900
+illum 2
+
+newmtl diamond
+Ka 0.1 0.1 0.1
+Kd 0.94 0.94 0.96
+Ks 1 1 1
+Ns 1300
+illum 2
+
+newmtl sapphire
+Ka 0.02 0.04 0.15
+Kd 0.08 0.22 0.72
+Ks 0.85 0.9 1
+Ns 1100
+illum 2
